@@ -1,0 +1,11 @@
+output
+VOCdevkit
+VOCdevkit2
+# 数据集
+Medical_Datasets
+model_data
+logs3
+logs4
+datasets
+
+__pycache__
