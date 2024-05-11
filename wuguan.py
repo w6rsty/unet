@@ -45,16 +45,20 @@ from PIL import Image
 from unet import Unet
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtWidgets import QMainWindow, QSplitter
+from PyQt5 import QtCore, QtGui, QtWidgets
+
+
 initial_image = None
 img_2c = None
 
+# TODO: 异步加载模型
 # 创建Unet实例，替换为您的模型路径和参数
-model_path = 'D:/unet/logs3/best_epoch_weights.pth'
+model_path = 'logs3/best_epoch_weights.pth'
 num_classes = 2
 unet_instance = Unet(model_path=model_path, num_classes=num_classes, input_shape=[256, 256], cuda=False)
 
 # 创建Unet实例，替换为您的模型路径和参数
-model_path = 'D:/unet/logs4/best_epoch_weights.pth'
+model_path = 'logs4/best_epoch_weights.pth'
 num_classes = 2
 unet_instance1 = Unet(model_path=model_path, num_classes=num_classes, input_shape=[1024, 1024], cuda=False)
 
@@ -64,8 +68,6 @@ def np2pixmap(np_img):
     bytesPerLine = 3 * width
     qImg = QImage(np_img.data, width, height, bytesPerLine, QImage.Format_RGB888)
     return QPixmap.fromImage(qImg)
-
-from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Ui_Form(object):
