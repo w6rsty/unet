@@ -69,6 +69,10 @@ def np2pixmap(np_img):
     qImg = QImage(np_img.data, width, height, bytesPerLine, QImage.Format_RGB888)
     return QPixmap.fromImage(qImg)
 
+def getJson(file_index):
+    with open(f'json/json{file_index}.json', 'r',encoding="utf-8") as f:
+        json_data = json.load(f)
+        return json_data
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -408,24 +412,33 @@ class Ui_Form(object):
         self.gridFrame.setObjectName("gridFrame")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.gridFrame)
         self.gridLayout_2.setObjectName("gridLayout_2")
+        
+        #优化，展示图像并添加相应槽函数
+        
         self.BodyLabel_6 = BodyLabel(self.gridFrame)
-        self.BodyLabel_6.setText("")
+        json1 = getJson(1)
+        self.BodyLabel_6.setPixmap(QtGui.QPixmap(json1['imgPath']).scaled(200,180,QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))        
+        self.BodyLabel_6.setGeometry(QtCore.QRect(0, 0, 100, 100))
         self.BodyLabel_6.setObjectName("BodyLabel_6")
         self.gridLayout_2.addWidget(self.BodyLabel_6, 0, 1, 1, 1)
         self.BodyLabel_7 = BodyLabel(self.gridFrame)
-        self.BodyLabel_7.setText("")
+        json2 = getJson(2)
+        self.BodyLabel_7.setPixmap(QtGui.QPixmap(json2['imgPath']).scaled(200,180,QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))
         self.BodyLabel_7.setObjectName("BodyLabel_7")
         self.gridLayout_2.addWidget(self.BodyLabel_7, 1, 1, 1, 1)
         self.BodyLabel_3 = BodyLabel(self.gridFrame)
-        self.BodyLabel_3.setText("")
+        json3 = getJson(3)
+        self.BodyLabel_3.setPixmap(QtGui.QPixmap(json3['imgPath']).scaled(200,180,QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))
         self.BodyLabel_3.setObjectName("BodyLabel_3")
         self.gridLayout_2.addWidget(self.BodyLabel_3, 1, 0, 1, 1)
         self.BodyLabel_5 = BodyLabel(self.gridFrame)
-        self.BodyLabel_5.setText("")
+        json4 = getJson(4)
+        self.BodyLabel_5.setPixmap(QtGui.QPixmap(json4['imgPath']).scaled(200,180,QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))
         self.BodyLabel_5.setObjectName("BodyLabel_5")
         self.gridLayout_2.addWidget(self.BodyLabel_5, 0, 0, 1, 1)
         self.BodyLabel_4 = BodyLabel(self.gridFrame)
-        self.BodyLabel_4.setText("")
+        json5 = getJson(5)
+        self.BodyLabel_4.setPixmap(QtGui.QPixmap(json5['imgPath']).scaled(200,180,QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))
         self.BodyLabel_4.setObjectName("BodyLabel_4")
         self.gridLayout_2.addWidget(self.BodyLabel_4, 0, 2, 1, 1)
         self.verticalFrame = QtWidgets.QFrame(self.gridFrame)
@@ -944,7 +957,11 @@ class DrawingLabel(QLabel):
             self.update()
 
 
-
+def center_splash(splash):
+    screen = QApplication.desktop().screenGeometry()
+    splash_geometry = splash.geometry()
+    splash.move((screen.width() - splash_geometry.width()) // 2, (screen.height() - splash_geometry.height()) // 2)
+    splash.show()
 
 
 
@@ -954,7 +971,7 @@ if __name__ == "__main__":
     # 创建启动界面，并设置为全屏显示
     splash_pix = QPixmap(':/qfluentwidgets/images/logo.png')  # 替换为你的启动图片路径
     splash = QSplashScreen(splash_pix)
-    splash.showFullScreen()  # 显示全屏启动界面
+    center_splash(splash)  # 调用函数使启动界面居中
     app.processEvents()  # 处理当前在事件队列中的所有事件
 
     # 设置启动界面停留时间为 3 秒
