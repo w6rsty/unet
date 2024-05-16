@@ -61,7 +61,9 @@ unet_instance = Unet(model_path=model_path, num_classes=num_classes, input_shape
 model_path = 'logs4/best_epoch_weights.pth'
 num_classes = 2
 unet_instance1 = Unet(model_path=model_path, num_classes=num_classes, input_shape=[1024, 1024], cuda=False)
-
+ #全局变量，当前展示在两个主Label的jsonId,初始化为1
+global jsonId 
+jsonId = 1
 
 def np2pixmap(np_img):
     height, width, channel = np_img.shape
@@ -413,7 +415,7 @@ class Ui_Form(object):
         self.gridLayout_2 = QtWidgets.QGridLayout(self.gridFrame)
         self.gridLayout_2.setObjectName("gridLayout_2")
         
-        #优化，展示图像并添加相应槽函数
+        #zjy优化，展示图像并添加相应槽函数
         
         self.BodyLabel_6 = BodyLabel(self.gridFrame)
         json1 = getJson(1)
@@ -605,10 +607,94 @@ class Ui_Form(object):
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
         
+        # zjy优化
         self.ToolButton_2.clicked.connect(self.openImage) #选择图片功能
         self.ToolButton_11.clicked.connect(self.draw)
         
-
+        self.toolButton.clicked.connect(self.addImage) #为添加影像增加槽函数
+        self.BodyLabel_6.mousePressEvent = self.showPatientInfo1
+        self.BodyLabel_7.mousePressEvent = self.showPatientInfo2
+        self.BodyLabel_3.mousePressEvent = self.showPatientInfo3
+        self.BodyLabel_5.mousePressEvent = self.showPatientInfo4
+        self.BodyLabel_4.mousePressEvent = self.showPatientInfo5
+        
+    #这个函数在点击图片后触发   
+    def showPatientInfo1(self,event):
+        # 修改全局变量
+        jsonId = 1
+        jsonData = getJson(jsonId)
+        self.BodyLabel.setScaledContents(True)
+        self.BodyLabel.setPixmap(QtGui.QPixmap(jsonData['imgPath']).scaled(900,500,QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))
+        self.BodyLabel_2.setScaledContents(True)
+        self.BodyLabel_2.setPixmap(QtGui.QPixmap(jsonData['imgPath']).scaled(900,500,QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))
+        #用户信息对应的框是10 
+        listpatientInfo = "\n".join(jsonData['patientInfo'])      
+        self.BodyLabel_10.setText(listpatientInfo)
+        #分析结果对应的框为TextEdit
+        listAnalysisResult = "\n".join(jsonData['AnalysisResult'])  
+        self.TextEdit.setText(listAnalysisResult)
+        
+        
+    def showPatientInfo2(self,event):
+        # 修改全局变量
+        jsonId = 2
+        jsonData = getJson(jsonId)
+        self.BodyLabel.setScaledContents(True)
+        self.BodyLabel.setPixmap(QtGui.QPixmap(jsonData['imgPath']).scaled(900,500,QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))
+        self.BodyLabel_2.setScaledContents(True)
+        self.BodyLabel_2.setPixmap(QtGui.QPixmap(jsonData['imgPath']).scaled(900,500,QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))       
+        #用户信息对应的框是10 
+        listpatientInfo = "\n".join(jsonData['patientInfo'])      
+        self.BodyLabel_10.setText(listpatientInfo)
+        #分析结果对应的框为TextEdit
+        listAnalysisResult = "\n".join(jsonData['AnalysisResult'])  
+        self.TextEdit.setText(listAnalysisResult)
+        
+    def showPatientInfo3(self,event):
+        # 修改全局变量
+        jsonId = 3
+        jsonData = getJson(jsonId)
+        self.BodyLabel.setScaledContents(True)
+        self.BodyLabel.setPixmap(QtGui.QPixmap(jsonData['imgPath']).scaled(900,500,QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))
+        self.BodyLabel_2.setScaledContents(True)
+        self.BodyLabel_2.setPixmap(QtGui.QPixmap(jsonData['imgPath']).scaled(900,500,QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))       
+        #用户信息对应的框是10 
+        listpatientInfo = "\n".join(jsonData['patientInfo'])      
+        self.BodyLabel_10.setText(listpatientInfo)
+        #分析结果对应的框为TextEdit
+        listAnalysisResult = "\n".join(jsonData['AnalysisResult'])  
+        self.TextEdit.setText(listAnalysisResult)   
+        
+    def showPatientInfo4(self,event):
+        # 修改全局变量
+        jsonId = 4
+        jsonData = getJson(jsonId)
+        self.BodyLabel.setScaledContents(True)
+        self.BodyLabel.setPixmap(QtGui.QPixmap(jsonData['imgPath']).scaled(900,500,QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))
+        self.BodyLabel_2.setScaledContents(True)
+        self.BodyLabel_2.setPixmap(QtGui.QPixmap(jsonData['imgPath']).scaled(900,500,QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))       
+        #用户信息对应的框是10 
+        listpatientInfo = "\n".join(jsonData['patientInfo'])      
+        self.BodyLabel_10.setText(listpatientInfo)
+        #分析结果对应的框为TextEdit
+        listAnalysisResult = "\n".join(jsonData['AnalysisResult'])  
+        self.TextEdit.setText(listAnalysisResult)
+        
+    def showPatientInfo5(self,event):
+        # 修改全局变量
+        jsonId = 5
+        jsonData = getJson(jsonId)
+        self.BodyLabel.setScaledContents(True)
+        self.BodyLabel.setPixmap(QtGui.QPixmap(jsonData['imgPath']).scaled(900,500,QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))
+        self.BodyLabel_2.setScaledContents(True)
+        self.BodyLabel_2.setPixmap(QtGui.QPixmap(jsonData['imgPath']).scaled(900,500,QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))       
+        #用户信息对应的框是10 
+        listpatientInfo = "\n".join(jsonData['patientInfo'])      
+        self.BodyLabel_10.setText(listpatientInfo)
+        #分析结果对应的框为TextEdit
+        listAnalysisResult = "\n".join(jsonData['AnalysisResult'])  
+        self.TextEdit.setText(listAnalysisResult)    
+        
     def loadImage(self, filePath):
         global initial_image
         img_np = io.imread(filePath)
@@ -627,6 +713,7 @@ class Ui_Form(object):
         pixmap = QtGui.QPixmap(filePath)
         self.BodyLabel_2.setPixmap(pixmap.scaled(self.BodyLabel_2.size(), QtCore.Qt.KeepAspectRatioByExpanding, QtCore.Qt.SmoothTransformation))
         self.BodyLabel.setPixmap(pixmap.scaled(self.BodyLabel.size(), QtCore.Qt.KeepAspectRatioByExpanding, QtCore.Qt.SmoothTransformation))
+   
     def set_image(self, img_3c):
         # 设置图像，并调整 QLabel 的大小以适应图像
         global img_2c
@@ -645,10 +732,27 @@ class Ui_Form(object):
             "Image Files (*.png *.jpg *.jpeg *.bmp)"
         )
         if filePath:
+            
             self.loadImage(filePath)
     def draw(self):
         pass
-            
+    
+    
+    #添加影响，只修改当前展示的图片
+    def addImage(self):
+        filePath, _ = QtWidgets.QFileDialog.getOpenFileName(
+            None, 
+            "选择图片", 
+            "", 
+            "Image Files (*.png *.jpg *.jpeg *.bmp)"
+        )
+        if filePath:
+            jsonData = getJson(jsonId)
+            jsonData['imgPath'] = filePath 
+             # 将修改后的数据保存回文件
+            with open(f'json/json{jsonId}.json', 'w', encoding='utf-8') as f:
+                json.dump(jsonData, f, ensure_ascii=False, indent=4)
+            self.loadImage(filePath)       
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
