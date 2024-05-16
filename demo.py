@@ -10,7 +10,6 @@ from PyQt5.QtGui import QIcon, QFont, QColor
 from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout, QVBoxLayout
 from qfluentwidgets import *
 
-
 class Demo(MSFluentWindow):
 
     def __init__(self, parent=None):
@@ -18,7 +17,6 @@ class Demo(MSFluentWindow):
         self.setTitleBar(TitleBar(self))
         self.detailedInterface = DetailInterface(self)
 
-        self.resize(1000, 800)
         self.setWindowTitle('慧眼卫视”——AI驱动的眼底图像智能处理软件')
         self.setWindowIcon(QIcon(':/qfluentwidgets/images/logo.png'))
 
@@ -156,21 +154,9 @@ class TitleBar(MSFluentTitleBar):
 
     def __init__(self, parent):
         super().__init__(parent)
-        self.lineEdit = SearchLineEdit(self)
-        self.lineEdit.setPlaceholderText('')
-        self.lineEdit.setClearButtonEnabled(True)
 
-        self.avatarButton = TransparentToolButton('resource/shoko.png', self)
-        self.avatarButton.setIconSize(QSize(28, 28))
-        self.avatarButton.setFixedSize(28, 28)
+        self.setIcon(QIcon('1.png')) 
 
-    def resizeEvent(self, e):
-        w, h = self.width(), self.height()
-        self.avatarButton.move(w - 205, h//2-self.avatarButton.height()//2)
-
-        self.lineEdit.resize(w // 2, self.lineEdit.height())
-        self.lineEdit.move(w//2 - self.lineEdit.width()//2, h//2-self.lineEdit.height()//2)
-        
 
 class ClockCard(HeaderCardWidget):
     """时间卡片"""
@@ -178,7 +164,7 @@ class ClockCard(HeaderCardWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        self.setTitle("时间卡片 >")
+        self.setTitle("时间卡片")
         self.setupUI()
         self.timer_init()
         self.timer.start()
@@ -268,7 +254,6 @@ class GalleryCard(HeaderCardWidget):
         self.headerLayout.addWidget(self.expandButton, 0, Qt.AlignRight)
         self.viewLayout.addWidget(self.flipView)
 
-
 class BasicInfoCard(HeaderCardWidget):
     """信息卡片"""
 
@@ -276,17 +261,8 @@ class BasicInfoCard(HeaderCardWidget):
         super().__init__(parent)
         self.setTitle('信息')
         
-        label = QLabel(
-'''慧眼卫视基于深度学习和智能优化算法等先进技术，有针对性地改进了医学影像信息系统中存在的缺点和不足之处。集成了医学图像处理、图像可视化、病灶自动定位等功能，实现了医学图像自动识别、自动标注、自动定位全过程。
-    - 限1人使用
-    - 可以在多台设备通过账号登陆同时使用
-    - 适用于PC
-    - 适用于windows7以上操作系统
-    - 1TB(1.000 GB)安全云存储空间
-    - 使用Docker技术进行模块化和容器化部署云服务后台
-    - 针对图像数据和分析数据进行高级安全存储
-    - 包括无灌注区域识别工具、糖网分级工具和血网分割工具
-    - 直观简洁，且易于使用，任何人都可以轻松操作''')
+        label = QLabel('fasdfa')
+        label.setStyleSheet('QLabel {padding-right: 125px}')
         self.viewLayout.addWidget(label, 0, Qt.AlignTop | Qt.AlignLeft)
 
 

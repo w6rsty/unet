@@ -46,6 +46,7 @@ from unet import Unet
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtWidgets import QMainWindow, QSplitter
 from PyQt5 import QtCore, QtGui, QtWidgets
+import asyncio
 
 
 initial_image = None
@@ -53,15 +54,23 @@ img_2c = None
 
 # TODO: 异步加载模型
 # 创建Unet实例，替换为您的模型路径和参数
-model_path = 'logs3/best_epoch_weights.pth'
-num_classes = 2
-unet_instance = Unet(model_path=model_path, num_classes=num_classes, input_shape=[256, 256], cuda=False)
+# model_path = 'logs3/best_epoch_weights.pth'
+# num_classes = 2
+# unet_instance = Unet(model_path=model_path, num_classes=num_classes, input_shape=[256, 256], cuda=False)
 
 # 创建Unet实例，替换为您的模型路径和参数
-model_path = 'logs4/best_epoch_weights.pth'
-num_classes = 2
-unet_instance1 = Unet(model_path=model_path, num_classes=num_classes, input_shape=[1024, 1024], cuda=False)
 
+class Loader:
+    def __init__(self, path, num_classes):
+        self.model = None
+        self.path = path
+        self.num_classes = num_classes
+
+    async def load(self):
+        self.model = Unet(model_path=self.path, num_classes=self.num_classes, input_shape=[1024, 1024], cuda=False)
+    
+    def get_model(self):
+        return self.model
 
 def np2pixmap(np_img):
     height, width, channel = np_img.shape
@@ -70,8 +79,8 @@ def np2pixmap(np_img):
     return QPixmap.fromImage(qImg)
 
 
-class Ui_Form(object):
-    def setupUi(self, Form):
+class UI_Form(object):
+    def setupUi(self, Form, loader):
         Form.setObjectName("Form")
         Form.resize(1589, 639)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
@@ -676,7 +685,7 @@ from PyQt5.QtGui import QImage, QPixmap, QPainter, QPen, QColor
 from skimage import io
 
 class DrawingLabel(QLabel):
-    def __init__(self, parent=None):
+    def __init__(self, loader, parent=None,):
         super(DrawingLabel, self).__init__(parent)
         global img_2c
         self.is_mouse_down = True
@@ -698,6 +707,8 @@ class DrawingLabel(QLabel):
         self.initial_image = None
         self.mask_c = np.zeros((100, 100, 3), dtype=np.uint8)
 
+        # a reference to the loader
+        self.loader = loader
 
         colors = [(255, 0, 0), (0, 255, 0), (0, 0, 255)]  # 这里定义了三种颜色：红色、绿色和蓝色
 
@@ -846,7 +857,9 @@ class DrawingLabel(QLabel):
                 # if region_to_render_white.shape[0] > 600  and region_to_render_white.shape[1] > 600:
                 image = Image.fromarray(initial_image)
                 image.save('output_image.png')
-                segmented_image = unet_instance1.detect_image(image)
+                # TODO: Detect the image here
+                # segmented_image = unet_instance1.detect_image(image)
+                segmented_image = unet_instance.detect_image(image)
                 image_array = np.array(segmented_image)
                 # print(image_array)
                 img_3c = image_array
@@ -957,14 +970,17 @@ if __name__ == "__main__":
     splash.showFullScreen()  # 显示全屏启动界面
     app.processEvents()  # 处理当前在事件队列中的所有事件
 
-    # 设置启动界面停留时间为 3 秒
-    QTimer.singleShot(3000, splash.close)
+    # FIXME： 修改了启动界面的显示时间
+    QTimer.singleShot(100, splash.close)
+
+    modelLoader = Loader('logs4/best_epoch_weights.pth', 2)
+    modelLoader.load()
 
     Form = QtWidgets.QWidget()
-    ui = Ui_Form()
+    ui = UI_Form(modelLoader)
     ui.setupUi(Form)
 
     # 在启动界面后延迟显示主窗口，并设置为全屏
-    QTimer.singleShot(3000, lambda: Form.showFullScreen())
+    QTimer.singleShot(100, lambda: Form.showMaximized())
 
     sys.exit(app.exec_())
