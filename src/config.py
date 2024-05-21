@@ -1,3 +1,7 @@
+import PyQt5.QtGui as QFont
+
+BUTTON_FONT = QFont('Microsoft YaHei', 12)
+
 WINDOW_TITLE = '慧眼卫视”——AI驱动的眼底图像智能处理软件'
 
 # Paths:

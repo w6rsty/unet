@@ -61,7 +61,7 @@ class AppInfoCard(SimpleCardWidget):
         # description label
         self.vBoxLayout.addSpacing(20)
         self.vBoxLayout.addWidget(self.descriptionLabel)
-         
+
 
 class StatisticsWidget(QWidget):
     """ Statistics widget """

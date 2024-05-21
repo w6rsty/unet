@@ -8,5 +8,5 @@ if __name__ == "__main__":
 
     mainWindow = MainWindow()
     mainWindow.showFullScreen()
-    
+
     sys.exit(app.exec())

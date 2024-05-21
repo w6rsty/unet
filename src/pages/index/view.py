@@ -6,6 +6,7 @@ from .app_info import AppInfoCard
 from .gallary import GalleryCard
 from .clock import ClockCard
 from .basic_info import BasicInfoCard
+from ..model_1.toolbar import Toolbar
 
 class IndexView(QWidget):
     def __init__(self, parent=None):
@@ -39,4 +40,3 @@ class IndexView(QWidget):
         vLayout.addLayout(hLayout)
 
         self.setLayout(vLayout)
-

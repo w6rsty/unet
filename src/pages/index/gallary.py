@@ -20,3 +20,4 @@ class GalleryCard(HeaderCardWidget):
         self.flipView.setAspectRatioMode(Qt.AspectRatioMode.KeepAspectRatio)
 
         self.viewLayout.addWidget(self.flipView)
+        
