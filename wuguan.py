@@ -15,25 +15,14 @@ from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout, QVBoxLayout, QSp
 from PyQt5.QtGui import QIcon, QFont, QColor
 from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout, QVBoxLayout
 from qfluentwidgets import *
-import hashlib
 import sys
-import threading
-import wmi
 
-import cv2
-import win32api
 from PyQt5 import Qt, QtWidgets
 from PyQt5.QtGui import QIcon, QBrush, QPainter, QPen, QPixmap, QColor, QImage, QGuiApplication
 from PyQt5.QtWidgets import (
     QFileDialog,
     QApplication,
-    QGraphicsEllipseItem,
-    QPushButton,
-    QHBoxLayout,
-    QVBoxLayout,
-    QWidget,
-    QShortcut,
-    QMessageBox,
+
     QGraphicsScene,
     QGraphicsView,
     QLabel, QDesktopWidget, QAction, QSpacerItem, QSizePolicy, QSlider, QDialog, QLineEdit,
@@ -54,13 +43,13 @@ img_2c = None
 
 # TODO: 异步加载模型
 # 创建Unet实例，替换为您的模型路径和参数
-# model_path = 'logs3/best_epoch_weights.pth'
-# num_classes = 2
-# unet_instance = Unet(model_path=model_path, num_classes=num_classes, input_shape=[256, 256], cuda=False)
+model_path = 'logs3/best_epoch_weights.pth'
+num_classes = 2
+unet_instance = Unet(model_path=model_path, num_classes=num_classes, input_shape=[256, 256], cuda=False)
 
 # 创建Unet实例，替换为您的模型路径和参数
 model_path = 'logs4/best_epoch_weights.pth'
-num_classes = 2
+num_classes
 unet_instance1 = Unet(model_path=model_path, num_classes=num_classes, input_shape=[1024, 1024], cuda=False)
  #全局变量，当前展示在两个主Label的jsonId,初始化为1
 global jsonId 
@@ -78,7 +67,7 @@ def getJson(file_index):
         return json_data
 
 class UI_Form(object):
-    def setupUi(self, Form, loader):
+    def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(1589, 639)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
@@ -1086,11 +1075,11 @@ if __name__ == "__main__":
     # FIXME： 修改了启动界面的显示时间
     QTimer.singleShot(100, splash.close)
 
-    modelLoader = Loader('logs4/best_epoch_weights.pth', 2)
-    modelLoader.load()
+    # modelLoader = Loader('logs4/best_epoch_weights.pth', 2)
+    # modelLoader.load()
 
     Form = QtWidgets.QWidget()
-    ui = UI_Form(modelLoader)
+    ui = UI_Form()
     ui.setupUi(Form)
 
     # 在启动界面后延迟显示主窗口，并设置为全屏

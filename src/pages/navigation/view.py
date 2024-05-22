@@ -18,7 +18,6 @@ class MainWindow(FluentWindow):
         self.initSplashScreen()
         self.initWindowStyle()
         self.initSubInterfaces()
-
         # Close splash screen after initialization
         self.splashScreen.finish(self)
         
@@ -36,6 +35,6 @@ class MainWindow(FluentWindow):
         self.model1Interface = Model1View(self)
         self.model2Interface = Model2View(self)
 
-        self.addSubInterface(self.indexInterface, FIF.HOME, '主页')
         self.addSubInterface(self.model1Interface, FIF.ALBUM, '模型1')
+        self.addSubInterface(self.indexInterface, FIF.HOME, '主页')
         self.addSubInterface(self.model2Interface, FIF.VIDEO, '模型2')
