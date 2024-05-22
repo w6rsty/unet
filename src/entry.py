@@ -7,6 +7,6 @@ if __name__ == "__main__":
     app.processEvents()
 
     mainWindow = MainWindow()
-    mainWindow.showFullScreen()
+    mainWindow.showMaximized()
 
     sys.exit(app.exec())
