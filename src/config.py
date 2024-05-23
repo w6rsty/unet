@@ -46,3 +46,13 @@ TOOL_BUTTON_FONT_NAME = 'Microsoft YaHei'
 TOOL_BUTTON_FONT_SIZE = 12
 
 ADD_ICON_PATH = ASSERT_DIR + 'icons/add.png'
+
+
+DEMO_IMAGE_DIR = 'img/'
+DEMO_IMAGE_PATHS = [
+    DEMO_IMAGE_DIR + 'demo_1.jpg',
+    DEMO_IMAGE_DIR + 'demo_2.jpg',
+    DEMO_IMAGE_DIR + 'demo_3.jpg',
+    DEMO_IMAGE_DIR + 'demo_4.jpg',
+    DEMO_IMAGE_DIR + 'demo_5.jpg',
+]
