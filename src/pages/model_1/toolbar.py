@@ -1,10 +1,8 @@
 from PyQt5.QtWidgets import QWidget, QToolButton, QSizePolicy, QHBoxLayout
 from PyQt5.QtGui import QIcon, QFont
 from PyQt5.QtCore import Qt
-from typing import Callable
 
 import config as cfg
-from .model import Model, Painter
 
 class Toolbar(QWidget):
     def __init__(self, model, painter, parent=None):
@@ -20,6 +18,7 @@ class Toolbar(QWidget):
             self.bts.append(bt)
 
         self.bts[0].setCallBack(self.painter.load_image)
+        
 
         self.initLayout()
 
@@ -51,5 +50,5 @@ class IconTextButton(QToolButton):
     def heightForWidth(self, width):
         return width
     
-    def setCallBack(self, callback: Callable[[], None]):
-        self.mousePressEvent = lambda: callback()
+    def setCallBack(self, callback):
+        self.clicked.connect(callback)
