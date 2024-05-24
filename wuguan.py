@@ -957,7 +957,7 @@ class DrawingLabel(QLabel):
                 image.save('output_image.png')
                 # TODO: Detect the image here
                 # segmented_image = unet_instance1.detect_image(image)
-                segmented_image = unet_instance.detect_image(image)
+                segmented_image = unet_instance.detect_image(image) ## 模型检查
                 image_array = np.array(segmented_image)
                 # print(image_array)
                 img_3c = image_array
@@ -1040,9 +1040,7 @@ class DrawingLabel(QLabel):
             # 将 numpy 数组（self.img_3c）转换为 QImage 对象
             height, width, channels = self.img_3c.shape
             bytes_per_line = channels * width
-            image = QImage(self.img_3c.data, width, height, bytes_per_line, QImage.Format_RGB888)
-
-            # 将 QImage 转换为 QPixmap 用于在 GUI 中显示
+            #image = QImage(self.img_3c.dataa在 GUI 中显示
             pixmap = QPixmap.fromImage(image)
 
             # 根据 DrawingLabel 的当前尺寸调整 QPixmap 的大小，以填充整个 Label
