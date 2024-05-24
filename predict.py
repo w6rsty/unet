@@ -92,10 +92,10 @@ class Window(QMainWindow):
             zoom_factor = 1.15  # 缩放因子，你可以根据需要调整
             if event.angleDelta().y() > 0:
                 # 向上滚动鼠标滚轮，放大图片
-                self.viewLeft.scale(zoom_factor, zoom_factor)
+                self.view1.scale(zoom_factor, zoom_factor)
             else:
                 # 向下滚动鼠标滚轮，缩小图片
-                self.viewLeft.scale(1 / zoom_factor, 1 / zoom_factor)
+                self.view1.scale(1 / zoom_factor, 1 / zoom_factor)
         else:
             # 如果没有按住 Shift 键，则执行默认的滚轮事件
             super().wheelEvent(event)
@@ -103,10 +103,10 @@ class Window(QMainWindow):
             zoom_factor = 1.15  # 缩放因子，你可以根据需要调整
             if event.angleDelta().y() > 0:
                 # 向上滚动鼠标滚轮，放大图片
-                self.viewRight.scale(zoom_factor, zoom_factor)
+                self.view2.scale(zoom_factor, zoom_factor)
             else:
                 # 向下滚动鼠标滚轮，缩小图片
-                self.viewRight.scale(1 / zoom_factor, 1 / zoom_factor)
+                self.view2.scale(1 / zoom_factor, 1 / zoom_factor)
         else:
             # 如果没有按住 Shift 键，则执行默认的滚轮事件
             super().wheelEvent(event)
@@ -122,6 +122,7 @@ class Window(QMainWindow):
         # configs
         self.last_click_pos = None
         self.half_point_size = 5
+        self.line_width = 3
         # app stats
         self.image_path = None
         self.color_idx = 0
@@ -138,14 +139,15 @@ class Window(QMainWindow):
         self.mode = "draw"  # 当前模式，默认为绘制模式
         self.restore_region_history = {}  # 恢复区域的历史记录
         self.initial_image = None  # 记录最初图片的样子
-        self.viewLeft = QGraphicsView()
-        self.viewRight = QGraphicsView()
-
+        self.view1 = QGraphicsView()
+        self.view2 = QGraphicsView()
+        self.img_3c_view1 = None
+        self.img_3c_view2 = None
 
         # 创建QSplitter以容纳两个视图
         splitter = QSplitter(Qt.Horizontal)
-        splitter.addWidget(self.viewLeft)
-        splitter.addWidget(self.viewRight)
+        splitter.addWidget(self.view1)
+        splitter.addWidget(self.view2)
         self.setCentralWidget(splitter)  # 设置QSplitter为主窗口的中央组件
 
         self.view = QGraphicsView()
@@ -156,6 +158,10 @@ class Window(QMainWindow):
         self.view.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.view.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
 
+        pixmap = QPixmap(1024, 1024)
+
+        # vbox = QVBoxLayout(self)
+        # vbox.addWidget(self.view)
         self.slider = QSlider(Qt.Horizontal)
         self.slider.setMinimum(1)
         self.slider.setMaximum(10)
@@ -164,31 +170,19 @@ class Window(QMainWindow):
         self.pen = QPen(QColor(0, 255, 0))
         self.pen.setWidth(self.slider.value())
 
-        load_button = MaterialButton("加载图片") # load_button                          
-        save_button = MaterialButton("数据保存") # save_button 
-        undo_button = MaterialButton("撤销操作") # undo_button 
-        draw_button = MaterialButton("大图识别") # 
-        add_button = MaterialButton("矩形增加") #          
-        restore_button = MaterialButton("矩形删除") #          
-        difference_button = MaterialButton("矩形占比") #           
-        diff_button = MaterialButton("眼底分区") #             
-        edge_button = MaterialButton("手动添加") #             
-        delete_button = MaterialButton("手动删除") #           
-        flood_button = MaterialButton("区域生长") #            
-        sss_button = MaterialButton("读取历史") #          
-        save2_button = MaterialButton("掩模保存") # 
-
-        hbox.addWidget(draw_button)
-        hbox.addWidget(restore_button)
-        hbox.addWidget(difference_button)
-        hbox.addWidget(diff_button)
-        hbox.addWidget(edge_button)
-        hbox.addWidget(delete_button)
-        hbox.addWidget(flood_button)
-        hbox.addWidget(add_button)
-        hbox.addWidget(sss_button)
-        hbox.addWidget(save2_button)
-        hbox.addWidget(self.slider)
+        load_button = MaterialButton("加载图片")
+        save_button = MaterialButton("数据保存")
+        undo_button = MaterialButton("撤销操作")
+        draw_button = MaterialButton("大图识别")
+        add_button = MaterialButton("矩形增加")
+        restore_button = MaterialButton("矩形删除")
+        difference_button = MaterialButton("矩形占比")
+        diff_button = MaterialButton("眼底分区")
+        edge_button = MaterialButton("手动添加")
+        delete_button = MaterialButton("手动删除")
+        flood_button = MaterialButton("区域生长")
+        sss_button = MaterialButton("读取历史")
+        save2_button = MaterialButton("掩模保存")
 
         button_style = (
             "background-color: #A9A9A9; color: white;"
@@ -211,6 +205,7 @@ class Window(QMainWindow):
         hbox.setSpacing(10)  # 设置按钮之间的间距为20像素
         hbox.addWidget(load_button)
         hbox.addWidget(save_button)
+
         hbox.addWidget(undo_button)
         hbox.addWidget(draw_button)
         hbox.addWidget(restore_button)
@@ -449,8 +444,8 @@ class Window(QMainWindow):
         self.bg_img2 = self.scene2.addPixmap(pixmap)
         self.bg_img1.setPos(0, 0)
         self.bg_img2.setPos(0, 0)
-        self.viewLeft.setScene(self.scene)  # 在第一个视图中显示图像
-        self.viewRight.setScene(self.scene2)  # 在第二个视图中显示相同的图像-
+        self.view1.setScene(self.scene)  # 在第一个视图中显示图像
+        self.view2.setScene(self.scene2)  # 在第二个视图中显示相同的图像-
 
         self.scene.mousePressEvent = self.mouse_press
         self.scene.mouseMoveEvent = self.mouse_move

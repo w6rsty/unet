@@ -1,6 +1,7 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QSizePolicy, QGraphicsView, QSlider
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QSizePolicy, QGraphicsView, QSlider,QFileDialog
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPainter, QColor, QPen
+
 import numpy as np
 import json
 import os
@@ -12,6 +13,7 @@ from .image_selector import ImageSelectorPanel
 from .patient_info import PatientInfoPanel
 from .result_info import ResultInfoPanel
 from .model import Model, Painter
+from PIL import Image
 
 
 class Model1View(QWidget):
@@ -22,7 +24,7 @@ class Model1View(QWidget):
         self.jsonLibrary = JsonLibrary(cfg.JSON_DIR)
 
         self.imagePanel = ImageManipulatePanel(self.jsonLibrary)
-        self.imagePanel.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding))
+        #self.imagePanel.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding))
 
         self.hInfoPanels = QHBoxLayout()
         self.patientInfoPanel = PatientInfoPanel(self.jsonLibrary)
@@ -96,9 +98,23 @@ class Model1View(QWidget):
         layout.addLayout(self.hInfoPanels)
 
         self.setLayout(layout)
+    
+    #数据保存
+    def save_mask(self):
+        if hasattr(self, "initial_image"):
+            file_path, _ = QFileDialog.getSaveFileName(
+                self, "保存结果图像", ".", "PNG Files (*.png)"
+            )
+
+            if file_path:
+                result_image = Image.fromarray(self.img_3c.astype('uint8'))
+                result_image.save(file_path)
 
     
+    
+    
 class JsonLibrary:
+    
     def __init__(self, dir_path):
         self.dir = dir_path
         self.lib = []
