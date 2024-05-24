@@ -18,19 +18,17 @@ class Model1View(QWidget):
         self.setObjectName('Model1View')
 
         # TODO: json library
-
         
-
-        
-        self.imagePanel = ImageManipulatePanel()
+        self.initJson()
+        self.imagePanel = ImageManipulatePanel(self.jsonArray)
         self.imagePanel.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding))
 
-        self.initJson()
+    
 
         self.hInfoPanels = QHBoxLayout()
-        self.imageSelector = ImageSelectorPanel()
+        self.imageSelector = ImageSelectorPanel(self.imagePanel)
         self.patientInfoPanel = PatientInfoPanel(self.jsonArray) # take json lib
-        self.resultInfoPanel = ResultInfoPanel() # take json lib
+        self.resultInfoPanel = ResultInfoPanel(self.jsonArray) # take json lib
 
         self.initModel()
         self.initPainter()

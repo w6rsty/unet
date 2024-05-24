@@ -1,14 +1,16 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout
-from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QToolButton
+from PyQt5.QtCore import QSize,Qt
+from PyQt5.QtGui import QIcon
 from qfluentwidgets import FlowLayout, ImageLabel
 from typing import Callable
 
+import os 
 import config as cfg
 
 class ImageSelectorPanel(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, imagePanel,parent=None):
         super().__init__(parent)
-
+        self.imagePanel = imagePanel
         self.imageButtons = []
         for index, path in enumerate(cfg.DEMO_IMAGE_PATHS):
             bt = ImageButton(index, path)
@@ -17,6 +19,9 @@ class ImageSelectorPanel(QWidget):
 
         self.addButton = ImageButton(-1, cfg.ADD_ICON_PATH)
         
+        # 使用一个回调函数，这个回调函数在图片被点击时，要把图片展示到两个主页面，添加患者信息，添加分析报告
+        for bt in self.imageButtons:
+            bt.setCallback(lambda : self.imagePanel.set_image(index))
         
         self.initLayout()
 
@@ -32,23 +37,23 @@ class ImageSelectorPanel(QWidget):
         self.setLayout(layout)
 
 
-class ImageButton(QWidget):
+class ImageButton(QToolButton):
     def __init__(self, id, imagePath, parent=None):
         super().__init__(parent)
 
         self.id = id
 
-        self.imageLabel = ImageLabel(imagePath)
-        self.imageLabel.setFixedSize(200, 180)
-        self.initLayout()
+        self.setIcon(QIcon(os.path.abspath(imagePath)))
+        self.setIconSize(QSize(200, 180))
+        # self.initLayout()
 
-    def initLayout(self):
-        layout = QVBoxLayout()
-        layout.setAlignment(Qt.AlignCenter)
+    # def initLayout(self):
+    #     layout = QVBoxLayout()
+    #     layout.setAlignment(Qt.AlignCenter)
 
-        layout.addWidget(self.imageLabel)
+    #     layout.addWidget(self.imageLabel)
 
-        self.setLayout(layout)
+    #     self.setLayout(layout)
 
     def setCallback(self, callback: Callable[[int], None]):
         self.clicked.connect(lambda: callback(self.id))
