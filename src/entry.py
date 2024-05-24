@@ -1,5 +1,6 @@
 import sys
 from PyQt5.QtWidgets import QApplication
+from PyQt5.QtCore import Qt
 from pages.navigation.view import MainWindow
 
 if __name__ == "__main__":

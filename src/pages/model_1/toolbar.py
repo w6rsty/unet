@@ -18,7 +18,6 @@ class Toolbar(QWidget):
             self.bts.append(bt)
 
         self.bts[0].setCallBack(self.painter.load_image)
-        
 
         self.initLayout()
 
