@@ -27,3 +27,6 @@ class PatientInfoPanel(QWidget):
         layout.addWidget(self.infoText)
 
         self.setLayout(layout)
+
+    # def set_data(self, index):
+    #     self.setText(f'Patient Info {index}')

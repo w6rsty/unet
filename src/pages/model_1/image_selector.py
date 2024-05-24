@@ -12,6 +12,7 @@ class ImageSelectorPanel(QWidget):
         self.imageButtons = []
         for index, path in enumerate(cfg.DEMO_IMAGE_PATHS):
             bt = ImageButton(index, path)
+            # bt.setCallback(lambda : info.set_data(index), reuslt.set_data(index))
             self.imageButtons.append(bt)
 
         self.addButton = ImageButton(-1, cfg.ADD_ICON_PATH)
@@ -50,3 +51,5 @@ class ImageButton(QWidget):
 
     def setCallback(self, callback: Callable[[int], None]):
         self.clicked.connect(lambda: callback(self.id))
+
+

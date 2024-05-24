@@ -16,14 +16,15 @@ class Model1View(QWidget):
         super().__init__(parent)
         self.setObjectName('Model1View')
 
+        # TODO: json library
 
         self.imagePanel = ImageManipulatePanel()
         self.imagePanel.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding))
 
         self.hInfoPanels = QHBoxLayout()
         self.imageSelector = ImageSelectorPanel()
-        self.patientInfoPanel = PatientInfoPanel()
-        self.resultInfoPanel = ResultInfoPanel()
+        self.patientInfoPanel = PatientInfoPanel() # take json lib
+        self.resultInfoPanel = ResultInfoPanel() # take json lib
 
         self.initModel()
         self.initPainter()
@@ -87,3 +88,14 @@ class Model1View(QWidget):
 
     def getPainter(self):
         return self.painter
+    
+
+class JsonLibrary:
+    def __init__(self):
+        self.data = []
+
+    def load(self, dir_path):
+        pass
+
+    def getJson(self, index):
+        pass
