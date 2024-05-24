@@ -16,7 +16,8 @@ class ImageSelectorPanel(QWidget):
             self.imageButtons.append(bt)
 
         self.addButton = ImageButton(-1, cfg.ADD_ICON_PATH)
-
+        
+        
         self.initLayout()
 
     def initLayout(self):
@@ -52,4 +53,4 @@ class ImageButton(QWidget):
     def setCallback(self, callback: Callable[[int], None]):
         self.clicked.connect(lambda: callback(self.id))
 
-
+    

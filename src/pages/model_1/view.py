@@ -6,6 +6,7 @@ from .image_selector import ImageSelectorPanel
 from .patient_info import PatientInfoPanel
 from .result_info import ResultInfoPanel
 import numpy as np
+import json
 
 from .model import Model, Painter
 
@@ -18,12 +19,17 @@ class Model1View(QWidget):
 
         # TODO: json library
 
+        
+
+        
         self.imagePanel = ImageManipulatePanel()
         self.imagePanel.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding))
 
+        self.initJson()
+
         self.hInfoPanels = QHBoxLayout()
         self.imageSelector = ImageSelectorPanel()
-        self.patientInfoPanel = PatientInfoPanel() # take json lib
+        self.patientInfoPanel = PatientInfoPanel(self.jsonArray) # take json lib
         self.resultInfoPanel = ResultInfoPanel() # take json lib
 
         self.initModel()
@@ -66,6 +72,7 @@ class Model1View(QWidget):
         self.img_3c_view2 = None
         self.mode = "draw"  # 当前模式，默认为绘制模式
 
+
         self.initLayout()
 
     def initLayout(self):
@@ -88,14 +95,20 @@ class Model1View(QWidget):
 
     def getPainter(self):
         return self.painter
-    
 
+    def initJson(self):
+        self.jsonArray = JsonLibrary()
+    
 class JsonLibrary:
     def __init__(self):
-        self.data = []
-
-    def load(self, dir_path):
-        pass
-
-    def getJson(self, index):
-        pass
+        self.jsonArray = []
+        for i in range(1, 5):
+            self.jsonArray.append(self.getJson(i))
+            print(self.jsonArray[i-1])
+    def getJson(self,file_index):
+            with open(f'json/json{file_index}.json', 'r',encoding="utf-8") as f:
+                json_data = json.load(f)
+                return json_data
+    
+    def getJsonById(self,id):
+        return self.jsonArray[id-1]

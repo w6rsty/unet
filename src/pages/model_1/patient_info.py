@@ -3,10 +3,11 @@ from PyQt5.QtCore import Qt
 from qfluentwidgets import BodyLabel
 
 class PatientInfoPanel(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self,jsonLibrary,parent=None):
         super().__init__(parent)
-
+        self.jsonlibrary = jsonLibrary
         self.titleBar = BodyLabel('Patient Info')
+        print(self.jsonlibrary.getJsonById(1))
         self.titleBar.setStyleSheet("\n"
 "QLabel\n"
 "{\n"
@@ -16,8 +17,16 @@ class PatientInfoPanel(QWidget):
 "background-color: rgb(62, 144, 162);\n"
 "\n"
 "}")
-        self.infoText = BodyLabel('This is the patient info panel')
+        
+        self.titleBar.setFixedWidth(200)  # 设置标题栏的宽度为200像素
+        self.titleBar.setFixedHeight(50)   # 设置标题栏的高度为50像素
 
+
+        self.infoText = BodyLabel('This is the patient info panel')
+        self.infoText.setStyleSheet("QLabel {border: 2px solid grey;}")
+        self.infoText.setFixedWidth(200)  # 设置信息文本的宽度为200像素
+        self.infoText.setFixedHeight(30)   # 设置信息文本的高度为30像素
+        
         self.initLayout()
 
     def initLayout(self):
@@ -28,5 +37,5 @@ class PatientInfoPanel(QWidget):
 
         self.setLayout(layout)
 
-    # def set_data(self, index):
-    #     self.setText(f'Patient Info {index}')
+    def set_data(self, index):
+        self.setText(f'Patient Info {index}')

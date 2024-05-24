@@ -21,3 +21,6 @@ class ImageManipulatePanel(QWidget):
         layout.addWidget(self.originalImage)
         self.setLayout(layout)
         
+    def set_image(self, image):
+        self.manipulatedImage.setPixmap(QPixmap(image))
+        self.originalImage.setPixmap(QPixmap(image))
