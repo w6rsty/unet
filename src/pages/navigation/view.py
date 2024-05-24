@@ -10,7 +10,7 @@ import config as cfg
 from ..index.view import IndexView
 from ..model_1.view import Model1View
 from ..model_2.view import Model2View
-from ..model_2.jiu import Ui_Form
+from ..model_2.new_tangwang import Ui_Form
 
 
 class MainWindow(FluentWindow):
