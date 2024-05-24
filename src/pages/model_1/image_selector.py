@@ -8,21 +8,17 @@ import os
 import config as cfg
 
 class ImageSelectorPanel(QWidget):
-    def __init__(self, imagePanel,parent=None):
+    def __init__(self, patient_info, result_info, parent=None):
         super().__init__(parent)
-        self.imagePanel = imagePanel
+    
         self.imageButtons = []
         for index, path in enumerate(cfg.DEMO_IMAGE_PATHS):
-            bt = ImageButton(index, path)
-            # bt.setCallback(lambda : info.set_data(index), reuslt.set_data(index))
+            bt = ImageButton(index, path, patient_info, result_info)
             self.imageButtons.append(bt)
 
         self.addButton = ImageButton(-1, cfg.ADD_ICON_PATH)
         
-        # 使用一个回调函数，这个回调函数在图片被点击时，要把图片展示到两个主页面，添加患者信息，添加分析报告
-        for bt in self.imageButtons:
-            bt.setCallback(lambda : self.imagePanel.set_image(index))
-        
+    
         self.initLayout()
 
     def initLayout(self):
@@ -38,24 +34,27 @@ class ImageSelectorPanel(QWidget):
 
 
 class ImageButton(QToolButton):
-    def __init__(self, id, imagePath, parent=None):
+    def __init__(self, id, imagePath, patient_info = None, result_info = None, parent=None):
         super().__init__(parent)
 
         self.id = id
 
         self.setIcon(QIcon(os.path.abspath(imagePath)))
         self.setIconSize(QSize(200, 180))
-        # self.initLayout()
+        self.initLayout()
 
-    # def initLayout(self):
-    #     layout = QVBoxLayout()
-    #     layout.setAlignment(Qt.AlignCenter)
+        self.patient_info = patient_info
+        self.result_info = result_info
+        self.clicked.connect(lambda: self.notify(id))
 
-    #     layout.addWidget(self.imageLabel)
+    def initLayout(self):
+        layout = QVBoxLayout()
+        layout.setAlignment(Qt.AlignCenter)
 
-    #     self.setLayout(layout)
+        self.setLayout(layout)
 
-    def setCallback(self, callback: Callable[[int], None]):
-        self.clicked.connect(lambda: callback(self.id))
+    def notify(self, id):
+        self.patient_info.set_data(id)
+        self.result_info.set_data(id)
 
     

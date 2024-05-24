@@ -1,4 +1,6 @@
 ASSERT_DIR = 'assets/'
+DEMO_IMAGE_DIR = 'img/'
+JSON_DIR = 'json/'
 
 WINDOW_TITLE = '慧眼卫视”——AI驱动的眼底图像智能处理软件'
 
@@ -7,7 +9,7 @@ PLACEHOLDER_IMAGE_PATH = 'assets/images/placeholder.jpg'
 # Paths:
 WINDOW_ICON_PATH = 'assets/icons/window_icon.svg'
 SPLASH_SCREEN_PATH = 'assets/images/paper.png'
-
+MODEL_DATA_PATH = 'logs4/best_epoch_weights.pth'
 
 # Texts:
 APP_NAME = '慧眼卫视'
@@ -47,8 +49,6 @@ TOOL_BUTTON_FONT_SIZE = 12
 
 ADD_ICON_PATH = ASSERT_DIR + 'icons/add.png'
 
-
-DEMO_IMAGE_DIR = 'img/'
 DEMO_IMAGE_PATHS = [
     DEMO_IMAGE_DIR + 'demo_1.jpg',
     DEMO_IMAGE_DIR + 'demo_2.jpg',

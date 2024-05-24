@@ -1,13 +1,14 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QSizePolicy
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QSizePolicy, QStyle
+import numpy as np
+import json
+import os
 
+import config as cfg
 from .toolbar import Toolbar
 from .image_manipulate import ImageManipulatePanel
 from .image_selector import ImageSelectorPanel
 from .patient_info import PatientInfoPanel
 from .result_info import ResultInfoPanel
-import numpy as np
-import json
-
 from .model import Model, Painter
 
 initial_image = None
@@ -17,18 +18,15 @@ class Model1View(QWidget):
         super().__init__(parent)
         self.setObjectName('Model1View')
 
-        # TODO: json library
-        
-        self.initJson()
-        self.imagePanel = ImageManipulatePanel(self.jsonArray)
+        self.jsonLibrary = JsonLibrary(cfg.JSON_DIR)
+
+        self.imagePanel = ImageManipulatePanel(self.jsonLibrary)
         self.imagePanel.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding))
 
-    
-
         self.hInfoPanels = QHBoxLayout()
-        self.imageSelector = ImageSelectorPanel(self.imagePanel)
-        self.patientInfoPanel = PatientInfoPanel(self.jsonArray) # take json lib
-        self.resultInfoPanel = ResultInfoPanel(self.jsonArray) # take json lib
+        self.patientInfoPanel = PatientInfoPanel(self.jsonLibrary)
+        self.resultInfoPanel = ResultInfoPanel(self.jsonLibrary)
+        self.imageSelector = ImageSelectorPanel(self.patientInfoPanel, self.resultInfoPanel)
 
         self.initModel()
         self.initPainter()
@@ -81,32 +79,35 @@ class Model1View(QWidget):
 
         self.hInfoPanels.addWidget(self.imageSelector)
         self.hInfoPanels.addWidget(self.patientInfoPanel)
+        self.hInfoPanels.addWidget(self.resultInfoPanel)
         layout.addLayout(self.hInfoPanels)
 
         self.setLayout(layout)
 
     def initModel(self):
-        self.model = Model('logs4/best_epoch_weights.pth')
+        self.model = Model(cfg.MODEL_DATA_PATH)
 
     def initPainter(self):
         self.painter = Painter(self.model)
 
     def getPainter(self):
         return self.painter
-
-    def initJson(self):
-        self.jsonArray = JsonLibrary()
     
 class JsonLibrary:
-    def __init__(self):
-        self.jsonArray = []
-        for i in range(1, 5):
-            self.jsonArray.append(self.getJson(i))
-            print(self.jsonArray[i-1])
-    def getJson(self,file_index):
-            with open(f'json/json{file_index}.json', 'r',encoding="utf-8") as f:
-                json_data = json.load(f)
-                return json_data
+    def __init__(self, dir_path):
+        self.dir = dir_path
+        self.lib = []
+        self.num = 0
+
+        self.load(self.dir);
     
-    def getJsonById(self,id):
-        return self.jsonArray[id-1]
+    def load(self, dir):
+        for file in os.listdir(dir):
+            if file.endswith('.json'):
+                with open(os.path.join(dir, file), 'r', encoding="utf-8") as f:
+                    self.lib.append(json.load(f))
+                    self.num += 1
+
+
+    def getJsonById(self, id):
+        return self.lib[id]
