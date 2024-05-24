@@ -1,4 +1,6 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QSizePolicy, QStyle
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QSizePolicy, QGraphicsView, QSlider
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QPainter, QColor, QPen
 import numpy as np
 import json
 import os
@@ -11,7 +13,6 @@ from .patient_info import PatientInfoPanel
 from .result_info import ResultInfoPanel
 from .model import Model, Painter
 
-initial_image = None
 
 class Model1View(QWidget):
     def __init__(self, parent=None):
@@ -28,23 +29,24 @@ class Model1View(QWidget):
         self.resultInfoPanel = ResultInfoPanel(self.jsonLibrary)
         self.imageSelector = ImageSelectorPanel(self.patientInfoPanel, self.resultInfoPanel)
 
-        self.initModel()
-        self.initPainter()
+        self.model = Model(cfg.MODEL_DATA_PATH)
+        self.painter = Painter(self.model)
 
         self.toolbar = Toolbar(self.model, self.painter)
         self.toolbar.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding))
 
+        self.initLayout()
+
+        #画图相关############################################
         self.circle1 = None
         self.click_point = None
         self.radius = None
         self.end_pos = None
         self.circle = None
-        global initial_image
 
         # configs
         self.last_click_pos = None
         self.half_point_size = 5
-        self.line_width = 3
         # app stats
         self.image_path = None
         self.color_idx = 0
@@ -61,15 +63,25 @@ class Model1View(QWidget):
         self.mode = "draw"  # 当前模式，默认为绘制模式
         self.restore_region_history = {}  # 恢复区域的历史记录
         self.initial_image = None  # 记录最初图片的样子
+        self.viewLeft = QGraphicsView()
+        self.viewRight = QGraphicsView()
+        #画图相关############################################
 
-        # self.view1 = QGraphicsView()
-        # self.view2 = QGraphicsView()
-        self.img_3c_view1 = None
-        self.img_3c_view2 = None
-        self.mode = "draw"  # 当前模式，默认为绘制模式
+        self.view = QGraphicsView()
+        self.view.setRenderHint(QPainter.Antialiasing)
+        self.view.setMouseTracking(True)
 
+        # 确保在初始化方法中设置了正确的滚动区域，以便可以滚动查看整个图像
+        self.view.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.view.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
 
-        self.initLayout()
+        self.slider = QSlider(Qt.Horizontal)
+        self.slider.setMinimum(1)
+        self.slider.setMaximum(10)
+        self.slider.setValue(3)
+
+        self.pen = QPen(QColor(0, 255, 0))
+        self.pen.setWidth(self.slider.value())
 
     def initLayout(self):
         layout = QVBoxLayout()
@@ -77,21 +89,14 @@ class Model1View(QWidget):
         layout.addWidget(self.toolbar)
         layout.addWidget(self.imagePanel)
 
-        self.hInfoPanels.addWidget(self.imageSelector)
-        self.hInfoPanels.addWidget(self.patientInfoPanel)
-        self.hInfoPanels.addWidget(self.resultInfoPanel)
+        self.hInfoPanels.setSpacing(10)
+        self.hInfoPanels.addWidget(self.imageSelector, 1)
+        self.hInfoPanels.addWidget(self.patientInfoPanel, 1)
+        self.hInfoPanels.addWidget(self.resultInfoPanel, 1)
         layout.addLayout(self.hInfoPanels)
 
         self.setLayout(layout)
 
-    def initModel(self):
-        self.model = Model(cfg.MODEL_DATA_PATH)
-
-    def initPainter(self):
-        self.painter = Painter(self.model)
-
-    def getPainter(self):
-        return self.painter
     
 class JsonLibrary:
     def __init__(self, dir_path):

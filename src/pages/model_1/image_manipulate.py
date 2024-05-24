@@ -1,5 +1,5 @@
-from PyQt5.QtWidgets import QWidget, QHBoxLayout
-from PyQt5.QtGui import QPixmap, QPalette, QBrush
+from PyQt5.QtWidgets import QWidget, QHBoxLayout, QSplitter
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
 from qfluentwidgets import ImageLabel
 
@@ -9,19 +9,23 @@ class ImageManipulatePanel(QWidget):
     def __init__(self,jsonLibrary,parent=None):
         super().__init__(parent)
         self.jsonlibrary = jsonLibrary
-        self.manipulatedImage = ImageLabel(cfg.PLACEHOLDER_IMAGE_PATH)
-        self.originalImage = ImageLabel(cfg.PLACEHOLDER_IMAGE_PATH)
+
+        self.splitter = QSplitter(Qt.Horizontal)
+
+        self.imageLeft = ImageLabel(cfg.PLACEHOLDER_IMAGE_PATH)
+        self.imageRight = ImageLabel(cfg.PLACEHOLDER_IMAGE_PATH)
 
         self.initLayout()
 
     def initLayout(self):
         layout = QHBoxLayout()
-        layout.setSpacing(20)
-        layout.addWidget(self.manipulatedImage)
-        layout.addWidget(self.originalImage)
-        self.setLayout(layout)
+        layout.addWidget(self.splitter)
         
-    def set_image(self, id):
-        json = self.jsonlibrary.getJsonById(id+1)
-        self.manipulatedImage.setPixmap(QPixmap(json["imgPath"]))
-        self.originalImage.setPixmap(QPixmap(json["imgPath"]))
+        self.splitter.addWidget(self.imageLeft)
+        self.splitter.addWidget(self.imageRight)
+        
+        self.setLayout(layout)
+
+        
+    def setImageLeft(self, path):
+        self.imageLeft.setImage(path)
