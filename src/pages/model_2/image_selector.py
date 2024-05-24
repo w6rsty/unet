@@ -1,6 +1,7 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QSizePolicy
+from PyQt5.QtWidgets import QWidget, QVBoxLayout
 from PyQt5.QtCore import Qt
 from qfluentwidgets import FlowLayout, ImageLabel
+from typing import Callable
 
 import config as cfg
 
@@ -9,9 +10,12 @@ class ImageSelectorPanel(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        self.imageButtons = [ImageButton(cfg.PLACEHOLDER_IMAGE_PATH) for _ in range(5)]
+        self.imageButtons = []
+        for index, path in enumerate(cfg.DEMO_IMAGE_PATHS):
+            bt = ImageButton(index, path)
+            self.imageButtons.append(bt)
         
-        self.addButton = ImageButton(cfg.ADD_ICON_PATH)
+        self.addButton = ImageButton(-1, cfg.ADD_ICON_PATH)
 
         self.initLayout()
 
@@ -19,8 +23,8 @@ class ImageSelectorPanel(QWidget):
         layout = FlowLayout(self, needAni = False)
         layout.setSpacing(20)
 
-        for imageButton in self.imageButtons:
-            layout.addWidget(imageButton)
+        for bt in self.imageButtons:
+            layout.addWidget(bt)
 
         layout.addWidget(self.addButton)
 
@@ -28,8 +32,10 @@ class ImageSelectorPanel(QWidget):
 
 
 class ImageButton(QWidget):
-    def __init__(self, imagePath, parent=None):
+    def __init__(self, id, imagePath, parent=None):
         super().__init__(parent)
+
+        self.id = id
 
         self.imageLabel = ImageLabel(imagePath)
         self.imageLabel.setFixedSize(200, 180)
@@ -42,6 +48,3 @@ class ImageButton(QWidget):
         layout.addWidget(self.imageLabel)
 
         self.setLayout(layout)
-        
-
-        

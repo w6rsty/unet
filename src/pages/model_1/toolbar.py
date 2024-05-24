@@ -52,4 +52,4 @@ class IconTextButton(QToolButton):
         return width
     
     def setCallBack(self, callback: Callable[[], None]):
-        self.mousePressEvent = lambda: callback();
+        self.mousePressEvent = lambda: callback()
