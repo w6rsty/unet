@@ -1,6 +1,8 @@
 from PyQt5.QtCore import Qt
 from qfluentwidgets import HeaderCardWidget, HorizontalFlipView
 
+import config as cfg
+
 class GalleryCard(HeaderCardWidget):
     """ Gallery card """
 
@@ -9,10 +11,7 @@ class GalleryCard(HeaderCardWidget):
         self.setTitle('屏幕截图')
 
         self.flipView = HorizontalFlipView(self)
-        self.flipView.addImages([
-            'img/1212.jpg', 'img/11111.jpg', 'img/ceshi.jpg',
-            'img/ceshi1.jpg',
-        ])
+        self.flipView.addImages(cfg.DEMO_IMAGE_PATHS)
         
         self.flipView.setBorderRadius(8)
         self.flipView.setSpacing(10)

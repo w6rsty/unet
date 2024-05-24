@@ -35,8 +35,6 @@ from unet import Unet
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtWidgets import QMainWindow, QSplitter
 from PyQt5 import QtCore, QtGui, QtWidgets
-import asyncio
-
 
 initial_image = None
 img_2c = None
@@ -49,7 +47,7 @@ unet_instance = Unet(model_path=model_path, num_classes=num_classes, input_shape
 
 # 创建Unet实例，替换为您的模型路径和参数
 model_path = 'logs4/best_epoch_weights.pth'
-num_classes
+num_classes = 2
 unet_instance1 = Unet(model_path=model_path, num_classes=num_classes, input_shape=[1024, 1024], cuda=False)
  #全局变量，当前展示在两个主Label的jsonId,初始化为1
 global jsonId 
@@ -76,6 +74,8 @@ class UI_Form(object):
         sizePolicy.setHeightForWidth(Form.sizePolicy().hasHeightForWidth())
         Form.setSizePolicy(sizePolicy)
         super().__init__()
+
+        
         self.circle1 = None
         self.click_point = None
         self.radius = None
@@ -111,6 +111,9 @@ class UI_Form(object):
         self.img_3c_view1 = None
         self.img_3c_view2 = None
         self.mode = "draw"  # 当前模式，默认为绘制模式
+
+
+        
         Form.setStyleSheet("QLabel\n"
 "{\n"
 "background-color: rgb(221, 221, 221);\n"
@@ -601,7 +604,9 @@ class UI_Form(object):
         self.ToolButton_2.clicked.connect(self.openImage) #选择图片功能
         self.ToolButton_11.clicked.connect(self.draw)
         
-        self.toolButton.clicked.connect(self.addImage) #为添加影像增加槽函数
+        # self.toolButton.clicked.connect(self.addImage) #为添加影像增加槽函数
+
+        self.toolButton.mousePressEvent = self.addImage
         self.BodyLabel_6.mousePressEvent = self.showPatientInfo1
         self.BodyLabel_7.mousePressEvent = self.showPatientInfo2
         self.BodyLabel_3.mousePressEvent = self.showPatientInfo3
