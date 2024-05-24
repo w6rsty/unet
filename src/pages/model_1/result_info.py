@@ -3,9 +3,9 @@ from PyQt5.QtCore import Qt
 from qfluentwidgets import BodyLabel
 
 class ResultInfoPanel(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, jsonLibrary,parent=None):
         super().__init__(parent)
-        
+        self.jsonlibrary = jsonLibrary
         self.titleBar = BodyLabel('Result Info')
         self.titleBar.setStyleSheet("\n"
 "QLabel\n"
