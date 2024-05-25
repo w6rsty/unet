@@ -10,7 +10,7 @@ import config as cfg
 from ..index.view import IndexView
 from ..model_1.view import Model1View
 from ..model_2.view import Model2View
-# from ..model_2.new_tangwang import Ui_Form
+from ..model_2.new_tangwang import Ui_Form
 
 
 
@@ -39,10 +39,10 @@ class MainWindow(FluentWindow):
         self.indexInterface = IndexView(self)
         self.model1Interface = Model1View(self)
         
-        # self.Form = QtWidgets.QWidget()
-        # ui = Ui_Form()
-        # ui.setupUi(self.Form)
+        self.Form = QtWidgets.QWidget()
+        ui = Ui_Form()
+        ui.setupUi(self.Form)
 
         self.addSubInterface(self.indexInterface, FIF.HOME, '主页')
         self.addSubInterface(self.model1Interface, FIF.ALBUM, '模型1')
-        # self.addSubInterface(self.Form, FIF.VIDEO, '模型2')
+        self.addSubInterface(self.Form, FIF.VIDEO, '模型2')
