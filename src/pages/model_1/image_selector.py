@@ -7,29 +7,39 @@ import os
 import config as cfg
 
 class ImageSelectorPanel(QWidget):
-    def __init__(self, manipulated, patient_info, result_info, dispatch, parent=None):
+    def __init__(self, manipulated, patient_info, result_info,gridlayout, dispatch, parent=None):
         super().__init__(parent)
     
         self.imageButtons = []
         for index, path in enumerate(cfg.DEMO_IMAGE_PATHS):
             bt = ImageButton(index, path, manipulated, patient_info, result_info)
             self.imageButtons.append(bt)
-
+            
         self.addButton = ImageButton(-1, cfg.ADD_ICON_PATH)
         self.addButton.setCallBack(dispatch.imagePanel.loadImage)
         
-        self.initLayout()
+        
+        gridlayout.addWidget(self.imageButtons[0],0,0)
+        gridlayout.addWidget(self.imageButtons[1],0,1)
+        gridlayout.addWidget(self.imageButtons[2],0,2)
+        gridlayout.addWidget(self.imageButtons[3],1,0)
+        gridlayout.addWidget(self.imageButtons[4],1,1)
+        gridlayout.addWidget(self.addButton,1,2)
+        
+    #     self.initLayout()
 
-    def initLayout(self):
-        layout = FlowLayout(self, needAni = False)
-        layout.setSpacing(20)
+    # def initLayout(self):
+    #     layout = FlowLayout(self, needAni = False)
+    #     layout.setSpacing(20)
 
-        for bt in self.imageButtons:
-            layout.addWidget(bt)
+    #     for bt in self.imageButtons:
+    #         layout.addWidget(bt)
 
-        layout.addWidget(self.addButton)
+    #     layout.addWidget(self.addButton)
 
-        self.setLayout(layout)
+    #     self.setLayout(layout)
+        
+    
 
 
 class ImageButton(QToolButton):
@@ -40,7 +50,7 @@ class ImageButton(QToolButton):
 
         self.setIcon(QIcon(os.path.abspath(path)))
         self.setIconSize(QSize(200, 180))
-        self.initLayout()
+        # self.initLayout()
 
         self.manipulated = manipulated
         self.patient_info = patient_info

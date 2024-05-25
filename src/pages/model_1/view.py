@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QSizePolicy
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QSizePolicy,QFrame,QGridLayout
 import json
 import os
 
@@ -39,11 +39,17 @@ class Model1View(QWidget):
         self.hInfoPanels = QHBoxLayout()
         self.patientInfoPanel = PatientInfoPanel(self.jsonLibrary)
         self.resultInfoPanel = ResultInfoPanel(self.jsonLibrary)
-        self.imageSelector = ImageSelectorPanel(self.imagePanel, self.patientInfoPanel, self.resultInfoPanel, self)
+        
+        # 五张小图+添加影像
+        self.gridFrame = QFrame()
+        self.gridlayout = QGridLayout(self.gridFrame)
+        self.imageSelector = ImageSelectorPanel(self.imagePanel, self.patientInfoPanel, self.resultInfoPanel,self.gridlayout,self)
 
         # 工具栏
         self.toolbar = Toolbar(self.model, self)
         self.toolbar.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed))
+        
+        
 
         self.initLayout()
 
@@ -54,12 +60,24 @@ class Model1View(QWidget):
         layout.addWidget(self.imagePanel, 3)
 
         self.hInfoPanels.setSpacing(10)
-        self.hInfoPanels.addWidget(self.imageSelector)
+        #self.hInfoPanels.addWidget(self.imageSelector)
+        self.hInfoPanels.addWidget(self.gridFrame)
         self.hInfoPanels.addWidget(self.patientInfoPanel)
         self.hInfoPanels.addWidget(self.resultInfoPanel)
+
         layout.addLayout(self.hInfoPanels, 1)
 
         self.setLayout(layout)
+        
+    def setupUi(self, Form):
+        Form.setObjectName("Form")
+        Form.resize(1589, 639)
+        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(1)
+        sizePolicy.setHeightForWidth(Form.sizePolicy().hasHeightForWidth())
+        Form.setSizePolicy(sizePolicy)
+        super().__init__()
 
 class JsonLibrary:
     

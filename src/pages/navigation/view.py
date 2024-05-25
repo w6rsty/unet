@@ -15,6 +15,12 @@ from ..model_1.view import Model1View
 class MainWindow(FluentWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
+        
+        self.setFixedSize(1920, 1080)
+        
+        # currentGeometry = self.geometry()  # 获取当前窗口的几何信息
+        # print(currentGeometry.width())
+        # print(currentGeometry.height())
         self.setWindowIcon(QIcon(cfg.WINDOW_ICON_PATH))
 
         self.initSplashScreen()
