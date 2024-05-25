@@ -342,9 +342,6 @@ class ImageManipulatePanel(QWidget):
             else:
                 if self.mode == OperationMode.MANUAL_ADD and self.drawing:
 
-                    # try:
-                    # print(self.points)
-
                     current_point = ev.scenePos()
                     if len(self.points) > 0:
                         # 使用QPainter进行绘制
@@ -363,16 +360,7 @@ class ImageManipulatePanel(QWidget):
 
                         self.points.append(current_point)
 
-                        # self.bg_img.setPos(0, 0)
-
-
-                # except Exception as e:
-                #     print(e)
-
                 elif self.mode ==  OperationMode.MANUAL_DELETE and self.deleteing:
-
-                    # try:
-                    # print(self.points)
 
                     current_point = ev.scenePos()
                     if len(self.points) > 0:
@@ -452,8 +440,6 @@ class ImageManipulatePanel(QWidget):
             ymax = int(max(self.start_pos[1], ev.scenePos().y()))
 
             region_to_restore = self.initial_image[ymin:ymax, xmin:xmax]
-
-            # time.sleep(1)
 
             self.img_3c[ymin:ymax, xmin:xmax] = region_to_restore
             self.update_image()
@@ -712,8 +698,6 @@ class ImageManipulatePanel(QWidget):
             points_array = np.array(
                 [(point.x(), point.y()) for point in self.points], dtype=np.int32
             )
-            # for point in self.points:
-            #     print(self.img_3c[int(point.x()), int(point.y())])
 
             cv2.fillPoly(self.mask, [points_array], (128, 0, 0, 50))
 
@@ -747,3 +731,17 @@ class ImageManipulatePanel(QWidget):
             result = cv2.add(img_bg, img_fg)
             self.img_3c = result
             self.update_image()
+            
+    def resize_image(self, img, max_width, max_height):
+        img_height, img_width, _ = img.shape
+        if img_width > max_width or img_height > max_height:
+            scale_x = max_width / img_width
+            scale_y = max_height / img_height
+            scale = min(scale_x, scale_y)
+            new_width = int(img_width * scale)
+            new_height = int(img_height * scale)
+            img = Image.fromarray(img)
+            img = img.resize((new_width, new_height), Image.ANTIALIAS)
+            img = np.array(img)
+
+        return img
