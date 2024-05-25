@@ -9,7 +9,9 @@ PLACEHOLDER_IMAGE_PATH = 'assets/images/placeholder.jpg'
 # Paths:
 WINDOW_ICON_PATH = 'assets/icons/window_icon.svg'
 SPLASH_SCREEN_PATH = 'assets/images/paper.png'
-MODEL_DATA_PATH = 'logs4/best_epoch_weights.pth'
+
+SMALL_MODEL_PATH = 'logs3/best_epoch_weights.pth'
+LARGE_MODEL_PATH = 'logs4/best_epoch_weights.pth'
 
 # Texts:
 APP_NAME = '慧眼卫视'
@@ -30,19 +32,21 @@ BASIC_INFO_TEXT = '''慧眼卫视基于深度学习和智能优化算法等先�
 
 TOOL_BUTTON_INFOS = [
     ('加载图片', ASSERT_DIR + 'icons/加载图片.png'),
-    ('数据保存', ASSERT_DIR + 'icons/数据保存.png'),
-    ('撤销操作', ASSERT_DIR + 'icons/撤销操作.png'),
+    ('读取历史', ASSERT_DIR + 'icons/读取历史.png'),
     ('大图识别', ASSERT_DIR + 'icons/大图识别.png'),
     ('矩形增加', ASSERT_DIR + 'icons/矩形增加.png'),
     ('矩形删除', ASSERT_DIR + 'icons/矩形删除.png'),
-    ('矩形占比', ASSERT_DIR + 'icons/矩形占比.png'),
-    ('眼底分区', ASSERT_DIR + 'icons/眼底分区.png'),
     ('手动添加', ASSERT_DIR + 'icons/手动添加.png'),
     ('手动删除', ASSERT_DIR + 'icons/手动删除.png'),
     ('区域生长', ASSERT_DIR + 'icons/区域生长.png'),
-    ('读取历史', ASSERT_DIR + 'icons/读取历史.png'),
+    ('眼底分区', ASSERT_DIR + 'icons/眼底分区.png'),
+    ('矩形占比', ASSERT_DIR + 'icons/矩形占比.png'),
+    ('撤销操作', ASSERT_DIR + 'icons/撤销操作.png'),
+    ('数据保存', ASSERT_DIR + 'icons/数据保存.png'),
     ('掩膜保存', ASSERT_DIR + 'icons/掩模保存.png'),
 ]
+
+TOOL_BUTTON_NUM = len(TOOL_BUTTON_INFOS)
 
 TOOL_BUTTON_FONT_NAME = 'Microsoft YaHei'
 TOOL_BUTTON_FONT_SIZE = 12
@@ -56,3 +60,5 @@ DEMO_IMAGE_PATHS = [
     DEMO_IMAGE_DIR + 'demo_4.jpg',
     DEMO_IMAGE_DIR + 'demo_5.jpg',
 ]
+
+MASK_COLOR = [128, 0, 0, 50]

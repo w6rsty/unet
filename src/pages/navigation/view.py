@@ -13,6 +13,7 @@ from ..model_2.view import Model2View
 from ..model_2.new_tangwang import Ui_Form
 
 
+
 class MainWindow(FluentWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -23,7 +24,8 @@ class MainWindow(FluentWindow):
         self.initSubInterfaces()
         # Close splash screen after initialization
         self.splashScreen.finish(self)
-        
+
+
     def initSplashScreen(self):
         self.splashScreen = QSplashScreen(QPixmap(cfg.SPLASH_SCREEN_PATH), Qt.WindowStaysOnTopHint)
         self.splashScreen.show()
@@ -41,6 +43,6 @@ class MainWindow(FluentWindow):
         ui = Ui_Form()
         ui.setupUi(Form)
 
-        self.addSubInterface(self.model1Interface, FIF.ALBUM, '模型1')
         self.addSubInterface(self.indexInterface, FIF.HOME, '主页')
-        self.addSubInterface(Form, FIF.VIDEO, '模型2')
+        self.addSubInterface(self.model1Interface, FIF.ALBUM, '模型1')
+        self.addSubInterface(self.model2Interface, FIF.VIDEO, '模型2')

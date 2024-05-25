@@ -1,7 +1,6 @@
 import hashlib
 import sys
-import threading
-import wmi
+
 
 import cv2
 from PyQt5 import Qt, QtWidgets
@@ -24,7 +23,8 @@ import numpy as np
 from skimage import io
 import time
 from PIL import Image
-from unet import Unet
+# from unet import Unet
+from .model_1.unet import Unet
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtWidgets import QMainWindow, QSplitter
 
@@ -148,9 +148,7 @@ class Window(QWidget):
         splitter = QSplitter(Qt.Horizontal)
         splitter.addWidget(self.view1)
         splitter.addWidget(self.view2)
-        splitter.addWidget(self.view1)
-        splitter.addWidget(self.view2)
-        self.setCentralWidget(splitter)  # 设置QSplitter为主窗口的中央组件
+        # self.setCentralWidget(splitter)  # 设置QSplitter为主窗口的中央组件
 
         self.view = QGraphicsView()
         self.view.setRenderHint(QPainter.Antialiasing)
@@ -160,11 +158,6 @@ class Window(QWidget):
         self.view.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.view.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
 
-        pixmap = QPixmap(1024, 1024)
-
-        # vbox = QVBoxLayout(self)
-        # vbox.addWidget(self.view)
-        pixmap = QPixmap(1024, 1024)
 
         # vbox = QVBoxLayout(self)
         # vbox.addWidget(self.view)
@@ -189,24 +182,7 @@ class Window(QWidget):
         flood_button = MaterialButton("区域生长")
         sss_button = MaterialButton("读取历史")
         save2_button = MaterialButton("掩模保存")
-        load_button = MaterialButton("加载图片")
-        save_button = MaterialButton("数据保存")
-        undo_button = MaterialButton("撤销操作")
-        draw_button = MaterialButton("大图识别")
-        add_button = MaterialButton("矩形增加")
-        restore_button = MaterialButton("矩形删除")
-        difference_button = MaterialButton("矩形占比")
-        diff_button = MaterialButton("眼底分区")
-        edge_button = MaterialButton("手动添加")
-        delete_button = MaterialButton("手动删除")
-        flood_button = MaterialButton("区域生长")
-        sss_button = MaterialButton("读取历史")
-        save2_button = MaterialButton("掩模保存")
 
-        button_style = (
-            "background-color: #A9A9A9; color: white;"
-            "border-radius: 8px; padding: 12px 18px; font-size: 10px;"
-        )
 
         # 设置初始窗口状态为普通大小窗口，而不是全屏
         # 获取屏幕的大小和任务栏高度
@@ -257,109 +233,9 @@ class Window(QWidget):
         save2_button.clicked.connect(self.save_mask2)
         self.slider.valueChanged.connect(self.updatePenWidth)
 
-        toolbar = self.addToolBar("Tools")
-
-
-
-        # 添加按钮
-        toolbar.addWidget(load_button)
-        # 创建一个透明的小部件来模拟不可见的间隔
-        spacer_widget = QWidget()
-        spacer_widget.setFixedWidth(10)  # 设置小部件宽度，这里设为10像素，你可以根据需要调整
-        spacer_widget.setStyleSheet("background: transparent;")  # 设置背景透明
-        toolbar.addWidget(spacer_widget)
-
-        toolbar.addWidget(sss_button)
-        spacer_widget2 = QWidget()
-        spacer_widget2.setFixedWidth(10)  # 设置小部件宽度，这里设为10像素，你可以根据需要调整
-        spacer_widget2.setStyleSheet("background: transparent;")  # 设置背景透明
-        toolbar.addWidget(spacer_widget2)
-        toolbar.addWidget(draw_button)
-        spacer_widget5 = QWidget()
-        spacer_widget5.setFixedWidth(10)  # 设置小部件宽度，这里设为10像素，你可以根据需要调整
-        spacer_widget5.setStyleSheet("background: transparent;")  # 设置背景透明
-        toolbar.addWidget(spacer_widget5)
-        toolbar.addWidget(add_button)
-        spacer_widget9 = QWidget()
-        spacer_widget9.setFixedWidth(10)  # 设置小部件宽度，这里设为10像素，你可以根据需要调整
-        spacer_widget9.setStyleSheet("background: transparent;")  # 设置背景透明
-        toolbar.addWidget(spacer_widget9)
-        toolbar.addWidget(edge_button)
-        spacer_widget1 = QWidget()
-        spacer_widget1.setFixedWidth(10)  # 设置小部件宽度，这里设为10像素，你可以根据需要调整
-        spacer_widget1.setStyleSheet("background: transparent;")  # 设置背景透明
-        toolbar.addWidget(spacer_widget1)
-        toolbar.addWidget(restore_button)
-        spacer_widget4 = QWidget()
-        spacer_widget4.setFixedWidth(10)  # 设置小部件宽度，这里设为10像素，你可以根据需要调整
-        spacer_widget4.setStyleSheet("background: transparent;")  # 设置背景透明
-        toolbar.addWidget(spacer_widget4)
-        toolbar.addWidget(delete_button)
-        spacer_widget8 = QWidget()
-        spacer_widget8.setFixedWidth(10)  # 设置小部件宽度，这里设为10像素，你可以根据需要调整
-        spacer_widget8.setStyleSheet("background: transparent;")  # 设置背景透明
-        toolbar.addWidget(spacer_widget8)
-        toolbar.addWidget(flood_button)
-        spacer_widget9 = QWidget()
-        spacer_widget9.setFixedWidth(10)  # 设置小部件宽度，这里设为10像素，你可以根据需要调整
-        spacer_widget9.setStyleSheet("background: transparent;")  # 设置背景透明
-        toolbar.addWidget(spacer_widget9)
-        toolbar.addWidget(diff_button)
-        spacer_widget6 = QWidget()
-        spacer_widget6.setFixedWidth(10)  # 设置小部件宽度，这里设为10像素，你可以根据需要调整
-        spacer_widget6.setStyleSheet("background: transparent;")  # 设置背景透明
-        toolbar.addWidget(spacer_widget6)
-        toolbar.addWidget(difference_button)
-        # 创建一个透明的小部件来模拟不可见的间隔
-        spacer_widget12 = QWidget()
-        spacer_widget12.setFixedWidth(10)  # 设置小部件宽度，这里设为10像素，你可以根据需要调整
-        spacer_widget12.setStyleSheet("background: transparent;")  # 设置背景透明
-        toolbar.addWidget(spacer_widget12)
-        toolbar.addWidget(undo_button)
-        spacer_widget3 = QWidget()
-        spacer_widget3.setFixedWidth(10)  # 设置小部件宽度，这里设为10像素，你可以根据需要调整
-        spacer_widget3.setStyleSheet("background: transparent;")  # 设置背景透明
-        toolbar.addWidget(spacer_widget3)
-
-        toolbar.addWidget(save_button)
-        spacer_widget12 = QWidget()
-        spacer_widget12.setFixedWidth(10)  # 设置小部件宽度，这里设为10像素，你可以根据需要调整
-        spacer_widget12.setStyleSheet("background: transparent;")  # 设置背景透明
-        toolbar.addWidget(spacer_widget12)
-        toolbar.addWidget(save2_button)
-        spacer_widget12 = QWidget()
-        spacer_widget12.setFixedWidth(10)  # 设置小部件宽度，这里设为10像素，你可以根据需要调整
-        spacer_widget12.setStyleSheet("background: transparent;")  # 设置背景透明
-        toolbar.addWidget(spacer_widget12)
-        toolbar.addWidget(self.slider)
-
     def quit(self):
         QApplication.quit()
 
-    def encrypt_mac_address(self,mac_address):
-        sha256 = hashlib.sha256()
-        sha256.update(mac_address.encode())
-        encrypted_mac = sha256.hexdigest()
-        encrypted_mac = encrypted_mac.replace("a","w")
-        encrypted_mac = encrypted_mac.replace("b", "l")
-        encrypted_mac = encrypted_mac.replace("c", "a")
-        encrypted_mac = encrypted_mac.replace("d", "o")
-        encrypted_mac = encrypted_mac.replace("e", "y")
-        encrypted_mac = encrypted_mac.replace("f", "u")
-        encrypted_mac = encrypted_mac.replace("g", "n")
-        encrypted_mac = encrypted_mac.replace("h", "s")
-        encrypted_mac = encrypted_mac.replace("i", "0417")
-        encrypted_mac = encrypted_mac.replace("j", "0524")
-        encrypted_mac = encrypted_mac.replace("k", "b")
-        encrypted_mac = encrypted_mac.replace("l", "f")
-        encrypted_mac = encrypted_mac.replace("m", "e")
-        encrypted_mac = encrypted_mac.replace("n", "c")
-        encrypted_mac = encrypted_mac.replace("w", "accde")
-        encrypted_mac = encrypted_mac.replace("l", "bxcty")
-        encrypted_mac = encrypted_mac.replace("1", "sdlkajhgfjkhsdfj")
-        encrypted_mac = encrypted_mac.replace("2", "1l23e12qv")
-        encrypted_mac = encrypted_mac.replace("3", "fjduslahf214451asdfslaij")
-        return encrypted_mac
 
     def show_dialog(self):
         dialog = QDialog()
@@ -391,33 +267,6 @@ class Window(QWidget):
         dialog.exec_()
 
     def load_image(self):
-        # # 打开文件
-        # cfg_path = "cfg/cfg.txt"  # 将文件路径替换为您要读取的文件
-        # try:
-        #     with open(cfg_path, 'r', encoding='utf-8') as file:
-        #         # 读取文件内容
-        #         file_contents = file.read().replace("\n","")
-        #         c = wmi.WMI()
-        #         bio = ""
-        #         for bios_id in c.Win32_BIOS():
-        #             # print(bios_id.SerialNumber.strip())
-        #             bio += bios_id.SerialNumber.strip()
-        #         code = bio
-        #         mac_code = self.encrypt_mac_address(code)
-        #         if file_contents!=mac_code:
-        #             self.show_dialog()
-        #             return
-
-
-        # except FileNotFoundError:
-        #     print(f"文件 '{cfg_path}' 未找到.")
-        #     return
-        # except Exception as e:
-        #     print(f"发生错误: {str(e)}")
-        #     return
-
-
-
         file_path, _ = QFileDialog.getOpenFileName(
             self, "选择图片", ".", "Image Files (*.png *.jpg *.bmp)"
         )
@@ -460,8 +309,6 @@ class Window(QWidget):
         self.bg_img2 = self.scene2.addPixmap(pixmap)
         self.bg_img1.setPos(0, 0)
         self.bg_img2.setPos(0, 0)
-        self.view1.setScene(self.scene)  # 在第一个视图中显示图像
-        self.view2.setScene(self.scene2)  # 在第二个视图中显示相同的图像-
         self.view1.setScene(self.scene)  # 在第一个视图中显示图像
         self.view2.setScene(self.scene2)  # 在第二个视图中显示相同的图像-
 
@@ -953,6 +800,8 @@ class Window(QWidget):
                 # 保存二值灰度图像
                 result_image = Image.fromarray(output_image.astype('uint8'))
                 result_image.save(file_path)
+
+                
     def show_difference_percentage(self, xmin, xmax, ymin, ymax):
         region_to_compare = self.initial_image[ymin:ymax, xmin:xmax]
         region_to_render = self.img_3c[ymin:ymax, xmin:xmax]

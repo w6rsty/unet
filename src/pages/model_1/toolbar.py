@@ -5,19 +5,31 @@ from PyQt5.QtCore import Qt
 import config as cfg
 
 class Toolbar(QWidget):
-    def __init__(self, model, painter, parent=None):
+    def __init__(self, model, dispatch, parent=None):
         super().__init__(parent)
 
+        # 模型的引用
         self.model = model
-        self.painter = painter
 
         self.bts = []
-        
-        for index, info in enumerate(cfg.TOOL_BUTTON_INFOS):
+        for info in cfg.TOOL_BUTTON_INFOS:
             bt = IconTextButton(info[0], info[1])
             self.bts.append(bt)
 
-        self.bts[0].setCallBack(self.painter.load_image)
+        # 设置按钮的回调函数
+        self.bts[0].setCallBack(dispatch.loadImage)
+        self.bts[1].setCallBack(dispatch.readHistory)
+        self.bts[2].setCallBack(dispatch.globalRecognize)
+        self.bts[3].setCallBack(dispatch.addRect)
+        self.bts[4].setCallBack(dispatch.deleteRect)
+        self.bts[5].setCallBack(dispatch.manualAdd)
+        self.bts[6].setCallBack(dispatch.manualDelete)
+        self.bts[7].setCallBack(dispatch.regionGrow)
+        self.bts[8].setCallBack(dispatch.retinaSeg)
+        self.bts[9].setCallBack(dispatch.rectRatio)
+        self.bts[10].setCallBack(dispatch.undo)
+        self.bts[11].setCallBack(dispatch.saveData)
+        self.bts[12].setCallBack(dispatch.saveMask)
 
         self.initLayout()
 
@@ -45,9 +57,9 @@ class IconTextButton(QToolButton):
         self.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
         self.setAutoRaise(True)
 
-    # Overwrite the heightForWidth method to keep aspect ratio 1:1
-    def heightForWidth(self, width):
-        return width
+    # # Overwrite the heightForWidth method to keep aspect ratio 1:1
+    # def heightForWidth(self, width):
+    #     return width
     
     def setCallBack(self, callback):
         self.clicked.connect(callback)
