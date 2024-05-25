@@ -7,7 +7,7 @@ from qfluentwidgets import FluentWindow
 
 import config as cfg
 from ..index.view import IndexView
-from ..model_1.view import Model1View
+from ..wuguanzhu.view import WuguanzhuView
 # from ..model_2.new_tangwang import Ui_Form
 
 
@@ -35,7 +35,7 @@ class MainWindow(FluentWindow):
         
     def initSubInterfaces(self):
         self.indexInterface = IndexView(self)
-        self.model1Interface = Model1View(self)
+        self.model1Interface = WuguanzhuView(self)
         
         # self.Form = QtWidgets.QWidget()
         # ui = Ui_Form()

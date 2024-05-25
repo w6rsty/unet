@@ -4,7 +4,7 @@ from PyQt5.QtCore import Qt
 from skimage import io
 import numpy as np
 from PIL import Image
-from .unet import Unet
+from ..model.unet import Unet
 
 img_2c = None
 

@@ -1,4 +1,5 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QSizePolicy
+from PyQt5.QtCore import QSize
 import json
 import os
 
@@ -8,10 +9,10 @@ from .image_manipulate import ImageManipulatePanel
 from .image_selector import ImageSelectorPanel
 from .patient_info import PatientInfoPanel
 from .result_info import ResultInfoPanel
-from .model import Model
+from .model import WuguanzhuModel
 from .image_manipulate import OperationMode
 
-class Model1View(QWidget):
+class WuguanzhuView(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setObjectName('Model1View')
@@ -30,7 +31,7 @@ class Model1View(QWidget):
         self.currentOperationMode = OperationMode.NONE
 
         # 加载模型
-        self.model = Model()
+        self.model = WuguanzhuModel()
         ###############################################
         self.imagePanel = ImageManipulatePanel(self.jsonLibrary, self.model, self.currentOperationMode)
         self.imagePanel.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding))
@@ -38,7 +39,9 @@ class Model1View(QWidget):
         # 信息面板
         self.hInfoPanels = QHBoxLayout()
         self.patientInfoPanel = PatientInfoPanel(self.jsonLibrary)
+        self.patientInfoPanel.setFixedSize(QSize(600, 300))
         self.resultInfoPanel = ResultInfoPanel(self.jsonLibrary)
+        self.resultInfoPanel.setFixedSize(QSize(600, 300))
         self.imageSelector = ImageSelectorPanel(self.imagePanel, self.patientInfoPanel, self.resultInfoPanel, self)
 
         # 工具栏
