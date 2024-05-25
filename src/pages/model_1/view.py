@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QSizePolicy, QFileDialog
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QSizePolicy
 import json
 import os
 
@@ -33,16 +33,17 @@ class Model1View(QWidget):
         self.model = Model()
         ###############################################
         self.imagePanel = ImageManipulatePanel(self.jsonLibrary, self.model, self.currentOperationMode)
-        self.imagePanel.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum))
+        self.imagePanel.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding))
 
+        # 信息面板
         self.hInfoPanels = QHBoxLayout()
         self.patientInfoPanel = PatientInfoPanel(self.jsonLibrary)
         self.resultInfoPanel = ResultInfoPanel(self.jsonLibrary)
         self.imageSelector = ImageSelectorPanel(self.imagePanel, self.patientInfoPanel, self.resultInfoPanel, self)
 
-
+        # 工具栏
         self.toolbar = Toolbar(self.model, self)
-        self.toolbar.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding))
+        self.toolbar.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed))
 
         self.initLayout()
 

@@ -12,7 +12,6 @@ from torch import nn
 from .nets.unet import Unet as unet
 
 from ..utils.utils import cvtColor, preprocess_input, resize_image, show_config
-
 # --------------------------------------------#
 #   使用自己训练好的模型预测需要修改2个参数
 #   model_path和num_classes都需要修改！
