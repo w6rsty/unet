@@ -1358,7 +1358,7 @@ class Ui_Form(object):
         # 构建预测命令
         # command = f'python E:/糖网/11/11/1.py --eval --image_path={image_path}'
         # command = f'python E:/糖网/11/11/1.py --eval --image_path={image_path}'
-        command = f'python 11/1.py --eval --image_path={image_path}'
+        command = f'python E:/pythonProject/unet/src/pages/model_2/1.py --eval --image_path={image_path}'
         print('Command:', command)  # 打印检查命令是否正确
         result = subprocess.getoutput(command)
         print(result)
