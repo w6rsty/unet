@@ -17,7 +17,7 @@ class ImageSelectorPanel(QWidget):
             self.imageButtons.append(bt)
 
         self.addButton = ImageButton(-1, cfg.ADD_ICON_PATH)
-        self.addButton.setCallBack(dispatch.loadImage)
+        self.addButton.setCallBack(dispatch.imagePanel.loadImage)
         
         self.initLayout()
 
