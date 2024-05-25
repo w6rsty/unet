@@ -602,7 +602,7 @@ class UI_Form(object):
         
         # zjy优化
         self.ToolButton_2.clicked.connect(self.openImage) #选择图片功能
-        self.ToolButton_11.clicked.connect(self.draw)
+        #self.ToolButton_11.clicked.connect(self.draw)
         
         # self.toolButton.clicked.connect(self.addImage) #为添加影像增加槽函数
 
@@ -729,8 +729,9 @@ class UI_Form(object):
         if filePath:
             
             self.loadImage(filePath)
-    def draw(self):
-        pass
+            
+    # def draw(self):
+    #     pass
     
     
     #添加影响，只修改当前展示的图片

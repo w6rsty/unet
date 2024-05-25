@@ -60,6 +60,17 @@ class Model1View(QWidget):
         layout.addLayout(self.hInfoPanels, 1)
 
         self.setLayout(layout)
+    
+    #数据保存
+    def save_mask(self):
+        if hasattr(self, "initial_image"):
+            file_path, _ = QFileDialog.getSaveFileName(
+                self, "保存结果图像", ".", "PNG Files (*.png)"
+            )
+
+            if file_path:
+                result_image = Image.fromarray(self.img_3c.astype('uint8'))
+                result_image.save(file_path)
 
     # 加载图片
     def loadImage(self):
@@ -135,6 +146,7 @@ class Model1View(QWidget):
 
 
 class JsonLibrary:
+    
     def __init__(self, dir_path):
         self.dir = dir_path
         self.lib = []

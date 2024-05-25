@@ -1,6 +1,7 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import  QSplashScreen
 from PyQt5.QtGui import QIcon, QPixmap
+from PyQt5 import QtWidgets
 
 from qfluentwidgets import FluentIcon as FIF
 from qfluentwidgets import FluentWindow
@@ -9,6 +10,8 @@ import config as cfg
 from ..index.view import IndexView
 from ..model_1.view import Model1View
 from ..model_2.view import Model2View
+from ..model_2.new_tangwang import Ui_Form
+
 
 
 class MainWindow(FluentWindow):
@@ -35,7 +38,10 @@ class MainWindow(FluentWindow):
     def initSubInterfaces(self):
         self.indexInterface = IndexView(self)
         self.model1Interface = Model1View(self)
-        self.model2Interface = Model2View(self)
+        
+        Form = QtWidgets.QWidget()
+        ui = Ui_Form()
+        ui.setupUi(Form)
 
         self.addSubInterface(self.indexInterface, FIF.HOME, '主页')
         self.addSubInterface(self.model1Interface, FIF.ALBUM, '模型1')

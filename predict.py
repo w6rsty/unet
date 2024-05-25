@@ -148,6 +148,8 @@ class Window(QWidget):
         splitter = QSplitter(Qt.Horizontal)
         splitter.addWidget(self.view1)
         splitter.addWidget(self.view2)
+        splitter.addWidget(self.view1)
+        splitter.addWidget(self.view2)
         self.setCentralWidget(splitter)  # 设置QSplitter为主窗口的中央组件
 
         self.view = QGraphicsView()
@@ -162,6 +164,10 @@ class Window(QWidget):
 
         # vbox = QVBoxLayout(self)
         # vbox.addWidget(self.view)
+        pixmap = QPixmap(1024, 1024)
+
+        # vbox = QVBoxLayout(self)
+        # vbox.addWidget(self.view)
         self.slider = QSlider(Qt.Horizontal)
         self.slider.setMinimum(1)
         self.slider.setMaximum(10)
@@ -170,6 +176,19 @@ class Window(QWidget):
         self.pen = QPen(QColor(0, 255, 0))
         self.pen.setWidth(self.slider.value())
 
+        load_button = MaterialButton("加载图片")
+        save_button = MaterialButton("数据保存")
+        undo_button = MaterialButton("撤销操作")
+        draw_button = MaterialButton("大图识别")
+        add_button = MaterialButton("矩形增加")
+        restore_button = MaterialButton("矩形删除")
+        difference_button = MaterialButton("矩形占比")
+        diff_button = MaterialButton("眼底分区")
+        edge_button = MaterialButton("手动添加")
+        delete_button = MaterialButton("手动删除")
+        flood_button = MaterialButton("区域生长")
+        sss_button = MaterialButton("读取历史")
+        save2_button = MaterialButton("掩模保存")
         load_button = MaterialButton("加载图片")
         save_button = MaterialButton("数据保存")
         undo_button = MaterialButton("撤销操作")
@@ -441,6 +460,8 @@ class Window(QWidget):
         self.bg_img2 = self.scene2.addPixmap(pixmap)
         self.bg_img1.setPos(0, 0)
         self.bg_img2.setPos(0, 0)
+        self.view1.setScene(self.scene)  # 在第一个视图中显示图像
+        self.view2.setScene(self.scene2)  # 在第二个视图中显示相同的图像-
         self.view1.setScene(self.scene)  # 在第一个视图中显示图像
         self.view2.setScene(self.scene2)  # 在第二个视图中显示相同的图像-
 
