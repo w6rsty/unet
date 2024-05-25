@@ -1,8 +1,7 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QToolButton
 from PyQt5.QtCore import QSize,Qt
 from PyQt5.QtGui import QIcon
-from qfluentwidgets import FlowLayout, ImageLabel
-from typing import Callable
+from qfluentwidgets import FlowLayout
 
 import os 
 import config as cfg

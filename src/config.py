@@ -60,5 +60,3 @@ DEMO_IMAGE_PATHS = [
     DEMO_IMAGE_DIR + 'demo_4.jpg',
     DEMO_IMAGE_DIR + 'demo_5.jpg',
 ]
-
-MASK_COLOR = [128, 0, 0, 50]

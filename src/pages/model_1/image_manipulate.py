@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QHBoxLayout, QSplitter, QGraphicsView, QGraphicsScene, QSizePolicy, QGraphicsEllipseItem, QMessageBox, QFileDialog
+from PyQt5.QtWidgets import QWidget, QHBoxLayout, QSplitter, QGraphicsView, QGraphicsScene, QGraphicsEllipseItem, QMessageBox, QFileDialog
 from PyQt5.QtGui import QPixmap, QImage, QColor, QPen, QBrush, QPainter
 from PyQt5.QtCore import Qt
 from skimage import io
@@ -592,6 +592,12 @@ class ImageManipulatePanel(QWidget):
         message_box.setWindowTitle("信息消息框")
         message_box.show()
 
+
+    ###########################################
+    # 按钮函数
+    ###########################################
+    # 不设置模式的函数，先将模式设置为NONE
+
     # 加载图片
     def loadImage(self):
         path = QFileDialog.getOpenFileName(self, '选择图片', './', 'Images(*.png *.jpg *.jpeg *.bmp *.gif)')[0]
@@ -608,6 +614,7 @@ class ImageManipulatePanel(QWidget):
 
     # 大图识别(识别整个图片， 使用log4)
     def globalRecognize(self):
+        self.mode = OperationMode.NONE
         print("大图识别")
         pass
     
