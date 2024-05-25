@@ -687,7 +687,7 @@ class UI_Form(object):
         listpatientInfo = "\n".join(jsonData['patientInfo'])      
         self.BodyLabel_10.setText(listpatientInfo)
         #分析结果对应的框为TextEdit
-        listAnalysisResult = "\n".join(jsonData['AnalysisResult'])  
+        listAnalysisResult = "\n".join(jsonData['analysisResult'])  
         self.TextEdit.setText(listAnalysisResult)    
         
     def loadImage(self, filePath):
