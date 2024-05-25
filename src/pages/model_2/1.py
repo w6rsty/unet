@@ -143,7 +143,7 @@ def get_args_parser():
     parser.add_argument('--device', default='cuda',
                         help='device to use for training / testing')
     parser.add_argument('--seed', default=0, type=int)
-    parser.add_argument('--resume', default='E:/糖网/11/11/finetune_IDRiD/checkpoint-best.pth',
+    parser.add_argument('--resume', default="E:/pythonProject/unet/src/pages/model_2/finetune_IDRiD",
                         help='resume from checkpoint')
 
     parser.add_argument('--start_epoch', default=0, type=int, metavar='N',
@@ -187,12 +187,12 @@ def main(args):
         global_pool=args.global_pool,
     )
 
-    model.to(device)
+    # model.to(device)
     
-    # if torch.cuda.is_available():
-    #    device = torch.device('cuda')
-    # else:
-    #    device = torch.device('cpu')
+    if torch.cuda.is_available():
+       device = torch.device('cuda')
+    else:
+       device = torch.device('cpu')
 
     model = model.to(device)
 
