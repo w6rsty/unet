@@ -341,7 +341,7 @@ class Window(QWidget):
         x, y = ev.scenePos().x(), ev.scenePos().y()
 
         try:
-            if self.mode == "draw":
+            if self.mode == "draw":  # 大图识别
                 # 处理绘制逻辑
                 self.is_mouse_down = True
                 self.start_pos = ev.scenePos().x(), ev.scenePos().y()
@@ -356,7 +356,7 @@ class Window(QWidget):
                 self.coordinate_history.append((x, y))
                 self.history.append(np.copy(self.img_3c))
                 self.last_click_pos = (x, y)
-            if self.mode == "add":
+            if self.mode == "add": # 矩形增加
                 # 处理绘制逻辑
                 self.is_mouse_down = True
                 self.start_pos = ev.scenePos().x(), ev.scenePos().y()
@@ -371,7 +371,7 @@ class Window(QWidget):
                 self.coordinate_history.append((x, y))
                 self.history.append(np.copy(self.img_3c))
                 self.last_click_pos = (x, y)
-            elif self.mode == "difference":
+            elif self.mode == "difference":   # 矩形占比
                 # 处理差异模式逻辑
                 self.is_mouse_down = True
                 self.start_pos = ev.scenePos().x(), ev.scenePos().y()
@@ -385,7 +385,7 @@ class Window(QWidget):
                 )
                 self.coordinate_history.append((x, y))
                 self.history.append(np.copy(self.img_3c))
-            elif self.mode == "restore":
+            elif self.mode == "restore": # 矩形删除
                 # 处理恢复模式逻辑
                 self.is_mouse_down = True
                 self.start_pos = ev.scenePos().x(), ev.scenePos().y()
@@ -398,25 +398,25 @@ class Window(QWidget):
                     brush=QBrush(QColor("green")),
                 )
                 self.restore_state = np.copy(self.img_3c)
-            elif self.mode == "describe":
+            elif self.mode == "describe": # 手动添加
                 self.is_mouse_down = True
                 self.drawing = True
                 self.points = [ev.scenePos()]
                 self.tag = 0
                 self.history.append(np.copy(self.img_3c))
-            elif self.mode == "delete":
+            elif self.mode == "delete": # 手动删除
                 self.is_mouse_down = True
                 self.deleteing = True
                 self.points = [ev.scenePos()]
                 self.tag = 0
                 self.history.append(np.copy(self.img_3c))
-            elif self.mode == "flood":
+            elif self.mode == "flood": # 区域生长
                 self.is_mouse_down = True
                 self.history.append(np.copy(self.img_3c))
                 self.flooding = True
                 self.pa = ev.scenePos()
 
-            elif self.mode == "diff":
+            elif self.mode == "diff": # 眼底分区
                 self.is_mouse_down = True
                 self.start_pos = ev.scenePos()
                 self.click_point = QGraphicsEllipseItem(
@@ -429,7 +429,7 @@ class Window(QWidget):
                 self.click_point.setBrush(QBrush(QColor("yellow")))
                 self.scene.addItem(self.click_point)
 
-            elif self.mode == "diff1":
+            elif self.mode == "diff1": 
                 self.end_pos = ev.scenePos()  # 记录第二个点击的点
                 self.radius = ((self.end_pos.x() - self.start_pos.x()) ** 2 + (
                         self.end_pos.y() - self.start_pos.y()) ** 2) ** 0.5  # 计算圆的半径
@@ -453,7 +453,7 @@ class Window(QWidget):
                 ymin = int(min(y, sy))
                 ymax = int(max(y, sy))
 
-                if self.mode == "draw":
+                if self.mode == "draw": # 大图识别
                     self.rect = self.scene.addRect(
                         xmin, ymin, xmax - xmin, ymax - ymin, pen=QPen(QColor("red"))
                     )
@@ -537,7 +537,7 @@ class Window(QWidget):
 
     def mouse_release(self, ev):
         self.is_mouse_down = False
-        if self.mode == "draw":
+        if self.mode == "draw": # 大图识别
             color = colors[self.color_idx]
             self.mask_c[int(min(self.start_pos[1], ev.scenePos().y())):int(max(self.start_pos[1], ev.scenePos().y())),
             int(min(self.start_pos[0], ev.scenePos().x())):int(max(self.start_pos[0], ev.scenePos().x()))] = color
@@ -551,13 +551,7 @@ class Window(QWidget):
             ymax = int(max(self.start_pos[1], ev.scenePos().y()))
 
             region_to_render_white = self.initial_image[ymin:ymax, xmin:xmax]
-            # message_box = QMessageBox()
-            # message_box.setIcon(QMessageBox.Information)
-            # message_box.setText("正在识别")
-            # message_box.setWindowTitle("信息消息框")
-            # message_box.exec_()
-            # timer = QTimer()
-            # timer.timeout.connect(message_box.accept)
+
             if region_to_render_white.shape[0] > 600 and region_to_render_white.shape[1] > 600:
                 print(region_to_render_white.shape)
 
@@ -578,13 +572,8 @@ class Window(QWidget):
                 image_array = np.array(segmented_image)
                 self.img_3c[ymin:ymax, xmin:xmax] = image_array
             self.update_image()
-            # message_box = QMessageBox()
-            # message_box.setIcon(QMessageBox.Information)
-            # message_box.setText("识别完成")
-            # message_box.setWindowTitle("信息消息框")
-            # message_box.exec_()
 
-        if self.mode == "difference":
+        if self.mode == "difference": # 矩形占比
             xmin = int(min(self.start_pos[0], ev.scenePos().x()))
             xmax = int(max(self.start_pos[0], ev.scenePos().x()))
             ymin = int(min(self.start_pos[1], ev.scenePos().y()))
@@ -592,7 +581,7 @@ class Window(QWidget):
             self.show_difference_percentage(xmin, xmax, ymin, ymax)
 
 
-        elif self.mode == "restore":
+        elif self.mode == "restore": # 矩形删除
             xmin = int(min(self.start_pos[0], ev.scenePos().x()))
             xmax = int(max(self.start_pos[0], ev.scenePos().x()))
             ymin = int(min(self.start_pos[1], ev.scenePos().y()))

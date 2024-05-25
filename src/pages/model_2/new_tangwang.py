@@ -35,8 +35,6 @@ from functools import partial
 
 from PyQt5.QtCore import QUrl
 from PyQt5.QtGui import QDesktopServices
-from docx import Document
-from docx.shared import Inches
 import os
 from PyQt5 import QtCore, QtGui, QtWidgets
 

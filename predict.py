@@ -462,8 +462,6 @@ class Window(QWidget):
         self.bg_img2.setPos(0, 0)
         self.view1.setScene(self.scene)  # 在第一个视图中显示图像
         self.view2.setScene(self.scene2)  # 在第二个视图中显示相同的图像-
-        self.view1.setScene(self.scene)  # 在第一个视图中显示图像
-        self.view2.setScene(self.scene2)  # 在第二个视图中显示相同的图像-
 
         self.scene.mousePressEvent = self.mouse_press
         self.scene.mouseMoveEvent = self.mouse_move
