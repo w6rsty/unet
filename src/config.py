@@ -60,3 +60,5 @@ DEMO_IMAGE_PATHS = [
     DEMO_IMAGE_DIR + 'demo_4.jpg',
     DEMO_IMAGE_DIR + 'demo_5.jpg',
 ]
+
+TANGWANG_MODEL_PATH = 'assets/models/RETFound_cfp_weights.pth'
