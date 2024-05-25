@@ -4,25 +4,22 @@ import datetime
 from datetime import datetime
 from PIL import Image
 # 在 ImageViewer 类中添加信号
-import os
-
-import sys
-import time
-from shutil import copyfile
 from PyQt5.QtCore import pyqtSignal
+import os
+import time
+
+from shutil import copyfile
 from PyQt5.QtGui import QPainter, QPixmap, QPen, QColor, QBrush, QPainterPath, QFont, QIcon
 from PyQt5.QtCore import Qt, QRectF, QPointF, QTimer
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QFrame, QGraphicsView, QGraphicsScene, \
-    QGraphicsPixmapItem, QFileDialog, QTextEdit
+from PyQt5.QtWidgets import  QFrame, QGraphicsView, QGraphicsScene, QGraphicsPixmapItem, QFileDialog, QTextEdit
 from PyQt5.QtGui import QPixmap, QPainter
 from PyQt5.QtCore import Qt
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt, QRectF, QPointF, QLineF
-from functools import partial
-
+import sys
 from PyQt5.QtCore import QUrl
 from PyQt5.QtGui import QDesktopServices
-
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 # 全局变量
 image_files = []
@@ -430,7 +427,7 @@ class Ui_Form(object):
         self.ToolButton_5.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
         self.ToolButton_5.setAutoRaise(True)
         self.ToolButton_5.setObjectName("ToolButton_5")
-        self.horizontalLayout_5.addWidget(self.ToolButton_5)
+        # self.horizontalLayout_5.addWidget(self.ToolButton_5)
         self.toolButton_4 = QtWidgets.QToolButton(Form)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -444,7 +441,7 @@ class Ui_Form(object):
         self.toolButton_4.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
         self.toolButton_4.setAutoRaise(True)
         self.toolButton_4.setObjectName("toolButton_4")
-        self.horizontalLayout_5.addWidget(self.toolButton_4)
+        # self.horizontalLayout_5.addWidget(self.toolButton_4)
         self.ToolButton_8 = QtWidgets.QToolButton(Form)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -458,7 +455,7 @@ class Ui_Form(object):
         self.ToolButton_8.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
         self.ToolButton_8.setAutoRaise(True)
         self.ToolButton_8.setObjectName("ToolButton_8")
-        self.horizontalLayout_5.addWidget(self.ToolButton_8)
+        # self.horizontalLayout_5.addWidget(self.ToolButton_8)
         self.toolButton = QtWidgets.QToolButton(Form)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -813,9 +810,8 @@ class Ui_Form(object):
         #     partial(self.replace_images, r"C:\Users\cyq\Desktop\new\数码宝贝.docx",
         #             r"C:\Users\cyq\Desktop\new\photos\曾东华0 OS_006.jpg",
         #             r'C:\Users\cyq\Desktop\new\报告单文件夹'))
-        self.PrimaryPushButton.clicked.connect(
-            partial(self.replace_images, r"src\pages\model_2\诊断报告模板.docx",
-                    r'报告单文件夹'))
+        
+        # self.PrimaryPushButton.clicked.connect(partial(self.replace_images, r"src\pages\model_2\诊断报告模板.docx", r'报告单文件夹'))
         self.BodyLabel_4.mousePressEvent = self.on_label1_clicked  # 设置点击事件处理函数（预览的第一张图片）
         self.BodyLabel_5.mousePressEvent = self.on_label2_clicked  # 设置点击事件处理函数（预览的第二张图片）
         self.BodyLabel_3.mousePressEvent = self.on_label3_clicked  # 设置点击事件处理函数（预览的第一张图片）
@@ -870,7 +866,7 @@ class Ui_Form(object):
 
     def file_openFolder(self):  # 用来查看历史报告
         # folder_path = r'C:\Users\cyq\Desktop\new\报告单文件夹'
-        folder_path = r'报告单文件夹'
+        folder_path = r"assets\报告单文件夹"
         os.startfile(folder_path)
 
     # def file_openFolder(self):  # 用来查看历史报告/暂时被我改成了动态条形图
@@ -881,7 +877,7 @@ class Ui_Form(object):
 
     def images_openFolder(self):  # 用来查看历史图片
         # folder_path = r'C:\Users\cyq\Desktop\new\photos'
-        folder_path = r'src\pages\model_2\xueguan_pre_photos'
+        folder_path = "assets\save"
         os.startfile(folder_path)
 
     def zoom_in_image(self):
@@ -939,7 +935,7 @@ class Ui_Form(object):
     def save0_image(self):  # 用于保存的函数
 
         # target0_folder = r'C:\Users\cyq\Desktop\new\用于保存'
-        target0_folder = r"src\pages\model_2\save"
+        target0_folder = r"assets\save"
         photo_filename0 = os.path.basename(picture)
         # 构建目标文件路径
         target_file_path = os.path.join(target0_folder, photo_filename0)
@@ -965,8 +961,7 @@ class Ui_Form(object):
     def pre_showImage(self):  # 这是用来预览部分显示的函数
         global dir
         # 显示指定文件夹的图片：前5张图片
-        # dir = r"C:\Users\cyq\Desktop\new\photos"
-        dir = r'assets\images\xueguan'
+        dir = r"assets/images/xueguan"
         # 获取文件夹中的所有文件
         global files
         files = os.listdir(dir)
@@ -1101,7 +1096,7 @@ class Ui_Form(object):
                     if 'time' in run1.text:
                         run1.text = run1.text.replace('time', current_date)
 
-        output_folder = file_path  # 替换为你的目标文件夹路径
+        output_folder = "assets\糖尿病视网膜检测报告"  # 替换为你的目标文件夹路径
         new_doc_path = os.path.join(output_folder,
                                     os.path.splitext(os.path.basename(new_image_path))[0] + "_modified.docx")
         print(os.path.splitext(os.path.basename(doc_path))[0])
@@ -1339,36 +1334,35 @@ class Ui_Form(object):
         global picture
         image_path = picture  # 保存路径需要根据你的实际需求修改
         print(image_path)
-        # # 构建预测命令
-        # # command = f'python E:/糖网/11/11/1.py --eval --image_path={image_path}'
-        # # command = f'python E:/糖网/11/11/1.py --eval --image_path={image_path}'
-        # command = f'python E:/pythonProject/unet/src/pages/model_2/1.py --eval --image_path={image_path}'
+        # 构建预测命令
+        # command = f'python E:/糖网/11/11/1.py --eval --image_path={image_path}'
+        # command = f'python E:/糖网/11/11/1.py --eval --image_path={image_path}'
+        command = f'python src/pages/model_2/1.py --eval --image_path={image_path}'
+        print('Command:', command)  # 打印检查命令是否正确
+        result = subprocess.getoutput(command)
+        print(result)
+        print('json ok')
+        # command = f'python E:/糖网/11/11/1.py --eval --image_path={picture}'
         # print('Command:', command)  # 打印检查命令是否正确
         # result = subprocess.getoutput(command)
         # print(result)
         # print('json ok')
-        # # command = f'python E:/糖网/11/11/1.py --eval --image_path={picture}'
-        # # print('Command:', command)  # 打印检查命令是否正确
-        # # result = subprocess.getoutput(command)
-        # # print(result)
-        # # print('json ok')
-        # # 解析预测结果
-        # # 这里需要根据你的预测代码的输出格式进行解析
-        # # 假设预测结果的格式为 "Class {class_idx}: Probability {probability:.4f}" 和 "该图片最有可能分级是 {preclass}"
-        # class_values, probability_values, preclass_values = self.extract_values_from_output(result)
-        # print(class_values, probability_values, preclass_values)
-        # # print(class_values)
-        # end_time = time.time()
-        # # 计算执行时间
-        # execution_time = end_time - start_time
-        # print(f"Predict executed in {execution_time} seconds")
-        # self.text_edit.setText(
-        #     f"糖网分级共为五级，Class: {class_values}, 您的分级概率为，Probability: {probability_values}, 您的最大概率为，Prediction: {preclass_values} \n您平时需要特别注意以下几点，并且按照医生的建议进行治疗和药物管理：1.控制血糖平衡 2.定期眼科检查 3.戒烟限酒，减少并发症的风险。 \n建议您服用的药物有：1.口服类降糖药，如二甲双胍、磺脲类药物等，用于帮助控制血糖水平 2.抗高血压药物，如ACE抑制剂、ARBs等，用于控制高血压 \n注：具体用药规则请谨遵医嘱。")
-        # style_sheet = "QTextEdit { color: black; font-size: 20px; font-family: Arial; }"
-        # self.text_edit.setStyleSheet(style_sheet)
+        # 解析预测结果
+        # 这里需要根据你的预测代码的输出格式进行解析
+        # 假设预测结果的格式为 "Class {class_idx}: Probability {probability:.4f}" 和 "该图片最有可能分级是 {preclass}"
+        class_values, probability_values, preclass_values = self.extract_values_from_output(result)
+        print(class_values, probability_values, preclass_values)
+        # print(class_values)
+        end_time = time.time()
+        # 计算执行时间
+        execution_time = end_time - start_time
+        print(f"Predict executed in {execution_time} seconds")
+        self.text_edit.setText(
+            f"糖网分级共为五级，Class: {class_values}, 您的分级概率为，Probability: {probability_values}, 您的最大概率为，Prediction: {preclass_values} \n您平时需要特别注意以下几点，并且按照医生的建议进行治疗和药物管理：1.控制血糖平衡 2.定期眼科检查 3.戒烟限酒，减少并发症的风险。 \n建议您服用的药物有：1.口服类降糖药，如二甲双胍、磺脲类药物等，用于帮助控制血糖水平 2.抗高血压药物，如ACE抑制剂、ARBs等，用于控制高血压 \n注：具体用药规则请谨遵医嘱。")
+        style_sheet = "QTextEdit { color: black; font-size: 20px; font-family: Arial; }"
+        self.text_edit.setStyleSheet(style_sheet)
 
-        # return class_values, probability_values, preclass_values
-        # return Predictor.predict(image_path)
+        return class_values, probability_values, preclass_values
 
     # 槽函数用于更新 BodyLabel 的文本内容
     def updateBodyLabel(self, text):
@@ -1447,14 +1441,14 @@ class Ui_Form(object):
         self.ToolButton_6.setFont(font1)  # 将设置后的字体应用到按钮上
         self.ToolButton_6.setText(_translate("Form", "任意框选"))
 
-        self.ToolButton_5.setFont(font1)  # 将设置后的字体应用到按钮上
-        self.ToolButton_5.setText(_translate("Form", "重置"))
+        # self.ToolButton_5.setFont(font1)  # 将设置后的字体应用到按钮上
+        # self.ToolButton_5.setText(_translate("Form", "重置"))
 
-        self.toolButton_4.setFont(font1)  # 将设置后的字体应用到按钮上
-        self.toolButton_4.setText(_translate("Form", "模板更改"))
+        # self.toolButton_4.setFont(font1)  # 将设置后的字体应用到按钮上
+        # self.toolButton_4.setText(_translate("Form", "模板更改"))
 
-        self.ToolButton_8.setFont(font1)  # 将设置后的字体应用到按钮上
-        self.ToolButton_8.setText(_translate("Form", "模式更换"))
+        # self.ToolButton_8.setFont(font1)  # 将设置后的字体应用到按钮上
+        # self.ToolButton_8.setText(_translate("Form", "模式更换"))
 
         self.toolButton.setFont(font1)  # 将设置后的字体应用到按钮上
         self.toolButton.setText(_translate("Form", "帮助"))

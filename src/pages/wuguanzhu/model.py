@@ -1,12 +1,12 @@
 from enum import Enum
-from .unet import Unet
 import config as cfg
+from ..model.unet import Unet
 
-class ModelScale(Enum):
+class WuguanzhuModelScale(Enum):
     SMALL = 0
     LARGE = 1
 
-class Model:
+class WuguanzhuModel:
     def __init__(self, use_cuda=False):
         self.numClasses = 2
         self.useCuda = use_cuda

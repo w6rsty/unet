@@ -28,8 +28,6 @@ from functools import partial
 
 from PyQt5.QtCore import QUrl
 from PyQt5.QtGui import QDesktopServices
-from docx import Document
-from docx.shared import Inches
 import os
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -241,16 +239,6 @@ class ImageViewer(QGraphicsView):
         if self.path_item:
             # 应用填充颜色
             self.path_item.setBrush(QBrush(QColor(255, 200, 200, 128)))
-
-
-
-
-
-
-
-
-
-
 
 
 class Ui_Form(object):
@@ -939,8 +927,7 @@ class Ui_Form(object):
     def pre_showImage(self):#这是用来预览部分显示的函数
         global dir
         # 显示指定文件夹的图片：前5张图片
-        # dir = r"C:\Users\cyq\Desktop\new\photos"
-        dir = r"src\pages\model_2\xueguan_pre_photos"
+        dir = 'assets/images/xueguan'
         # 获取文件夹中的所有文件
         global files
         files = os.listdir(dir)
