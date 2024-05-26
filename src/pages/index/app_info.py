@@ -3,7 +3,7 @@ from PyQt5.QtCore import Qt, QSize, QUrl
 from PyQt5.QtGui import QFont, QColor
 from qfluentwidgets import *
 
-import config as cfg
+import src.config as cfg
 
 class AppInfoCard(SimpleCardWidget):
     def __init__(self, parent=None):

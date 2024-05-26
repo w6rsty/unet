@@ -7,7 +7,7 @@ from PIL import Image
 from enum import Enum
 import cv2
 
-import config as cfg
+import src.config as cfg
 
 class OperationMode(Enum):
     NONE = -1           # 无操作

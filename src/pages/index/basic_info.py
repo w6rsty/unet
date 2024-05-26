@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QLabel
 from PyQt5.QtCore import Qt
 from qfluentwidgets import HeaderCardWidget
 
-import config as cfg
+import src.config as cfg
 
 class BasicInfoCard(HeaderCardWidget):
     """信息卡片"""

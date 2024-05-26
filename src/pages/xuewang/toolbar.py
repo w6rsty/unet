@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QWidget, QToolButton, QSizePolicy, QHBoxLayout
 from PyQt5.QtGui import QIcon, QFont
 from PyQt5.QtCore import Qt
 
-import config as cfg
+import src.config as cfg
 
 class Toolbar(QWidget):
     def __init__(self, model, dispatch, parent=None):

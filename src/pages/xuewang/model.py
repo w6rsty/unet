@@ -1,5 +1,5 @@
 from ..model.unet import Unet
-import config as cfg
+import src.config as cfg
 
 
 class XuewangModel:

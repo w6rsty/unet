@@ -5,7 +5,7 @@ from PyQt5.QtGui import QIcon
 from qfluentwidgets import SingleDirectionScrollArea, FlowLayout
 
 import os 
-import config as cfg
+import src.config as cfg
 
 class ImageSelectorPanel(QWidget):
     def __init__(self, manipulated, patient_info, result_info,gridlayout, dispatch, parent=None):

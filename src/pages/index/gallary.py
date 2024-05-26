@@ -1,7 +1,7 @@
 from PyQt5.QtCore import Qt
 from qfluentwidgets import HeaderCardWidget, HorizontalFlipView
 
-import config as cfg
+import src.config as cfg
 
 class GalleryCard(HeaderCardWidget):
     """ Gallery card """

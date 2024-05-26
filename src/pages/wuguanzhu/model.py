@@ -1,5 +1,5 @@
 from enum import Enum
-import config as cfg
+import src.config as cfg
 from ..model.unet import Unet
 
 class WuguanzhuModelScale(Enum):
