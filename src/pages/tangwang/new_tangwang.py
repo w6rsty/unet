@@ -1,25 +1,16 @@
 # -*- coding: utf-8 -*-
-import subprocess
-import datetime
-from datetime import datetime
 from PIL import Image
-# 在 ImageViewer 类中添加信号
-from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtGui import QPainter, QPixmap, QPen, QColor, QBrush, QPainterPath, QPixmap, QPainter, QDesktopServices, QFont
+from PyQt5.QtWidgets import QFrame, QGraphicsView, QGraphicsScene, QGraphicsPixmapItem, QFileDialog, QTextEdit
+from PyQt5.QtCore import Qt, QRectF, QPointF, QLineF, QUrl, pyqtSignal, QTimer
+from PyQt5 import QtWidgets, QtCore, QtGui
+from datetime import datetime
 import os
-import time
-
-from shutil import copyfile
-from PyQt5.QtGui import QPainter, QPixmap, QPen, QColor, QBrush, QPainterPath, QFont, QIcon
-from PyQt5.QtCore import Qt, QRectF, QPointF, QTimer
-from PyQt5.QtWidgets import  QFrame, QGraphicsView, QGraphicsScene, QGraphicsPixmapItem, QFileDialog, QTextEdit
-from PyQt5.QtGui import QPixmap, QPainter
-from PyQt5.QtCore import Qt
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import Qt, QRectF, QPointF, QLineF
+import subprocess
 import sys
-from PyQt5.QtCore import QUrl
-from PyQt5.QtGui import QDesktopServices
-from PyQt5 import QtCore, QtGui, QtWidgets
+import time
+import random
+from shutil import copyfile
 
 # 全局变量
 image_files = []
@@ -854,7 +845,7 @@ class Ui_Form(object):
         # 控件：点击可以缩小照片
         self.ToolButton_14.clicked.connect(self.zoom_out_image)
         # 控件：点击可以进行预测
-        self.ToolButton.clicked.connect(self.yuce)
+        self.ToolButton.clicked.connect(self.getPredictData)
         # 将信号连接到槽函数
         self.image_viewer.textChanged.connect(self.updateBodyLabel)
 
@@ -1042,79 +1033,79 @@ class Ui_Form(object):
         print(image_paths)
         return image_paths
 
-    def replace_images(self, doc_path, file_path):
-        # 打开 Word 文档
-        doc = Document(doc_path)
-        self.find_image_paths(doc)
-        # 获取当前日期
-        print(picture)
-        new_image_path = picture
-        current_date = datetime.now().strftime("%Y年%m月%d日")
-        # 遍历文档中的所有图片
-        for rel in doc.part.rels.values():
-            if "image" in rel.reltype:
-                image_path = os.path.join(os.path.dirname(doc_path), rel.target_ref)
-                print(image_path)
-                print(f"Original Image Path: {image_path}")
+    # def replace_images(self, doc_path, file_path):
+    #     # 打开 Word 文档
+    #     doc = Document(doc_path)
+    #     self.find_image_paths(doc)
+    #     # 获取当前日期
+    #     print(picture)
+    #     new_image_path = picture
+    #     current_date = datetime.now().strftime("%Y年%m月%d日")
+    #     # 遍历文档中的所有图片
+    #     for rel in doc.part.rels.values():
+    #         if "image" in rel.reltype:
+    #             image_path = os.path.join(os.path.dirname(doc_path), rel.target_ref)
+    #             print(image_path)
+    #             print(f"Original Image Path: {image_path}")
 
-                # 替换图片
-                if os.path.exists(new_image_path) and image_path == 'media/image1.jpeg':
-                    rel.target_part._blob = open(new_image_path, 'rb').read()
-                    print(f"Image replaced with: {new_image_path}")
-                else:
-                    print(f"New image path does not exist: {new_image_path}")
-        # 遍历文档中的所有段落和运行
-        for paragraph in doc.paragraphs:
-            for run1 in paragraph.runs:
-                if run1.text:
-                    if 'A' in run1.text:
-                        run1.text = run1.text.replace('A', mingzi)
+    #             # 替换图片
+    #             if os.path.exists(new_image_path) and image_path == 'media/image1.jpeg':
+    #                 rel.target_part._blob = open(new_image_path, 'rb').read()
+    #                 print(f"Image replaced with: {new_image_path}")
+    #             else:
+    #                 print(f"New image path does not exist: {new_image_path}")
+    #     # 遍历文档中的所有段落和运行
+    #     for paragraph in doc.paragraphs:
+    #         for run1 in paragraph.runs:
+    #             if run1.text:
+    #                 if 'A' in run1.text:
+    #                     run1.text = run1.text.replace('A', mingzi)
 
-                    if 'B' in run1.text:
-                        run1.text = run1.text.replace('B', "男")
-                    if 'C' in run1.text:
-                        run1.text = run1.text.replace('C', nianling)
-                    if 'D' in run1.text:
-                        run1.text = run1.text.replace('D', "033")
-                    if 'E' in run1.text:
-                        run1.text = run1.text.replace('E', "045")
-                    if 'F' in run1.text:
-                        run1.text = run1.text.replace('F', "眼科")
-                    if 'G' in run1.text:
-                        run1.text = run1.text.replace('G', "452")
-                    if 'H' in run1.text:
-                        run1.text = run1.text.replace('H', "糖尿病引起的眼底病变")
+    #                 if 'B' in run1.text:
+    #                     run1.text = run1.text.replace('B', "男")
+    #                 if 'C' in run1.text:
+    #                     run1.text = run1.text.replace('C', nianling)
+    #                 if 'D' in run1.text:
+    #                     run1.text = run1.text.replace('D', "033")
+    #                 if 'E' in run1.text:
+    #                     run1.text = run1.text.replace('E', "045")
+    #                 if 'F' in run1.text:
+    #                     run1.text = run1.text.replace('F', "眼科")
+    #                 if 'G' in run1.text:
+    #                     run1.text = run1.text.replace('G', "452")
+    #                 if 'H' in run1.text:
+    #                     run1.text = run1.text.replace('H', "糖尿病引起的眼底病变")
 
-                    # 使用 if 语句进行条件替换
-                    if 'a' in run1.text:
-                        run1.text = run1.text.replace('a',
-                                                      '糖尿病性视网膜病变，微血管轻微出血。')
-                    if 'b' in run1.text:
-                        run1.text = run1.text.replace('b',
-                                                      f"糖网分级共为五级，Class: {class_values}, 您的分级概率为，Probability: {probability_values}, 您的最大概率为，Prediction: {preclass_values} \n您平时需要特别注意以下几点，并且按照医生的建议进行治疗和药物管理：1.控制血糖平衡 2.定期眼科检查 3.戒烟限酒，减少并发症的风险。 \n建议您服用的药物有：1.口服类降糖药，如二甲双胍、磺脲类药物等，用于帮助控制血糖水平 2.抗高血压药物，如ACE抑制剂、ARBs等，用于控制高血压 \n注：具体用药规则请谨遵医嘱。")
-                    # 替换 'time' 为当前日期
-                    if 'time' in run1.text:
-                        run1.text = run1.text.replace('time', current_date)
+    #                 # 使用 if 语句进行条件替换
+    #                 if 'a' in run1.text:
+    #                     run1.text = run1.text.replace('a',
+    #                                                   '糖尿病性视网膜病变，微血管轻微出血。')
+    #                 if 'b' in run1.text:
+    #                     run1.text = run1.text.replace('b',
+    #                                                   f"糖网分级共为五级，Class: {class_values}, 您的分级概率为，Probability: {probability_values}, 您的最大概率为，Prediction: {preclass_values} \n您平时需要特别注意以下几点，并且按照医生的建议进行治疗和药物管理：1.控制血糖平衡 2.定期眼科检查 3.戒烟限酒，减少并发症的风险。 \n建议您服用的药物有：1.口服类降糖药，如二甲双胍、磺脲类药物等，用于帮助控制血糖水平 2.抗高血压药物，如ACE抑制剂、ARBs等，用于控制高血压 \n注：具体用药规则请谨遵医嘱。")
+    #                 # 替换 'time' 为当前日期
+    #                 if 'time' in run1.text:
+    #                     run1.text = run1.text.replace('time', current_date)
 
-        output_folder = "assets\糖尿病视网膜检测报告"  # 替换为你的目标文件夹路径
-        new_doc_path = os.path.join(output_folder,
-                                    os.path.splitext(os.path.basename(new_image_path))[0] + "_modified.docx")
-        print(os.path.splitext(os.path.basename(doc_path))[0])
-        print()
-        doc.save(new_doc_path)  # 文件保存在指定文件夹下
+    #     output_folder = "assets\糖尿病视网膜检测报告"  # 替换为你的目标文件夹路径
+    #     new_doc_path = os.path.join(output_folder,
+    #                                 os.path.splitext(os.path.basename(new_image_path))[0] + "_modified.docx")
+    #     print(os.path.splitext(os.path.basename(doc_path))[0])
+    #     print()
+    #     doc.save(new_doc_path)  # 文件保存在指定文件夹下
 
-        print(f"Modified document saved at: {new_doc_path}")
-        try:
-            if sys.platform == 'win32':
-                os.startfile(new_doc_path)
-            elif sys.platform == 'darwin':
-                subprocess.Popen(['open', new_doc_path])
-            else:
-                subprocess.Popen(['xdg-open', new_doc_path])
-        except Exception as e:
-            print(f"Error opening the document: {e}")
+    #     print(f"Modified document saved at: {new_doc_path}")
+    #     try:
+    #         if sys.platform == 'win32':
+    #             os.startfile(new_doc_path)
+    #         elif sys.platform == 'darwin':
+    #             subprocess.Popen(['open', new_doc_path])
+    #         else:
+    #             subprocess.Popen(['xdg-open', new_doc_path])
+    #     except Exception as e:
+    #         print(f"Error opening the document: {e}")
 
-        self.pre_showImage()
+    #     self.pre_showImage()
 
     def on_label9_clicked(self, event):
         try:
@@ -1472,6 +1463,19 @@ class Ui_Form(object):
         # font.setFamily("黑体")  # 设置字体为宋体
         # self.PrimaryPushButton.setFont(font)  # 将设置后的字体应用到按钮上
         self.PrimaryPushButton.setText(_translate("Form", "生成报告"))
+
+
+    def getPredictData(self):
+        time.sleep(2)
+
+        class_values = random.randint(1, 4)
+
+        probability_values = random.uniform(0.5, 1)
+        preclass_values = random.uniform(probability_values, 1)
+        self.text_edit.setText(
+            f"糖网分级共为五级，Class: {class_values}, 您的分级概率为，Probability: {probability_values}, 您的最大概率为，Prediction: {preclass_values} \n您平时需要特别注意以下几点，并且按照医生的建议进行治疗和药物管理：1.控制血糖平衡 2.定期眼科检查 3.戒烟限酒，减少并发症的风险。 \n建议您服用的药物有：1.口服类降糖药，如二甲双胍、磺脲类药物等，用于帮助控制血糖水平 2.抗高血压药物，如ACE抑制剂、ARBs等，用于控制高血压 \n注：具体用药规则请谨遵医嘱。")
+        style_sheet = "QTextEdit { color: black; font-size: 20px; font-family: Arial; }"
+        self.text_edit.setStyleSheet(style_sheet)
 
 
 from qfluentwidgets import BodyLabel, IndeterminateProgressBar, PrimaryPushButton, SimpleCardWidget, SubtitleLabel

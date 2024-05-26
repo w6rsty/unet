@@ -19,7 +19,7 @@ from .image_manipulate import OperationMode
 class WuguanzhuView(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setObjectName('Model1View')
+        self.setObjectName('WuguanzhuView')
 
         self.jsonLibrary = JsonLibrary(cfg.JSON_DIR)
 

@@ -210,21 +210,6 @@ class ImageManipulatePanel(QWidget):
         x, y = ev.scenePos().x(), ev.scenePos().y()
 
         try:
-            if self.mode == OperationMode.GLOBAL_RECOGNIZE: # 大图识别
-                # 处理绘制逻辑
-                self.is_mouse_down = True
-                self.start_pos = ev.scenePos().x(), ev.scenePos().y()
-                self.start_point = self.scene.addEllipse(
-                    x - self.half_point_size,
-                    y - self.half_point_size,
-                    self.point_size,
-                    self.point_size,
-                    pen=QPen(QColor("red")),
-                    brush=QBrush(QColor("red")),
-                )
-                self.coordinate_history.append((x, y))
-                self.history.append(np.copy(self.img_3c))
-                self.last_click_pos = (x, y)
             if self.mode == OperationMode.ADD_RECT: # 矩形增加
                 # 处理绘制逻辑
                 self.is_mouse_down = True
@@ -322,11 +307,6 @@ class ImageManipulatePanel(QWidget):
                 ymin = int(min(y, sy))
                 ymax = int(max(y, sy))
 
-                if self.mode == OperationMode.GLOBAL_RECOGNIZE: # 大图识别
-                    self.rect = self.scene.addRect(
-                        xmin, ymin, xmax - xmin, ymax - ymin, pen=QPen(QColor("red"))
-                    )
-
                 if self.mode == OperationMode.ADD_RECT: # 矩形增加
                     self.rect = self.scene.addRect(
                         xmin, ymin, xmax - xmin, ymax - ymin, pen=QPen(QColor("red"))
@@ -392,38 +372,6 @@ class ImageManipulatePanel(QWidget):
 
     def mouse_release(self, ev):
         self.is_mouse_down = False
-        if self.mode == OperationMode.GLOBAL_RECOGNIZE: # 大图识别
-            color = colors[self.color_idx]
-            self.mask_c[int(min(self.start_pos[1], ev.scenePos().y())):int(max(self.start_pos[1], ev.scenePos().y())),
-            int(min(self.start_pos[0], ev.scenePos().x())):int(max(self.start_pos[0], ev.scenePos().x()))] = color
-            self.color_idx = (self.color_idx + 1) % len(colors)
-
-
-            xmin = int(min(self.start_pos[0], ev.scenePos().x()))
-            xmax = int(max(self.start_pos[0], ev.scenePos().x()))
-            ymin = int(min(self.start_pos[1], ev.scenePos().y()))
-            ymax = int(max(self.start_pos[1], ev.scenePos().y()))
-
-            region_to_render_white = self.initial_image[ymin:ymax, xmin:xmax]
-
-            if region_to_render_white.shape[0] > 600 and region_to_render_white.shape[1] > 600:
-                print(region_to_render_white.shape)
-
-                image = Image.fromarray(region_to_render_white)
-                segmented_image = self.model.getSmallModel().detect_image(image)
-                image_array = np.array(segmented_image)
-                self.img_3c[ymin:ymax, xmin:xmax] = image_array
-    
-            elif region_to_render_white.shape[0] < 1 and region_to_render_white.shape[1] < 1:
-                return
-
-            else:
-                print(region_to_render_white.shape)
-                image = Image.fromarray(region_to_render_white)
-                segmented_image = self.model.getLargeModel().detect_image(image)
-                image_array = np.array(segmented_image)
-                self.img_3c[ymin:ymax, xmin:xmax] = image_array
-            self.update_image()
 
         if self.mode == OperationMode.RECT_RATIO: # 矩形占比
             xmin = int(min(self.start_pos[0], ev.scenePos().x()))
@@ -616,7 +564,7 @@ class ImageManipulatePanel(QWidget):
     def globalRecognize(self):
         self.mode = OperationMode.NONE
         print("大图识别")
-        pass
+        self.global_recognize()
     
     # 矩形增加(添加矩形识别区域)
     def addRect(self):
@@ -752,3 +700,23 @@ class ImageManipulatePanel(QWidget):
             img = np.array(img)
 
         return img
+    
+    def global_recognize(self):
+        color = colors[self.color_idx]
+        image_size = self.img_3c.shape
+        height, width = image_size[:2]
+        # 识别整个图像
+        self.mask_c[0:height, 0:width] = color
+        self.color_idx = (self.color_idx + 1) % len(colors)
+
+        region_to_render_white = self.initial_image[0:height, 0:width]
+        if region_to_render_white.shape[0] > 0 and region_to_render_white.shape[1] > 0:
+            print(region_to_render_white.shape)
+            image = Image.fromarray(region_to_render_white)
+            segmented_image = self.model.getLargeModel().detect_image(image)
+            image_array = np.array(segmented_image)
+            self.img_3c[0:height, 0:width] = image_array
+
+        elif region_to_render_white.shape[0] < 1 and region_to_render_white.shape[1] < 1:
+            return
+        self.update_image()

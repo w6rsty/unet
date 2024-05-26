@@ -16,8 +16,22 @@ class WuguanzhuModel:
         self.load()
 
     def load(self):
-        self.smallModel = Unet(model_path=cfg.SMALL_MODEL_PATH, num_classes=self.numClasses, input_shape=[512, 512], cuda=self.useCuda)
-        self.largeModel = Unet(model_path=cfg.LARGE_MODEL_PATH, num_classes=self.numClasses, input_shape=[1024, 1024], cuda=self.useCuda)
+        self.smallModel = Unet(
+            model_path=cfg.SMALL_MODEL_PATH, 
+            num_classes=self.numClasses,
+            backbone='vgg',
+            input_shape=[512, 512],
+            mix_type = 0, 
+            cuda=self.useCuda
+        )
+        self.largeModel = Unet(
+            model_path=cfg.LARGE_MODEL_PATH,
+            num_classes=self.numClasses,
+            backbone='vgg',
+            input_shape=[1024, 1024],
+            mix_type = 0,
+            cuda=self.useCuda
+        )
         
     def getSmallModel(self):
         return self.smallModel
