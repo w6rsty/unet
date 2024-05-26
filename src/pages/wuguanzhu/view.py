@@ -17,7 +17,7 @@ class WuguanzhuView(QWidget):
         super().__init__(parent)
         self.setObjectName('WuguanzhuView')
 
-        self.jsonLibrary = JsonLibrary(cfg.JSON_DIR)
+        self.jsonLibrary = JsonLibrary(cfg.WUGUANZHU_JSON_DIR)
 
         ###############################################
         # 状态变量

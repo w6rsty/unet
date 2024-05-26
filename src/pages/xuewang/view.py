@@ -17,7 +17,7 @@ class XuewangView(QWidget):
         super().__init__(parent)
         self.setObjectName('XuewangView')
 
-        self.jsonLibrary = JsonLibrary(cfg.JSON_DIR)
+        self.jsonLibrary = JsonLibrary(cfg.XUEWANG_JSON_DIR)
 
         ###############################################
         # 状态变量

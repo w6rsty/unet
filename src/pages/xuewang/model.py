@@ -16,7 +16,7 @@ class XuewangModel:
             num_classes=self.numClasses,
             backbone='vgg', 
             input_shape=[1024, 1024],
-            mix_type = 1, 
+            mix_type = 2, 
             cuda=self.useCuda
         )
         

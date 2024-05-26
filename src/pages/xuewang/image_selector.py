@@ -12,7 +12,7 @@ class ImageSelectorPanel(SingleDirectionScrollArea):
         super().__init__(orient=Qt.Horizontal, parent=parent)
         
         self.imageButtons = []
-        for index, path in enumerate(cfg.DEMO_IMAGE_PATHS):
+        for index, path in enumerate(cfg.XUEWANG_IMAGE_PATHS):
             bt = ImageButton(index, path, manipulated, patient_info, result_info)
             self.imageButtons.append(bt)
 

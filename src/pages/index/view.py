@@ -16,7 +16,7 @@ class IndexView(QWidget):
         self.appInfoCard.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed))
         
         self.galleryCard = GalleryCard(self)
-        self.galleryCard.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding))
+        # self.galleryCard.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding))
 
         self.clockCard = ClockCard(self)
         self.clockCard.setSizePolicy(QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed))

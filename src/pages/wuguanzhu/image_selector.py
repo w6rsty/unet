@@ -12,7 +12,7 @@ class ImageSelectorPanel(QWidget):
         super().__init__(parent)
     
         self.imageButtons = []
-        for index, path in enumerate(cfg.DEMO_IMAGE_PATHS):
+        for index, path in enumerate(cfg.WUGUANZHU_IMAGE_PATHS):
             bt = ImageButton(index, path, manipulated, patient_info, result_info)
             self.imageButtons.append(bt)
             
