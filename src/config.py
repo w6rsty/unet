@@ -1,8 +1,8 @@
 ASSERT_DIR = 'assets/'
-DEMO_IMAGE_DIR = 'img/'
-JSON_DIR = ASSERT_DIR + 'json/'
+WUGUANZHU_JSON_DIR = ASSERT_DIR + 'json/wuguanzhu'
+XUEWANG_JSON_DIR = ASSERT_DIR + 'json/xuewang'
 
-WINDOW_TITLE = '慧眼卫视”——AI驱动的眼底图像智能处理软件'
+WINDOW_TITLE = '"慧眼卫视"——AI驱动的眼底图像智能处理软件'
 
 # Texts:
 APP_NAME = '慧眼卫视'
@@ -60,15 +60,24 @@ TOOL_BUTTON_FONT_SIZE = 12
 
 ADD_ICON_PATH = ASSERT_DIR + 'icons/add.png'
 
-DEMO_IMAGE_PATHS = [
-    DEMO_IMAGE_DIR + 'demo_1.jpg',
-    DEMO_IMAGE_DIR + 'demo_2.jpg',
-    DEMO_IMAGE_DIR + 'demo_3.jpg',
-    DEMO_IMAGE_DIR + 'demo_4.jpg',
-    DEMO_IMAGE_DIR + 'demo_5.jpg',
+
+WUGUANZHU_IMAGE_PATHS = [
+    ASSERT_DIR + 'images/wuguanzhu/demo_1.jpg',
+    ASSERT_DIR + 'images/wuguanzhu/demo_2.jpg',
+    ASSERT_DIR + 'images/wuguanzhu/demo_3.jpg',
+    ASSERT_DIR + 'images/wuguanzhu/demo_4.jpg',
+    ASSERT_DIR + 'images/wuguanzhu/demo_5.jpg',
 ]
 
-PLACEHOLDER_IMAGE_PATH = 'assets/images/placeholder.jpg'
+DEMO_IMAGE_PATHS = WUGUANZHU_IMAGE_PATHS
+
+XUEWANG_IMAGE_PATHS = [
+    ASSERT_DIR + 'images/xuewang/Image_01L.jpg',
+    ASSERT_DIR + 'images/xuewang/Image_01R.jpg',
+    ASSERT_DIR + 'images/xuewang/Image_02L.jpg',
+    ASSERT_DIR + 'images/xuewang/Image_02R.jpg',
+    ASSERT_DIR + 'images/xuewang/Image_03L.jpg',
+]
 
 # Paths:
 WINDOW_ICON_PATH = 'assets/icons/window_icon.svg'

@@ -5,14 +5,14 @@ from PyQt5.QtGui import QIcon
 from qfluentwidgets import SingleDirectionScrollArea, FlowLayout
 
 import os 
-import config as cfg
+import src.config as cfg
 
 class ImageSelectorPanel(SingleDirectionScrollArea):
     def __init__(self, manipulated, patient_info, result_info, gridlayout, dispatch, parent=None):
         super().__init__(orient=Qt.Horizontal, parent=parent)
         
         self.imageButtons = []
-        for index, path in enumerate(cfg.DEMO_IMAGE_PATHS):
+        for index, path in enumerate(cfg.XUEWANG_IMAGE_PATHS):
             bt = ImageButton(index, path, manipulated, patient_info, result_info)
             self.imageButtons.append(bt)
 

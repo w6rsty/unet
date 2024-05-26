@@ -5,7 +5,7 @@ from PyQt5.QtGui import QIcon, QPixmap
 from qfluentwidgets import FluentIcon as FIF
 from qfluentwidgets import FluentWindow
 
-import config as cfg
+import src.config as cfg
 from ..index.view import IndexView
 from ..wuguanzhu.view import WuguanzhuView
 from ..tangwang.new_tangwang import Ui_Form

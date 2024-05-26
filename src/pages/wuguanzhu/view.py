@@ -3,7 +3,7 @@ from PyQt5.QtCore import QSize
 import json
 import os
 
-import config as cfg
+import src.config as cfg
 from .toolbar import Toolbar
 from .image_manipulate import ImageManipulatePanel
 from .image_selector import ImageSelectorPanel
@@ -17,7 +17,7 @@ class WuguanzhuView(QWidget):
         super().__init__(parent)
         self.setObjectName('WuguanzhuView')
 
-        self.jsonLibrary = JsonLibrary(cfg.JSON_DIR)
+        self.jsonLibrary = JsonLibrary(cfg.WUGUANZHU_JSON_DIR)
 
         ###############################################
         # 状态变量
