@@ -1,6 +1,7 @@
 {
     "name":"json5",
     "imgPath":"assets/images/xuewang/Image_03L.jpg",
+    "targetPath":"assets/images/xuewang_target/Image_03L_1stHO.png",
     "patientInfo":{
         "姓名":"李华",
         "性别":"女",

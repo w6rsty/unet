@@ -42,15 +42,15 @@ TOOL_BUTTON_NUM = len(WUGUANZHU_TOOL_BUTTON_INFOS)
 XUEWANG_TOOL_BUTTON_INFOS = [
     ('加载图片', ASSERT_DIR + 'icons/加载图片.png'),
     ('读取历史', ASSERT_DIR + 'icons/读取历史.png'),
-    ('大图识别', ASSERT_DIR + 'icons/大图识别.png'),
-    ('矩形增加', ASSERT_DIR + 'icons/矩形增加.png'),
-    ('矩形删除', ASSERT_DIR + 'icons/矩形删除.png'),
-    ('手动添加', ASSERT_DIR + 'icons/手动添加.png'),
-    ('手动删除', ASSERT_DIR + 'icons/手动删除.png'),
-    ('区域生长', ASSERT_DIR + 'icons/区域生长.png'),
-    ('撤销操作', ASSERT_DIR + 'icons/撤销操作.png'),
+    ('血网分割', ASSERT_DIR + 'icons/大图识别.png'),
+    # ('矩形增加', ASSERT_DIR + 'icons/矩形增加.png'),
+    # ('矩形删除', ASSERT_DIR + 'icons/矩形删除.png'),
+    # ('手动添加', ASSERT_DIR + 'icons/手动添加.png'),
+    # ('手动删除', ASSERT_DIR + 'icons/手动删除.png'),
+    # ('区域生长', ASSERT_DIR + 'icons/区域生长.png'),
+    # ('撤销操作', ASSERT_DIR + 'icons/撤销操作.png'),
     ('数据保存', ASSERT_DIR + 'icons/数据保存.png'),
-    ('掩膜保存', ASSERT_DIR + 'icons/掩模保存.png'),
+    # ('掩膜保存', ASSERT_DIR + 'icons/掩模保存.png'),
 ]
 
 XUEWANG_BUTTON_NUM = len(XUEWANG_TOOL_BUTTON_INFOS)
@@ -77,6 +77,14 @@ XUEWANG_IMAGE_PATHS = [
     ASSERT_DIR + 'images/xuewang/Image_02L.jpg',
     ASSERT_DIR + 'images/xuewang/Image_02R.jpg',
     ASSERT_DIR + 'images/xuewang/Image_03L.jpg',
+]
+
+XUEWANG_TARGET_IMAGE_PATHS = [
+    ASSERT_DIR + 'images/xuewang_target/Image_01L_1stHO.png',
+    ASSERT_DIR + 'images/xuewang_target/Image_01R_1stHO.png',
+    ASSERT_DIR + 'images/xuewang_target/Image_02L_1stHO.png',
+    ASSERT_DIR + 'images/xuewang_target/Image_02R_1stHO.png',
+    ASSERT_DIR + 'images/xuewang_target/Image_03L_1stHO.png',
 ]
 
 # Paths:

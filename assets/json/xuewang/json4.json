@@ -1,6 +1,7 @@
 {
     "name":"json4",
     "imgPath":"assets/images/xuewang/Image_02R.jpg",
+    "targetPath":"assets/images/xuewang_target/Image_02R_1stHO.png",
     "patientInfo":{
         "姓名":"赵六",
         "性别":"女",

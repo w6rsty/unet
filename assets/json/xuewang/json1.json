@@ -1,6 +1,7 @@
 {
     "name": "json1",
     "imgPath": "assets/images/xuewang/Image_01L.jpg",
+    "targetPath": "assets/images/xuewang_target/Image_01L_1stHO.png",
     "patientInfo": {
         "姓名":"崔国华",
         "年龄":"38岁",

@@ -1,6 +1,7 @@
 {
     "name":"json2",
     "imgPath":"assets/images/xuewang/Image_01R.jpg",
+    "targetPath":"assets/images/xuewang_target/Image_01R_1stHO.png",
     "patientInfo": {
         "姓名":"李四",
         "性别":"女",

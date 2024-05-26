@@ -1,6 +1,7 @@
 {
     "name":"json3",
     "imgPath":"assets/images/xuewang/Image_02L.jpg",
+    "targetPath":"assets/images/xuewang_target/Image_02L_1stHO.png",
     "patientInfo":{
         "姓名":"王五",
         "性别":"女",

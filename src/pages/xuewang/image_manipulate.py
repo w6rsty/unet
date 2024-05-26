@@ -6,6 +6,8 @@ import numpy as np
 from PIL import Image
 from enum import Enum
 import cv2
+import time
+import random
 
 import src.config as cfg
 
@@ -64,6 +66,7 @@ class ImageManipulatePanel(QWidget):
         self.line_width = 3
         # app stats
         self.image_path = None
+        self.target_path = None
         self.color_idx = 0
         self.bg_img = None
         self.is_mouse_down = False
@@ -127,7 +130,20 @@ class ImageManipulatePanel(QWidget):
         self.initial_image = np.copy(self.img_3c)
         pixmap = np2pixmap(self.img_3c)
 
-        H, W, _ = self.img_3c.shape
+        # target
+
+        target_np = io.imread(self.target_path)
+        if len(target_np.shape) == 2:
+            target_3c = np.repeat(target_np[:, :, None], 3, axis=-1)
+        else:
+            target_3c = target_np
+
+        if target_3c.shape[0] > max_height or target_3c.shape[1] > max_width:
+            target_3c = self.resize_image(target_3c, max_width, max_height)
+
+        self.target_3c = target_3c
+        target_pixmap = np2pixmap(self.target_3c)
+
         H, W, _ = self.img_3c.shape
 
         if hasattr(self, "scene"):
@@ -139,14 +155,17 @@ class ImageManipulatePanel(QWidget):
 
         self.scene = QGraphicsScene(0, 0, W, H)
         self.scene2 = QGraphicsScene(0, 0, W, H)
+
+        empty_scene = QGraphicsScene(0, 0, W, H)
+
         self.end_point = None
         self.rect = None
         self.bg_img1 = self.scene.addPixmap(pixmap)
-        self.bg_img2 = self.scene2.addPixmap(pixmap)
+        self.bg_img2 = self.scene2.addPixmap(target_pixmap)
         self.bg_img1.setPos(0, 0)
         self.bg_img2.setPos(0, 0)
         self.view1.setScene(self.scene)  # 在第一个视图中显示图像
-        self.view2.setScene(self.scene2)  # 在第二个视图中显示相同的图像-
+        self.view2.setScene(empty_scene)  # 在第二个视图中显示相同的图像-
 
         # # 0: 未选中, 1: 左侧选中, 2: 右侧选中
         self.hoveredView = 0
@@ -161,6 +180,7 @@ class ImageManipulatePanel(QWidget):
 
     def setImage(self, id):
         path = self.jsonlibrary.getJsonById(id)['imgPath']
+        self.target_path = self.jsonlibrary.getJsonById(id)['targetPath']
         self.setImageByPath(path)
 
     def update(self):
@@ -208,21 +228,6 @@ class ImageManipulatePanel(QWidget):
         x, y = ev.scenePos().x(), ev.scenePos().y()
 
         try:
-            if self.mode == OperationMode.GLOBAL_RECOGNIZE: # 大图识别
-                # 处理绘制逻辑
-                self.is_mouse_down = True
-                self.start_pos = ev.scenePos().x(), ev.scenePos().y()
-                self.start_point = self.scene.addEllipse(
-                    x - self.half_point_size,
-                    y - self.half_point_size,
-                    self.point_size,
-                    self.point_size,
-                    pen=QPen(QColor("red")),
-                    brush=QBrush(QColor("red")),
-                )
-                self.coordinate_history.append((x, y))
-                self.history.append(np.copy(self.img_3c))
-                self.last_click_pos = (x, y)
             if self.mode == OperationMode.ADD_RECT: # 矩形增加
                 # 处理绘制逻辑
                 self.is_mouse_down = True
@@ -353,31 +358,6 @@ class ImageManipulatePanel(QWidget):
 
     def mouse_release(self, ev):
         self.is_mouse_down = False
-        if self.mode == OperationMode.GLOBAL_RECOGNIZE: # 大图识别
-            color = colors[self.color_idx]
-            self.mask_c[int(min(self.start_pos[1], ev.scenePos().y())):int(max(self.start_pos[1], ev.scenePos().y())),
-            int(min(self.start_pos[0], ev.scenePos().x())):int(max(self.start_pos[0], ev.scenePos().x()))] = color
-            self.color_idx = (self.color_idx + 1) % len(colors)
-
-
-            xmin = int(min(self.start_pos[0], ev.scenePos().x()))
-            xmax = int(max(self.start_pos[0], ev.scenePos().x()))
-            ymin = int(min(self.start_pos[1], ev.scenePos().y()))
-            ymax = int(max(self.start_pos[1], ev.scenePos().y()))
-
-            region_to_render_white = self.initial_image[ymin:ymax, xmin:xmax]
-
-            if region_to_render_white.shape[0] < 1 and region_to_render_white.shape[1] < 1:
-                return
-            else:
-                print(region_to_render_white.shape)
-
-                image = Image.fromarray(region_to_render_white)
-                segmented_image = self.model.getModel().detect_image(image)
-                image_array = np.array(segmented_image)
-                self.img_3c[ymin:ymax, xmin:xmax] = image_array
-
-            self.update_image()
 
         if self.mode == OperationMode.DELETE_RECT: # 矩形删除
             xmin = int(min(self.start_pos[0], ev.scenePos().x()))
@@ -491,7 +471,7 @@ class ImageManipulatePanel(QWidget):
     def globalRecognize(self):
         self.mode = OperationMode.NONE
         print("大图识别")
-        pass
+        self.global_recognize()
     
     # 矩形增加(添加矩形识别区域)
     def addRect(self):
@@ -617,3 +597,8 @@ class ImageManipulatePanel(QWidget):
             img = np.array(img)
 
         return img
+    
+    def global_recognize(self):
+        time.sleep(random.randint(2, 3))
+        self.view2.setScene(self.scene2)
+        
