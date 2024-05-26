@@ -11,6 +11,22 @@ import sys
 import time
 import random
 from shutil import copyfile
+from PyQt5.QtGui import QPainter, QPixmap, QPen, QColor, QBrush, QPainterPath, QFont, QIcon
+from PyQt5.QtCore import Qt, QRectF, QPointF, QTimer
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QFrame, QGraphicsView, QGraphicsScene, \
+    QGraphicsPixmapItem, QFileDialog, QTextEdit
+from PyQt5.QtGui import QPixmap, QPainter
+from PyQt5.QtCore import Qt
+from PyQt5 import QtCore, QtGui, QtWidgets
+import subprocess
+from PyQt5.QtCore import Qt, QRectF, QPointF, QLineF
+import sys
+from functools import partial
+from docx import Document
+from PyQt5.QtCore import QUrl
+from PyQt5.QtGui import QDesktopServices
+import os
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 # 全局变量
 image_files = []
@@ -801,8 +817,9 @@ class Ui_Form(object):
         #     partial(self.replace_images, r"C:\Users\cyq\Desktop\new\数码宝贝.docx",
         #             r"C:\Users\cyq\Desktop\new\photos\曾东华0 OS_006.jpg",
         #             r'C:\Users\cyq\Desktop\new\报告单文件夹'))
-        
-        # self.PrimaryPushButton.clicked.connect(partial(self.replace_images, r"src\pages\model_2\诊断报告模板.docx", r'报告单文件夹'))
+        self.PrimaryPushButton.clicked.connect(
+            partial(self.replace_images, r"assets\糖尿病视网膜诊断报告模板.docx",
+                    r'报告单文件夹'))
         self.BodyLabel_4.mousePressEvent = self.on_label1_clicked  # 设置点击事件处理函数（预览的第一张图片）
         self.BodyLabel_5.mousePressEvent = self.on_label2_clicked  # 设置点击事件处理函数（预览的第二张图片）
         self.BodyLabel_3.mousePressEvent = self.on_label3_clicked  # 设置点击事件处理函数（预览的第一张图片）
@@ -952,7 +969,8 @@ class Ui_Form(object):
     def pre_showImage(self):  # 这是用来预览部分显示的函数
         global dir
         # 显示指定文件夹的图片：前5张图片
-        dir = r"assets/images/xueguan"
+        # dir = r"C:\Users\cyq\Desktop\new\photos"
+        dir = r"assets\xueguan_pre_photos"
         # 获取文件夹中的所有文件
         global files
         files = os.listdir(dir)
@@ -1087,12 +1105,12 @@ class Ui_Form(object):
     #                 if 'time' in run1.text:
     #                     run1.text = run1.text.replace('time', current_date)
 
-    #     output_folder = "assets\糖尿病视网膜检测报告"  # 替换为你的目标文件夹路径
-    #     new_doc_path = os.path.join(output_folder,
-    #                                 os.path.splitext(os.path.basename(new_image_path))[0] + "_modified.docx")
-    #     print(os.path.splitext(os.path.basename(doc_path))[0])
-    #     print()
-    #     doc.save(new_doc_path)  # 文件保存在指定文件夹下
+        output_folder = "assets\糖尿病视网膜检测报告"  # 替换为你的目标文件夹路径
+        new_doc_path = os.path.join(output_folder,
+                                    os.path.splitext(os.path.basename(new_image_path))[0] + "_modified.docx")
+        print(os.path.splitext(os.path.basename(doc_path))[0])
+        print()
+        doc.save(new_doc_path)  # 文件保存在指定文件夹下
 
     #     print(f"Modified document saved at: {new_doc_path}")
     #     try:
