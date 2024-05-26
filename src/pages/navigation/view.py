@@ -9,6 +9,7 @@ import config as cfg
 from ..index.view import IndexView
 from ..wuguanzhu.view import WuguanzhuView
 from ..tangwang.new_tangwang import Ui_Form
+from ..xuewang.view import XuewangView
 
 
 
@@ -35,12 +36,15 @@ class MainWindow(FluentWindow):
         
     def initSubInterfaces(self):
         self.indexInterface = IndexView(self)
-        self.model1Interface = WuguanzhuView(self)
+        self.tangwangInterface = WuguanzhuView(self)
         
         self.Form = QWidget()
         ui = Ui_Form()
         ui.setupUi(self.Form)
 
+        self.xuewangInterface = XuewangView(self)
+
         self.addSubInterface(self.indexInterface, FIF.HOME, '主页')
-        self.addSubInterface(self.model1Interface, FIF.ALBUM, '无灌注识别')
-        self.addSubInterface(self.Form, FIF.VIDEO, '模型2')
+        self.addSubInterface(self.tangwangInterface, FIF.ALBUM, '无灌注识别')
+        self.addSubInterface(self.Form, FIF.VIDEO, '糖网分级')
+        self.addSubInterface(self.xuewangInterface, FIF.PHOTO, '血网分割')

@@ -12,7 +12,7 @@ class Toolbar(QWidget):
         self.model = model
 
         self.bts = []
-        for info in cfg.TOOL_BUTTON_INFOS:
+        for info in cfg.WUGUANZHU_TOOL_BUTTON_INFOS:
             bt = IconTextButton(info[0], info[1])
             self.bts.append(bt)
 
