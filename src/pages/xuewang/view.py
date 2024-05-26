@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QSizePolicy
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QSizePolicy, QFrame , QGridLayout
 from PyQt5.QtCore import QSize
 import json
 import os
@@ -42,8 +42,15 @@ class XuewangView(QWidget):
         self.patientInfoPanel.setFixedSize(QSize(600, 300))
         self.resultInfoPanel = ResultInfoPanel(self.jsonLibrary)
         self.resultInfoPanel.setFixedSize(QSize(600, 300))
-        self.imageSelector = ImageSelectorPanel(self.imagePanel, self.patientInfoPanel, self.resultInfoPanel, self)
-
+        # self.imageSelector = ImageSelectorPanel(self.imagePanel, self.patientInfoPanel, self.resultInfoPanel, self)
+        
+                
+        #五张小图
+        self.gridFrame = QFrame()
+        self.gridlayout = QGridLayout(self.gridFrame)
+        self.imageSelector = ImageSelectorPanel(self.imagePanel, self.patientInfoPanel, self.resultInfoPanel, self.gridlayout, self)
+        
+        
         # 工具栏
         self.toolbar = Toolbar(self.model, self)
         self.toolbar.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed))
@@ -57,7 +64,8 @@ class XuewangView(QWidget):
         layout.addWidget(self.imagePanel, 3)
 
         self.hInfoPanels.setSpacing(10)
-        self.hInfoPanels.addWidget(self.imageSelector)
+        # self.hInfoPanels.addWidget(self.imageSelector)
+        self.hInfoPanels.addWidget(self.gridFrame)
         self.hInfoPanels.addWidget(self.patientInfoPanel)
         self.hInfoPanels.addWidget(self.resultInfoPanel)
         layout.addLayout(self.hInfoPanels, 1)

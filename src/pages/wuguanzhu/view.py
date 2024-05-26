@@ -1,9 +1,5 @@
-<<<<<<< HEAD:src/pages/model_1/view.py
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QSizePolicy,QFrame,QGridLayout
-=======
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QSizePolicy
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QSizePolicy, QFrame, QGridLayout
 from PyQt5.QtCore import QSize
->>>>>>> dev:src/pages/wuguanzhu/view.py
 import json
 import os
 
@@ -45,16 +41,12 @@ class WuguanzhuView(QWidget):
         self.patientInfoPanel = PatientInfoPanel(self.jsonLibrary)
         self.patientInfoPanel.setFixedSize(QSize(600, 300))
         self.resultInfoPanel = ResultInfoPanel(self.jsonLibrary)
-<<<<<<< HEAD:src/pages/model_1/view.py
+        self.resultInfoPanel.setFixedSize(QSize(600, 300))
         
-        # 五张小图+添加影像
+        #五张小图
         self.gridFrame = QFrame()
         self.gridlayout = QGridLayout(self.gridFrame)
-        self.imageSelector = ImageSelectorPanel(self.imagePanel, self.patientInfoPanel, self.resultInfoPanel,self.gridlayout,self)
-=======
-        self.resultInfoPanel.setFixedSize(QSize(600, 300))
-        self.imageSelector = ImageSelectorPanel(self.imagePanel, self.patientInfoPanel, self.resultInfoPanel, self)
->>>>>>> dev:src/pages/wuguanzhu/view.py
+        self.imageSelector = ImageSelectorPanel(self.imagePanel, self.patientInfoPanel, self.resultInfoPanel, self.gridlayout, self)
 
         # 工具栏
         self.toolbar = Toolbar(self.model, self)
@@ -71,7 +63,7 @@ class WuguanzhuView(QWidget):
         layout.addWidget(self.imagePanel, 3)
 
         self.hInfoPanels.setSpacing(10)
-        #self.hInfoPanels.addWidget(self.imageSelector)
+        # self.hInfoPanels.addWidget(self.imageSelector)
         self.hInfoPanels.addWidget(self.gridFrame)
         self.hInfoPanels.addWidget(self.patientInfoPanel)
         self.hInfoPanels.addWidget(self.resultInfoPanel)

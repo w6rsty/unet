@@ -8,7 +8,7 @@ import os
 import config as cfg
 
 class ImageSelectorPanel(SingleDirectionScrollArea):
-    def __init__(self, manipulated, patient_info, result_info, dispatch, parent=None):
+    def __init__(self, manipulated, patient_info, result_info, gridlayout, dispatch, parent=None):
         super().__init__(orient=Qt.Horizontal, parent=parent)
         
         self.imageButtons = []
@@ -16,22 +16,28 @@ class ImageSelectorPanel(SingleDirectionScrollArea):
             bt = ImageButton(index, path, manipulated, patient_info, result_info)
             self.imageButtons.append(bt)
 
-        addButton = ImageButton(-1, cfg.ADD_ICON_PATH)
-        addButton.setCallBack(dispatch.imagePanel.loadImage)
-        self.imageButtons.append(addButton)
+        self.addButton = ImageButton(-1, cfg.ADD_ICON_PATH)
+        self.addButton.setCallBack(dispatch.imagePanel.loadImage)
         
-        self.initLayout()
+        
+        # self.initLayout()
         self.setStyleSheet("QScrollArea{background: transparent}")
+        gridlayout.addWidget(self.imageButtons[0],0,0)
+        gridlayout.addWidget(self.imageButtons[1],0,1)
+        gridlayout.addWidget(self.imageButtons[2],0,2)
+        gridlayout.addWidget(self.imageButtons[3],1,0)
+        gridlayout.addWidget(self.imageButtons[4],1,1)
+        gridlayout.addWidget(self.addButton,1,2)
 
-    def initLayout(self):
+    # def initLayout(self):
 
-        self.resize(400, 400)
-        layout = QHBoxLayout(self)
-        layout.setSpacing(20)
-        for bt in self.imageButtons:
-            layout.addWidget(bt)
+    #     self.resize(400, 400)
+    #     layout = QHBoxLayout(self)
+    #     layout.setSpacing(20)
+    #     for bt in self.imageButtons:
+    #         layout.addWidget(bt)
 
-        self.setLayout(layout)
+    #     self.setLayout(layout)
 
 class ImageButton(QPushButton):
     def __init__(self, id, path, manipulated = None, patient_info = None, result_info = None, parent=None):
@@ -40,7 +46,7 @@ class ImageButton(QPushButton):
         self.id = id
         
         self.setIcon(QIcon(path))
-        self.setMinimumSize(200, 180)
+        self.setIconSize(QSize(200, 180))
 
         self.manipulated = manipulated
         self.patient_info = patient_info
