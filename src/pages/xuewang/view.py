@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QSizePolicy, QFrame , QGridLayout
-from PyQt5.QtCore import QSize
+from PyQt5.QtCore import Qt, QSize
 import json
 import os
 
@@ -66,8 +66,8 @@ class XuewangView(QWidget):
         self.hInfoPanels.setSpacing(10)
         # self.hInfoPanels.addWidget(self.imageSelector)
         self.hInfoPanels.addWidget(self.gridFrame)
-        self.hInfoPanels.addWidget(self.patientInfoPanel)
-        self.hInfoPanels.addWidget(self.resultInfoPanel)
+        self.hInfoPanels.addWidget(self.patientInfoPanel, 0, Qt.AlignTop)
+        self.hInfoPanels.addWidget(self.resultInfoPanel, 0, Qt.AlignTop)
         layout.addLayout(self.hInfoPanels, 1)
 
         self.setLayout(layout)

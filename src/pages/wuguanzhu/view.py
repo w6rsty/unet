@@ -53,8 +53,6 @@ class WuguanzhuView(QWidget):
         self.toolbar = Toolbar(self.model, self)
         self.toolbar.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed))
         
-        
-
         self.initLayout()
 
     def initLayout(self):
@@ -65,13 +63,12 @@ class WuguanzhuView(QWidget):
         # self.hInfoPanels.setSpacing(10)
         self.hInfoPanels.setAlignment(Qt.AlignTop)  # 设置顶部对齐
         
-        gridlayout = QGridLayout()
         # self.hInfoPanels.addWidget(self.imageSelector)
         self.hInfoPanels.addWidget(self.gridFrame)
         
         self.gly = QGridLayout()
-        self.gly.addWidget(self.patientInfoPanel,0,0)
-        self.gly.addWidget(self.resultInfoPanel,0,1)
+        self.gly.addWidget(self.patientInfoPanel,0,0, Qt.AlignTop)
+        self.gly.addWidget(self.resultInfoPanel,0,1, Qt.AlignTop)
         self.hInfoPanels.addLayout(self.gly)
 
         layout.addLayout(self.hInfoPanels, 1)
