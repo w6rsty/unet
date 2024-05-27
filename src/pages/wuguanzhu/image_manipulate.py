@@ -540,7 +540,18 @@ class ImageManipulatePanel(QWidget):
         message_box.setWindowTitle("信息消息框")
         message_box.show()
 
+    def show_difference_percentage(self, xmin, xmax, ymin, ymax):
+        region_to_compare = self.initial_image[ymin:ymax, xmin:xmax]
+        region_to_render = self.img_3c[ymin:ymax, xmin:xmax]
 
+        diff_percentage = 1 - ((region_to_compare == region_to_render).sum() / region_to_compare.size)
+
+        # 创建弹窗来显示百分比和区域
+        region_info = f"Region:\n{region_to_render}"
+        message = f"无灌注区域占矩形区域 : {diff_percentage:.2%}"
+        QMessageBox.information(self, "Difference Percentage", message)
+    
+    
     ###########################################
     # 按钮函数
     ###########################################
