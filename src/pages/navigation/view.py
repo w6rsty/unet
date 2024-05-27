@@ -1,5 +1,5 @@
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QSplashScreen, QWidget
+from PyQt5.QtWidgets import QSplashScreen, QWidget, QLabel
 from PyQt5.QtGui import QIcon, QPixmap
 
 from qfluentwidgets import FluentIcon as FIF
@@ -37,7 +37,6 @@ class MainWindow(FluentWindow):
     
     def initWindowStyle(self):
         self.setWindowTitle(cfg.WINDOW_TITLE)
-
         self.navigationInterface.setExpandWidth(200)
         
     def initSubInterfaces(self):
