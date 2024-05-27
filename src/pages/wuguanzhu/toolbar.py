@@ -51,10 +51,10 @@ class IconTextButton(QToolButton):
         
         self.setText(title)
         self.setFont(QFont(cfg.TOOL_BUTTON_FONT_NAME, cfg.TOOL_BUTTON_FONT_SIZE))
-
         icon = QIcon(path)
         self.setIcon(icon)
         self.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
+        
         self.setAutoRaise(True)
 
     # # Overwrite the heightForWidth method to keep aspect ratio 1:1
