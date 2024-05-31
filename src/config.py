@@ -10,7 +10,8 @@ COMPANY_NAME = '第一人民医院 Inc.'
 COMPANY_URL = 'https://www.xzsdyyy.com/'
 APP_DESCRIPTION = '慧眼卫视“——AI驱动的眼底图像智能处理软件'
 
-BASIC_INFO_TEXT = '''慧眼卫视基于深度学习和智能优化算法等先进技术，有针对性地改进了医学影像信息系统中存在的缺点和不足之处。集成了医学图像处理、图像可视化、病灶自动定位等功能，实现了医学图像自动识别、自动标注、自动定位全过程。
+BASIC_INFO_TEXT = '''慧眼卫视基于深度学习和智能优化算法等先进技术，有针对性地改进了医学影像信息系统中存在的缺点和不足之处。集成了医学图像处理、图像可视化、病灶自动定位等功能，
+实现了医学图像自动识别、自动标注、自动定位全过程。
     - 限1人使用
     - 可以在多台设备通过账号登陆同时使用
     - 适用于PC
@@ -55,7 +56,7 @@ XUEWANG_TOOL_BUTTON_INFOS = [
 
 XUEWANG_BUTTON_NUM = len(XUEWANG_TOOL_BUTTON_INFOS)
 
-TOOL_BUTTON_FONT_NAME = 'Microsoft YaHei'
+TOOL_BUTTON_FONT_NAME = 'SimHei'
 TOOL_BUTTON_FONT_SIZE = 12
 
 ADD_ICON_PATH = ASSERT_DIR + 'icons/add.png'

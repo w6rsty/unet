@@ -1,5 +1,7 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QFont
+
 from qfluentwidgets import BodyLabel
 
 class PatientInfoPanel(QWidget):
@@ -9,12 +11,13 @@ class PatientInfoPanel(QWidget):
         self.jsonlibrary = jsonLibrary
 
         self.titleBar = BodyLabel('病人信息')
+        self.titleBar.setAlignment(Qt.AlignCenter)
         self.titleBar.setFixedHeight(50)
         self.titleBar.setAlignment(Qt.AlignCenter)        
         self.titleBar.setStyleSheet(
             "QLabel\n"
             "{\n"
-            "font: 15pt \"Microsoft YaHei UI\";\n"
+            "font: 15pt \"SimHei\";\n"
             "border-radius: 50px;\n"
             "border: 2px solid grey;\n"
             "background-color: rgb(62, 144, 162);\n"
@@ -37,4 +40,7 @@ class PatientInfoPanel(QWidget):
         text = ""
         for key, value in self.jsonlibrary.getJsonById(index)['patientInfo'].items():
             text += key + ": " + value + "\n"
+        self.infoText.setWordWrap(True)
+        font = QFont('SimHei', 10)
+        self.infoText.setFont(font)
         self.infoText.setText(text)

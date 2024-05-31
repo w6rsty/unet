@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QSizePolicy, QFrame, QGridLayout
-from PyQt5.QtCore import QSize
+from PyQt5.QtCore import QSize, Qt
 import json
 import os
 
@@ -33,10 +33,11 @@ class WuguanzhuView(QWidget):
         # 加载模型
         self.model = WuguanzhuModel()
         ###############################################
+        # 中间两个大框框
         self.imagePanel = ImageManipulatePanel(self.jsonLibrary, self.model, self.currentOperationMode)
         self.imagePanel.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding))
 
-        # 信息面板
+        # 信息面板 五张小图、病人信息、分析结果
         self.hInfoPanels = QHBoxLayout()
         self.patientInfoPanel = PatientInfoPanel(self.jsonLibrary)
         self.patientInfoPanel.setFixedSize(QSize(600, 300))
@@ -52,8 +53,6 @@ class WuguanzhuView(QWidget):
         self.toolbar = Toolbar(self.model, self)
         self.toolbar.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed))
         
-        
-
         self.initLayout()
 
     def initLayout(self):
@@ -61,12 +60,16 @@ class WuguanzhuView(QWidget):
 
         layout.addWidget(self.toolbar, 1)
         layout.addWidget(self.imagePanel, 3)
-
-        self.hInfoPanels.setSpacing(10)
+        # self.hInfoPanels.setSpacing(10)
+        self.hInfoPanels.setAlignment(Qt.AlignTop)  # 设置顶部对齐
+        
         # self.hInfoPanels.addWidget(self.imageSelector)
         self.hInfoPanels.addWidget(self.gridFrame)
-        self.hInfoPanels.addWidget(self.patientInfoPanel)
-        self.hInfoPanels.addWidget(self.resultInfoPanel)
+        
+        self.gly = QGridLayout()
+        self.gly.addWidget(self.patientInfoPanel,0,0, Qt.AlignTop)
+        self.gly.addWidget(self.resultInfoPanel,0,1, Qt.AlignTop)
+        self.hInfoPanels.addLayout(self.gly)
 
         layout.addLayout(self.hInfoPanels, 1)
 

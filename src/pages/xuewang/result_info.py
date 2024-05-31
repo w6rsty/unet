@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QFont
 from qfluentwidgets import BodyLabel
 
 class ResultInfoPanel(QWidget):
@@ -38,4 +39,7 @@ class ResultInfoPanel(QWidget):
         text = ""
         for key, value in self.jsonlibrary.getJsonById(index)['analysisResult'].items():
             text += key + ": " + value + "\n"
+        self.infoText.setWordWrap(True)
+        font = QFont('SimHei', 10)
+        self.infoText.setFont(font)
         self.infoText.setText(text)
