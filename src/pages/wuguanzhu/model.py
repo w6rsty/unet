@@ -13,7 +13,7 @@ class WuguanzhuModel:
         self.smallModel = None
         self.largeModel = None
 
-        # self.load()
+        self.load()
 
     def load(self):
         self.smallModel = Unet(

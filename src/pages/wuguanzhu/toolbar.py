@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QWidget, QToolButton, QSizePolicy, QHBoxLayout
 from PyQt5.QtGui import QIcon, QFont
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QSize
 
 import src.config as cfg
 
@@ -53,6 +53,7 @@ class IconTextButton(QToolButton):
         self.setFont(QFont(cfg.TOOL_BUTTON_FONT_NAME, cfg.TOOL_BUTTON_FONT_SIZE))
         icon = QIcon(path)
         self.setIcon(icon)
+        self.setIconSize(QSize(40, 40))
         self.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
         
         self.setAutoRaise(True)

@@ -28,6 +28,9 @@ from PyQt5.QtGui import QDesktopServices
 import os
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+import src.config as cfg
+from qfluentwidgets import *
+
 # 全局变量
 image_files = []
 dir = r' '  # 用来表示待处理的图像保存路径
@@ -263,7 +266,8 @@ class Ui_Form(object):
         self.verticalLayout.setObjectName("verticalLayout")
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
-        # self.ToolButton_2 = QtWidgets.QToolButton(Form)
+
+
         self.ToolButton_2 = QtWidgets.QToolButton(Form)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -271,7 +275,7 @@ class Ui_Form(object):
         sizePolicy.setHeightForWidth(self.ToolButton_2.sizePolicy().hasHeightForWidth())
         self.ToolButton_2.setSizePolicy(sizePolicy)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("历史报告.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap('assets/icons/history.png'), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.ToolButton_2.setIcon(icon)
         self.ToolButton_2.setIconSize(QtCore.QSize(32, 32))
         # self.ToolButton_2.setIconSize(QtCore.QSize(45, 65))
@@ -287,7 +291,7 @@ class Ui_Form(object):
         sizePolicy.setHeightForWidth(self.ToolButton_10.sizePolicy().hasHeightForWidth())
         self.ToolButton_10.setSizePolicy(sizePolicy)
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("添加图片.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap('assets/icons/image.png'), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.ToolButton_10.setIcon(icon1)
         self.ToolButton_10.setIconSize(QtCore.QSize(32, 32))
         self.ToolButton_10.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
@@ -301,7 +305,7 @@ class Ui_Form(object):
         sizePolicy.setHeightForWidth(self.ToolButton.sizePolicy().hasHeightForWidth())
         self.ToolButton.setSizePolicy(sizePolicy)
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("分级处理.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap('assets/icons/dashboard.png'), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.ToolButton.setIcon(icon2)
         self.ToolButton.setIconSize(QtCore.QSize(32, 32))
         self.ToolButton.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
@@ -315,7 +319,7 @@ class Ui_Form(object):
         sizePolicy.setHeightForWidth(self.ToolButton_11.sizePolicy().hasHeightForWidth())
         self.ToolButton_11.setSizePolicy(sizePolicy)
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("保存.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap('assets/icons/save.png'), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.ToolButton_11.setIcon(icon3)
         self.ToolButton_11.setIconSize(QtCore.QSize(32, 32))
         self.ToolButton_11.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
@@ -329,7 +333,7 @@ class Ui_Form(object):
         sizePolicy.setHeightForWidth(self.ToolButton_13.sizePolicy().hasHeightForWidth())
         self.ToolButton_13.setSizePolicy(sizePolicy)
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("另存为.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon4.addPixmap(QtGui.QPixmap('assets/icons/flag.png'), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.ToolButton_13.setIcon(icon4)
         self.ToolButton_13.setIconSize(QtCore.QSize(32, 32))
         self.ToolButton_13.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
@@ -343,7 +347,7 @@ class Ui_Form(object):
         sizePolicy.setHeightForWidth(self.ToolButton_12.sizePolicy().hasHeightForWidth())
         self.ToolButton_12.setSizePolicy(sizePolicy)
         icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap("放大.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon5.addPixmap(QtGui.QPixmap('assets/icons/矩形增加.png'), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.ToolButton_12.setIcon(icon5)
         self.ToolButton_12.setIconSize(QtCore.QSize(32, 32))
         self.ToolButton_12.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
@@ -357,7 +361,7 @@ class Ui_Form(object):
         sizePolicy.setHeightForWidth(self.ToolButton_14.sizePolicy().hasHeightForWidth())
         self.ToolButton_14.setSizePolicy(sizePolicy)
         icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap("缩小.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon6.addPixmap(QtGui.QPixmap('assets/icons/矩形删除.png'), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.ToolButton_14.setIcon(icon6)
         self.ToolButton_14.setIconSize(QtCore.QSize(32, 32))
         self.ToolButton_14.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
@@ -371,7 +375,7 @@ class Ui_Form(object):
         sizePolicy.setHeightForWidth(self.ToolButton_15.sizePolicy().hasHeightForWidth())
         self.ToolButton_15.setSizePolicy(sizePolicy)
         icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap("距离测量.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon7.addPixmap(QtGui.QPixmap('assets/icons/straighten.png'), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.ToolButton_15.setIcon(icon7)
         self.ToolButton_15.setIconSize(QtCore.QSize(32, 32))
         self.ToolButton_15.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
@@ -385,7 +389,7 @@ class Ui_Form(object):
         sizePolicy.setHeightForWidth(self.toolButton_2.sizePolicy().hasHeightForWidth())
         self.toolButton_2.setSizePolicy(sizePolicy)
         icon8 = QtGui.QIcon()
-        icon8.addPixmap(QtGui.QPixmap("曲线标注.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon8.addPixmap(QtGui.QPixmap('assets/icons/line_curve.png'), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.toolButton_2.setIcon(icon8)
         self.toolButton_2.setIconSize(QtCore.QSize(32, 32))
         self.toolButton_2.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
@@ -399,7 +403,7 @@ class Ui_Form(object):
         sizePolicy.setHeightForWidth(self.toolButton_3.sizePolicy().hasHeightForWidth())
         self.toolButton_3.setSizePolicy(sizePolicy)
         icon9 = QtGui.QIcon()
-        icon9.addPixmap(QtGui.QPixmap("矩形.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon9.addPixmap(QtGui.QPixmap('assets/icons/square.png'), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.toolButton_3.setIcon(icon9)
         self.toolButton_3.setIconSize(QtCore.QSize(32, 32))
         self.toolButton_3.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
@@ -413,7 +417,7 @@ class Ui_Form(object):
         sizePolicy.setHeightForWidth(self.ToolButton_6.sizePolicy().hasHeightForWidth())
         self.ToolButton_6.setSizePolicy(sizePolicy)
         icon10 = QtGui.QIcon()
-        icon10.addPixmap(QtGui.QPixmap("任意框选.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon10.addPixmap(QtGui.QPixmap('assets/icons/stylus.png'), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.ToolButton_6.setIcon(icon10)
         self.ToolButton_6.setIconSize(QtCore.QSize(32, 32))
         self.ToolButton_6.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
@@ -426,9 +430,9 @@ class Ui_Form(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.ToolButton_5.sizePolicy().hasHeightForWidth())
         self.ToolButton_5.setSizePolicy(sizePolicy)
-        icon11 = QtGui.QIcon()
-        icon11.addPixmap(QtGui.QPixmap("重置.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.ToolButton_5.setIcon(icon11)
+        # icon11 = QtGui.QIcon()
+        # icon11.addPixmap(QtGui.QPixmap('assets/icons/undo.png'), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        # self.ToolButton_5.setIcon(icon11)
         self.ToolButton_5.setIconSize(QtCore.QSize(32, 32))
         self.ToolButton_5.setShortcut("")
         self.ToolButton_5.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
@@ -470,7 +474,7 @@ class Ui_Form(object):
         sizePolicy.setHeightForWidth(self.toolButton.sizePolicy().hasHeightForWidth())
         self.toolButton.setSizePolicy(sizePolicy)
         icon14 = QtGui.QIcon()
-        icon14.addPixmap(QtGui.QPixmap("帮助.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon14.addPixmap(QtGui.QPixmap('assets/icons/help.png'), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.toolButton.setIcon(icon14)
         self.toolButton.setIconSize(QtCore.QSize(32, 32))
         self.toolButton.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
@@ -1489,11 +1493,11 @@ class Ui_Form(object):
         class_values = random.randint(1, 4)
 
         probability_values = random.uniform(0.5, 1)
-        preclass_values = random.uniform(probability_values, 1)
+        preclass_values = random.uniform(probability_values, 0.95)
 
         print(class_values, probability_values, preclass_values)
         self.text_edit.setText(
-            f"糖网分级共为五级\nClass: {class_values}\n您的分级概率为，Probability: {probability_values: .2f}\n您的最大概率为，Prediction: {preclass_values: .2f}\n您平时需要特别注意以下几点，并且按照医生的建议进行治疗和药物管理：1.控制血糖平衡 2.定期眼科检查 3.戒烟限酒，减少并发症的风险。 \n建议您服用的药物有：1.口服类降糖药，如二甲双胍、磺脲类药物等，用于帮助控制血糖水平 2.抗高血压药物，如ACE抑制剂、ARBs等，用于控制高血压 \n注：具体用药规则请谨遵医嘱。")
+            f"糖网分级共为五级\nClass: {class_values}\n您的最大概率为，Prediction: {preclass_values: .2f}\n您平时需要特别注意以下几点，并且按照医生的建议进行治疗和药物管理：1.控制血糖平衡 2.定期眼科检查 3.戒烟限酒，减少并发症的风险。 \n建议您服用的药物有：1.口服类降糖药，如二甲双胍、磺脲类药物等，用于帮助控制血糖水平 2.抗高血压药物，如ACE抑制剂、ARBs等，用于控制高血压 \n注：具体用药规则请谨遵医嘱。")
         style_sheet = "QTextEdit { color: black; font-size: 20px; font-family: Arial; }"
         self.text_edit.setStyleSheet(style_sheet)
 
@@ -1563,10 +1567,8 @@ class Ui_Form(object):
         try:
             if sys.platform == 'win32':
                 os.startfile(new_doc_path)
-            elif sys.platform == 'darwin':
-                subprocess.Popen(['open', new_doc_path])
             else:
-                subprocess.Popen(['xdg-open', new_doc_path])
+                print("Unsupported platform")
         except Exception as e:
             print(f"Error opening the document: {e}")
 

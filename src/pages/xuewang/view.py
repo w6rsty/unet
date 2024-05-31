@@ -20,13 +20,6 @@ class XuewangView(QWidget):
         self.jsonLibrary = JsonLibrary(cfg.XUEWANG_JSON_DIR)
 
         ###############################################
-        # 状态变量
-
-        # 当前图片的路径(可能用于保存路径)
-        self.currentImagePath = None
-        # 历史操作栈, 用于撤销操作
-        self.historyStack = []
-
         # 当前操作模式
         self.currentOperationMode = OperationMode.NONE
 
@@ -42,8 +35,6 @@ class XuewangView(QWidget):
         self.patientInfoPanel.setFixedSize(QSize(600, 300))
         self.resultInfoPanel = ResultInfoPanel(self.jsonLibrary)
         self.resultInfoPanel.setFixedSize(QSize(600, 300))
-        # self.imageSelector = ImageSelectorPanel(self.imagePanel, self.patientInfoPanel, self.resultInfoPanel, self)
-        
                 
         #五张小图
         self.gridFrame = QFrame()
@@ -64,7 +55,6 @@ class XuewangView(QWidget):
         layout.addWidget(self.imagePanel, 3)
 
         self.hInfoPanels.setSpacing(10)
-        # self.hInfoPanels.addWidget(self.imageSelector)
         self.hInfoPanels.addWidget(self.gridFrame)
         self.hInfoPanels.addWidget(self.patientInfoPanel, 0, Qt.AlignTop)
         self.hInfoPanels.addWidget(self.resultInfoPanel, 0, Qt.AlignTop)

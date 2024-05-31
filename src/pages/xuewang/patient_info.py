@@ -18,7 +18,7 @@ class PatientInfoPanel(QWidget):
             "font: 15pt \"Microsoft YaHei UI\";\n"
             "border-radius: 50px;\n"
             "border: 2px solid grey;\n"
-            "background-color: rgb(62, 144, 162);\n"
+            "background-color: rgb(221, 221, 221);\n"
             "}"
         )
 

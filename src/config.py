@@ -23,19 +23,19 @@ BASIC_INFO_TEXT = '''慧眼卫视基于深度学习和智能优化算法等先�
     - 直观简洁，且易于使用，任何人都可以轻松操作''' 
 
 WUGUANZHU_TOOL_BUTTON_INFOS = [
-    ('加载图片', ASSERT_DIR + 'icons/加载图片.png'),
-    ('读取历史', ASSERT_DIR + 'icons/读取历史.png'),
-    ('大图识别', ASSERT_DIR + 'icons/大图识别.png'),
+    ('加载图片', ASSERT_DIR + 'icons/image.png'),
+    ('读取历史', ASSERT_DIR + 'icons/history.png'),
+    ('大图识别', ASSERT_DIR + 'icons/search.png'),
     ('矩形增加', ASSERT_DIR + 'icons/矩形增加.png'),
     ('矩形删除', ASSERT_DIR + 'icons/矩形删除.png'),
-    ('手动添加', ASSERT_DIR + 'icons/手动添加.png'),
-    ('手动删除', ASSERT_DIR + 'icons/手动删除.png'),
+    ('手动添加', ASSERT_DIR + 'icons/person_add.png'),
+    ('手动删除', ASSERT_DIR + 'icons/person_off.png'),
     ('区域生长', ASSERT_DIR + 'icons/区域生长.png'),
     ('眼底分区', ASSERT_DIR + 'icons/眼底分区.png'),
-    ('矩形占比', ASSERT_DIR + 'icons/矩形占比.png'),
-    ('撤销操作', ASSERT_DIR + 'icons/撤销操作.png'),
-    ('数据保存', ASSERT_DIR + 'icons/数据保存.png'),
-    ('掩膜保存', ASSERT_DIR + 'icons/掩模保存.png'),
+    ('矩形占比', ASSERT_DIR + 'icons/dashboard.png'),
+    ('撤销操作', ASSERT_DIR + 'icons/undo.png'),
+    ('数据保存', ASSERT_DIR + 'icons/save.png'),
+    ('掩膜保存', ASSERT_DIR + 'icons/flag.png'),
 ]
 
 TOOL_BUTTON_NUM = len(WUGUANZHU_TOOL_BUTTON_INFOS)
