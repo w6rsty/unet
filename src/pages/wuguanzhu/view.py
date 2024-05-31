@@ -60,19 +60,15 @@ class WuguanzhuView(QWidget):
 
         layout.addWidget(self.toolbar, 1)
         layout.addWidget(self.imagePanel, 3)
-        # self.hInfoPanels.setSpacing(10)
+        self.hInfoPanels.setSpacing(10)
         self.hInfoPanels.setAlignment(Qt.AlignTop)  # 设置顶部对齐
-        
-        # self.hInfoPanels.addWidget(self.imageSelector)
+
         self.hInfoPanels.addWidget(self.gridFrame)
         
-        self.gly = QGridLayout()
-        self.gly.addWidget(self.patientInfoPanel,0,0, Qt.AlignTop)
-        self.gly.addWidget(self.resultInfoPanel,0,1, Qt.AlignTop)
-        self.hInfoPanels.addLayout(self.gly)
-
+        self.hInfoPanels.addWidget(self.patientInfoPanel,0,Qt.AlignTop)
+        self.hInfoPanels.addWidget(self.resultInfoPanel,0,Qt.AlignTop)
         layout.addLayout(self.hInfoPanels, 1)
-
+        
         self.setLayout(layout)
         
     def setupUi(self, Form):
