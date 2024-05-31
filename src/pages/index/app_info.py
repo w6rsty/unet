@@ -1,6 +1,6 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout
-from PyQt5.QtCore import Qt, QSize, QUrl
-from PyQt5.QtGui import QFont, QColor
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QSizePolicy
+from PyQt5.QtCore import Qt, QUrl
+from PyQt5.QtGui import QFont, QColor, QPixmap
 from qfluentwidgets import *
 
 import src.config as cfg
@@ -9,8 +9,13 @@ class AppInfoCard(SimpleCardWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
+        self.appIcon = QLabel(self)
+        self.appIcon.setPixmap(QPixmap(cfg.APP_ICON_PATH)
+            .scaled(120, 120, Qt.KeepAspectRatio, Qt.SmoothTransformation))
+
         self.appName = TitleLabel(cfg.APP_NAME, self)
         self.companyLabel = HyperlinkLabel(QUrl(cfg.COMPANY_URL), cfg.COMPANY_NAME, self)
+
         self.installButton = PrimaryPushButton('详细', self)
         self.installButton.setFixedWidth(160)
 
@@ -27,31 +32,33 @@ class AppInfoCard(SimpleCardWidget):
     def initLayout(self):
         self.hBoxLayout = QHBoxLayout(self)
         self.vBoxLayout = QVBoxLayout()
-        self.topLayout = QHBoxLayout()
+
+        # align to each side
         self.statisticsLayout = QHBoxLayout()
         self.buttonLayout = QHBoxLayout()
 
         self.hBoxLayout.setSpacing(30)
-        self.hBoxLayout.setContentsMargins(34, 24, 24, 24)
+        self.hBoxLayout.setAlignment(Qt.AlignLeft)
+        self.hBoxLayout.addWidget(self.appIcon, 0)
         self.hBoxLayout.addLayout(self.vBoxLayout)
+        self.topLayout = QHBoxLayout()
 
-        self.vBoxLayout.setContentsMargins(0, 0, 0, 0)
         self.vBoxLayout.setSpacing(0)
 
         # name label and install button
-        self.vBoxLayout.addLayout(self.topLayout)
-        self.topLayout.setContentsMargins(0, 0, 0, 0)
-        self.topLayout.addWidget(self.appName)
-        self.topLayout.addWidget(self.installButton, 0, Qt.AlignRight)
+        self.topLayout.addWidget(self.appName, 0, Qt.AlignLeft)
+        # add a placeholder
+        self.topLayout.addStretch(1)
+        self.hBoxLayout.addWidget(self.installButton, 0, Qt.AlignRight | Qt.AlignTop)
 
         # company label
+        self.vBoxLayout.addLayout(self.topLayout)
         self.vBoxLayout.addSpacing(3)
         self.vBoxLayout.addWidget(self.companyLabel)
 
         # statistics widgets
         self.vBoxLayout.addSpacing(20)
         self.vBoxLayout.addLayout(self.statisticsLayout)
-        self.statisticsLayout.setContentsMargins(0, 0, 0, 0)
         self.statisticsLayout.setSpacing(10)
         self.statisticsLayout.addWidget(self.scoreWidget)
         self.statisticsLayout.addWidget(self.separator)

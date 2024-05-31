@@ -95,3 +95,5 @@ SMALL_MODEL_PATH = ASSERT_DIR + 'models/logs3/best_epoch_weights.pth'
 LARGE_MODEL_PATH = ASSERT_DIR + 'models/logs4/best_epoch_weights.pth'
 
 XUEWANG_MODEL_PATH = ASSERT_DIR + 'models/xuewang/best_epoch_weights.pth'
+
+APP_ICON_PATH = ASSERT_DIR + 'icons/app.png'
