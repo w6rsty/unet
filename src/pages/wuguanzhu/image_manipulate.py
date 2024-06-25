@@ -93,13 +93,11 @@ class ImageManipulatePanel(QWidget):
         # 分隔
         self.splitter = QSplitter(Qt.Horizontal)
 
-        self.view = QGraphicsView()
-        self.view.setRenderHint(QPainter.Antialiasing)
-        self.view.setMouseTracking(True)
+        self.view1.setRenderHint(QPainter.Antialiasing)
+        self.view1.setMouseTracking(True)
 
         # 确保在初始化方法中设置了正确的滚动区域，以便可以滚动查看整个图像
-        self.view.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        self.view.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.view1.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded | Qt.ScrollBarAsNeeded)
 
         self.initLayout()
 
@@ -132,34 +130,36 @@ class ImageManipulatePanel(QWidget):
         H, W, _ = self.img_3c.shape
         H, W, _ = self.img_3c.shape
 
-        if hasattr(self, "scene"):
-            self.view.setScene(None)
-            del self.scene
+        if hasattr(self, "scene1"):
+            self.view1.setScene(None)
+            del self.scene1
         if hasattr(self, "scene2"):
-            self.view.setScene(None)
+            self.view2.setScene(None)
             del self.scene2
 
-        self.scene = QGraphicsScene(0, 0, W, H)
+
+        self.scene1 = QGraphicsScene(0, 0, W, H)
         self.scene2 = QGraphicsScene(0, 0, W, H)
         self.end_point = None
         self.rect = None
-        self.bg_img1 = self.scene.addPixmap(pixmap)
+        self.bg_img1 = self.scene1.addPixmap(pixmap)
         self.bg_img2 = self.scene2.addPixmap(pixmap)
         self.bg_img1.setPos(0, 0)
         self.bg_img2.setPos(0, 0)
-        self.view1.setScene(self.scene)  # 在第一个视图中显示图像
+        self.view1.setScene(self.scene1)  # 在第一个视图中显示图像
         self.view2.setScene(self.scene2)  # 在第二个视图中显示相同的图像-
 
         # # 0: 未选中, 1: 左侧选中, 2: 右侧选中
-        self.hoveredView = 0
+        self.hoveredView = 1
         self.view1.enterEvent = self.enterLeft
-        self.view1.leaveEvent = self.leaveLeft
-        self.scene.mousePressEvent = self.mouse_press
-        self.scene.mouseMoveEvent = self.mouse_move
-        self.scene.mouseReleaseEvent = self.mouse_release
+        self.view1.leaveEvent = self.leaveView
+
+        self.scene1.mousePressEvent = self.mouse_press
+        self.scene1.mouseMoveEvent = self.mouse_move
+        self.scene1.mouseReleaseEvent = self.mouse_release
 
         self.view2.enterEvent = self.enterRight
-        self.view2.leaveEvent = self.leaveLeft
+        self.view2.leaveEvent = self.leaveView
 
     def setImage(self, id):
         path = self.jsonlibrary.getJsonById(id)['imgPath']
@@ -190,7 +190,7 @@ class ImageManipulatePanel(QWidget):
             delta = event.angleDelta().y() / 120
             factor = 1.1 if delta > 0 else 0.9
             if self.hoveredView == 1:
-                self.view.scale(factor, factor)
+                self.view1.scale(factor, factor)
             elif self.hoveredView == 2:
                 self.view2.scale(factor, factor)
         else:
@@ -199,12 +199,14 @@ class ImageManipulatePanel(QWidget):
 
     def enterLeft(self, event):
         self.hoveredView = 1
+        print("Enter left")
 
     def enterRight(self, event):
         self.hoveredView = 2
+        print("Enter right")
 
-    def leaveLeft(self, event):
-        self.hoveredView = 0
+    def leaveView(self, event):
+        self.hoveredView = 1
     
     def mouse_press(self, ev):
         x, y = ev.scenePos().x(), ev.scenePos().y()
@@ -214,7 +216,7 @@ class ImageManipulatePanel(QWidget):
                 # 处理绘制逻辑
                 self.is_mouse_down = True
                 self.start_pos = ev.scenePos().x(), ev.scenePos().y()
-                self.start_point = self.scene.addEllipse(
+                self.start_point = self.scene1.addEllipse(
                     x - self.half_point_size,
                     y - self.half_point_size,
                     self.point_size,
@@ -229,7 +231,7 @@ class ImageManipulatePanel(QWidget):
                 # 处理差异模式逻辑
                 self.is_mouse_down = True
                 self.start_pos = ev.scenePos().x(), ev.scenePos().y()
-                self.start_point = self.scene.addEllipse(
+                self.start_point = self.scene1.addEllipse(
                     x - self.half_point_size,
                     y - self.half_point_size,
                     self.point_size,
@@ -243,7 +245,7 @@ class ImageManipulatePanel(QWidget):
                 # 处理恢复模式逻辑
                 self.is_mouse_down = True
                 self.start_pos = ev.scenePos().x(), ev.scenePos().y()
-                self.start_point = self.scene.addEllipse(
+                self.start_point = self.scene1.addEllipse(
                     x - self.half_point_size,
                     y - self.half_point_size,
                     self.point_size,
@@ -281,7 +283,7 @@ class ImageManipulatePanel(QWidget):
                 )
                 self.click_point.setPen(QPen(QColor("yellow")))
                 self.click_point.setBrush(QBrush(QColor("yellow")))
-                self.scene.addItem(self.click_point)
+                self.scene1.addItem(self.click_point)
 
             elif self.mode == OperationMode.RETINA_SEG_1:
                 self.end_pos = ev.scenePos()  # 记录第二个点击的点
@@ -300,7 +302,7 @@ class ImageManipulatePanel(QWidget):
                 x, y = ev.scenePos().x(), ev.scenePos().y()
 
                 if self.rect is not None:
-                    self.scene.removeItem(self.rect)
+                    self.scene1.removeItem(self.rect)
                 sx, sy = self.start_pos
                 xmin = int(min(x, sx))
                 xmax = int(max(x, sx))
@@ -308,15 +310,15 @@ class ImageManipulatePanel(QWidget):
                 ymax = int(max(y, sy))
 
                 if self.mode == OperationMode.ADD_RECT: # 矩形增加
-                    self.rect = self.scene.addRect(
+                    self.rect = self.scene1.addRect(
                         xmin, ymin, xmax - xmin, ymax - ymin, pen=QPen(QColor("red"))
                     )
                 if self.mode == OperationMode.RECT_RATIO: # 矩形占比
-                    self.rect = self.scene.addRect(
+                    self.rect = self.scene1.addRect(
                         xmin, ymin, xmax - xmin, ymax - ymin, pen=QPen(QColor("yellow"))
                     )
                 elif self.mode == OperationMode.DELETE_RECT: # 矩形删除
-                    self.rect = self.scene.addRect(
+                    self.rect = self.scene1.addRect(
                         xmin, ymin, xmax - xmin, ymax - ymin, pen=QPen(QColor("green"))
                     )
             else:
@@ -335,8 +337,8 @@ class ImageManipulatePanel(QWidget):
                         painter.drawLine(self.points[-1], current_point)
                         painter.end()
                         if self.bg_img is not None:
-                            self.scene.removeItem(self.bg_img)
-                        self.bg_img = self.scene.addPixmap(self.pixmap)
+                            self.scene1.removeItem(self.bg_img)
+                        self.bg_img = self.scene1.addPixmap(self.pixmap)
 
                         self.points.append(current_point)
 
@@ -353,8 +355,8 @@ class ImageManipulatePanel(QWidget):
                         painter.drawLine(self.points[-1], current_point)
                         painter.end()
                         if self.bg_img is not None:
-                            self.scene.removeItem(self.bg_img)
-                        self.bg_img = self.scene.addPixmap(self.pixmap)
+                            self.scene1.removeItem(self.bg_img)
+                        self.bg_img = self.scene1.addPixmap(self.pixmap)
 
                         self.points.append(current_point)
         except Exception as e:
@@ -365,7 +367,7 @@ class ImageManipulatePanel(QWidget):
         try:
 
             pixmap = np2pixmap(self.img_3c)
-            self.bg_img = self.scene.addPixmap(pixmap)
+            self.bg_img = self.scene1.addPixmap(pixmap)
             self.bg_img.setPos(0, 0)
         except Exception as e:
             pass
@@ -478,7 +480,7 @@ class ImageManipulatePanel(QWidget):
                 radius * 2
             )
             self.circle.setPen(QPen(QColor("black")))
-            self.scene.addItem(self.circle)
+            self.scene1.addItem(self.circle)
             self.circle1 = QGraphicsEllipseItem(
                 x - 13.33*radius,
                 y - 13.33*radius,
@@ -486,7 +488,7 @@ class ImageManipulatePanel(QWidget):
                 radius * 26.66
             )
             self.circle1.setPen(QPen(QColor("yellow")))
-            self.scene.addItem(self.circle1)
+            self.scene1.addItem(self.circle1)
             self.circle2 = QGraphicsEllipseItem(
                 x - 20*radius,
                 y - 20*radius,
@@ -494,7 +496,7 @@ class ImageManipulatePanel(QWidget):
                 radius * 40
             )
             self.circle2.setPen(QPen(QColor("green")))
-            self.scene.addItem(self.circle2)
+            self.scene1.addItem(self.circle2)
             circle_rect = self.circle.boundingRect()
             xmin, ymin, xmax, ymax = int(circle_rect.left()), int(circle_rect.top()), int(circle_rect.right()), int(
                 circle_rect.bottom())
@@ -654,7 +656,7 @@ class ImageManipulatePanel(QWidget):
     def drawEdge(self, point1, point2):
         if len(self.points) >= 2:
             for i in range(len(self.points) - 1):
-                self.scene.addLine(point1.x(), point1.y(), point2.x(), point2.y(), self.pen)
+                self.scene1.addLine(point1.x(), point1.y(), point2.x(), point2.y(), self.pen)
 
     def fillMask(self):
         if self.img_3c is not None:
